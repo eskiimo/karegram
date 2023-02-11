@@ -1,16 +1,13 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
+import PostsList from "../components/posts/posts-list";
+import { getFeaturedEvents } from "@/dummy-data";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+function Home() {
+  const posts = getFeaturedEvents();
   return (
     <>
-      <main className={styles.main}>
-        <div className={styles.description}> Hello Instagram !</div>
-      </main>
+      <PostsList posts={posts} />
     </>
   );
 }
+
+export default Home;
