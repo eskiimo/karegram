@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function NavLinks() {
   return (
-    <div className="flex flex-row w-full justify-evenly sm:flex-col sm:justify-start sm:m-5 p-3">
+    <div className="flex flex-row w-full sm:w-[20vw] justify-evenly sm:flex-col sm:justify-start sm:m-5 p-3">
       <div className="flex sm:my-5 items-center	 ">
         <Link href="/profile" className="text-xl active:font-bold">
           <div className="flex flex-row items-center">
