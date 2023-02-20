@@ -1,3 +1,4 @@
+import NavBar from "@/components/nav/nav-bar";
 import NavLinks from "@/components/nav/nav-links";
 
 const MainHeader = () => {
@@ -8,8 +9,8 @@ const MainHeader = () => {
           {" "}
           <NavLinks />
         </div>
-        <div className="flex justify-center align-middle my-auto fixed sm:hidden  h-[8%] bottom-0 w-full bg-white dark:bg-black border-1 border-t border-gray-700 p-2 dark:text-white">
-          <NavLinks />
+        <div className="flex justify-center align-middle  fixed sm:hidden  h-[7%] bottom-0  border-1 border-t border-gray-700 p-2 dark:text-white">
+          <NavBar />
         </div>
       </header>
     </>

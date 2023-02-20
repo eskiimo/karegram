@@ -2,10 +2,10 @@ import Link from "next/link";
 
 function PostsList(props) {
   return (
-    <div>
+    <div className="py-10">
       {props.posts.map((post) => {
         return (
-          <div className="flex flex-col mx-auto w-11/12 sm:w-[50%] aspect-square	">
+          <div className="flex flex-col mx-auto w-11/12 sm:w-[55%] md:w-[50%]   aspect-square	overflow-y-hidden">
             <div>
               <div className="flex flex-row my-2 justify-start items-center	">
                 <div className="w-[12%] aspect-square mr-2 rounded-full bg-black border-2 border-pink-700"></div>
