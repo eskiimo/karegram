@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function PostsList(props) {
   return (
-    <div className="py-10">
+    <div className="pt-5 pb-[8vh]">
       {props.posts.map((post) => {
         return (
           <div className="flex flex-col mx-auto w-11/12 sm:w-[55%] md:w-[50%]   aspect-square	overflow-y-hidden">

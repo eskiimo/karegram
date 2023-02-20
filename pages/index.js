@@ -1,5 +1,4 @@
 import PostsList from "../components/posts/posts-list";
-import NavLinks from "@/components/nav/nav-links";
 import { getAllEvents } from "@/dummy-data";
 
 function Home() {
@@ -13,7 +12,7 @@ function Home() {
         <PostsList posts={posts} />
       </div>
       <button
-        className="toggle-dark rounded-full  fixed top-10 right-10 dark:text-white"
+        className="toggle-dark rounded-full  fixed top-6 right-10 dark:text-white"
         onClick={toggleDark}
       >
         <i className="fa-solid fa-moon text-2xl dark:text-white"></i>
