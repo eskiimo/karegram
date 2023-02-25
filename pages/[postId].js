@@ -10,7 +10,7 @@ const PostDetails = () => {
   }
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-start h-[70%] dark:bg-black dark:text-white w-11/12 mx-auto">
+      <div className="flex flex-col md:flex-row justify-start h-[70%] dark:bg-black dark:text-white w-5/12 mx-auto">
         <div className="m-5  md:w-[60%]">
           <img src="/images/pic1.jpg" alt="pic" />
         </div>

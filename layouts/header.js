@@ -5,7 +5,7 @@ const MainHeader = () => {
   return (
     <>
       <header>
-        <div className="nav fixed dark:bg-black dark:text-white hidden sm:flex   h-screen border-r border-1 border-gray-700">
+        <div className="nav fixed dark:bg-black dark:text-white hidden sm:flex h-screen border-r border-1 border-gray-700">
           {" "}
           <NavLinks />
         </div>

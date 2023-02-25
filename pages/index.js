@@ -8,7 +8,7 @@ function Home() {
   const posts = getAllEvents();
   return (
     <div className="flex flex-row dark:bg-black justify-end min-w-[300px] sm:h-[100vh] overflow-y-hidden">
-      <div className="h-[100vh] sm:w-[75vw] md:w-[80%]   dark:bg-black dark:text-white flex-end    p-0 overflow-y-scroll">
+      <div className="h-[100vh] sm:w-[75vw] md:w-[75%]  dark:bg-black dark:text-white flex-end   pt-5 overflow-y-scroll">
         <PostsList posts={posts} />
       </div>
       <button
