@@ -36,9 +36,9 @@ const ProfilePage = () => {
       </div>
       <div className="flex flex-row sm:hidden px-10 py-2  border-b-2  justify-between">
         {/* link to list of certain users */}
-        <i className="text-blue-700 text-lg fa-solid fa-border-all"></i>
-        <i class="text-lg fa-solid fa-border-all"></i>
-        <i class="text-lg fa-solid fa-border-all"></i>
+        <i class="text-blue-700 text-lg fa-solid fa-table-cells"></i>
+        <i class="text-lg fa-solid fa-table-cells"></i>
+        <i class="text-lg fa-solid fa-table-cells"></i>
       </div>
       <div className="h-[70vh]">
         <ProfileList posts={posts} />
