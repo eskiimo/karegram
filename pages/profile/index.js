@@ -10,7 +10,7 @@ const ProfilePage = () => {
         <div className="info w-[35%] flex flex-col">
           <div className="flex flex-row justify-between items-center">
             {" "}
-            <h3>@__eskiimo</h3> <i class="fa-solid fa-gear"></i>
+            <h3>@__eskiimo</h3> <i className="fa-solid fa-gear"></i>
           </div>
           <div className="hidden sm:flex sm:flex-row md:m-2 justify-between">
             <h1>250 posts </h1>
@@ -19,10 +19,11 @@ const ProfilePage = () => {
           </div>
 
           <h1 className="text-md sm:text-2xl font-medium	">Kareem Kamal</h1>
-          <h1> All Day I Dream</h1>
+          <h1> All Day I Dream </h1>
           <a
             className="font-medium text-blue-800"
-            href="https://l.instagram.com/?u=http%3A%2F%2Feskiimo.netlify.app%2F&e=AT2qAltfEWHmYDA4iFTVSlfjIMas3yJzCtHP7vqJQcVPVOP0zsRKMqA4Jau7GnuYXMvjYlAaxzbsaOH90WtpSTKAlaeHFRQ-szUvWA"
+            href="https:eskiimo.netlify.app"
+            target="_blank"
           >
             eskiimo.netlify.app{" "}
           </a>
@@ -36,11 +37,11 @@ const ProfilePage = () => {
       </div>
       <div className="flex flex-row sm:hidden px-10 py-2  border-b-2  justify-between">
         {/* link to list of certain users */}
-        <i class="text-blue-700 text-lg fa-solid fa-table-cells"></i>
-        <i class="text-lg fa-solid fa-table-cells"></i>
-        <i class="text-lg fa-solid fa-table-cells"></i>
+        <i className="text-blue-700 text-lg fa-solid fa-table-cells"></i>
+        <i className="text-lg fa-solid fa-table-cells"></i>
+        <i className="text-lg fa-solid fa-table-cells"></i>
       </div>
-      <div className="h-[70vh]">
+      <div className="h-[70vh] w-[95%] mx-auto">
         <ProfileList posts={posts} />
       </div>
     </div>

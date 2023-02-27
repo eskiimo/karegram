@@ -3,7 +3,7 @@ function ProfileList(props) {
     <div className="flex flex-wrap">
       {props.posts.map((post) => {
         return (
-          <div className="flex  w-1/3  aspect-square	">
+          <div className="flex  w-[31%]  aspect-square m-1	">
             {/* <div className="flex flex-row m-2 justify-start items-center	">
               <div className="w-[12%] max-w-[50px] aspect-square mr-2 rounded-full bg-black border-2 border-pink-700"></div>
               <div className="flex flex-col">
@@ -13,7 +13,11 @@ function ProfileList(props) {
                 </p>
               </div>
             </div> */}
-            <img src={"/" + post.image} alt={post.title} />
+            <img
+              className="object-cover"
+              src={"/" + post.image}
+              alt={post.title}
+            />
             {/* <div className="m-2">
               <h3 className="dark:text-white my-1">
                 {new Date(post.date).toLocaleDateString("en-US", {
