@@ -5,7 +5,9 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <LayOut>
-        <Component {...pageProps} />
+        <div className="flex justify-end ">
+          <Component {...pageProps} />
+        </div>
       </LayOut>
     </>
   );

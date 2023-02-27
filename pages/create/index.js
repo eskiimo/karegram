@@ -1,7 +1,7 @@
 const CreatePost = () => {
   return (
-    <div>
-      <h1>Create Page</h1>
+    <div className="w-full h-[100vh] sm:w-[75vw]  flex justify-center">
+      Create page
     </div>
   );
 };
