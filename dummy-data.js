@@ -59,7 +59,67 @@ const DUMMY_EVENTS = [
     image: "images/pic3.jpg",
     isFeatured: true,
   },
+  {
+    id: "e7",
+    title: "Programming for everyone",
+    description:
+      "Everyone can learn to code! Yes, everyone! In this live event, we are going to go through all the key basics and get you started with programming as well.",
+    location: "Somestreet 25, 12345 San Somewhereo",
+    date: "2021-05-12",
+    image: "images/pic1.jpg",
+    isFeatured: false,
+  },
 ];
+const DUMMY_USERS = [
+  {
+    id: "u1",
+    username: "@__eskiimo",
+    name: "kareem kamal",
+    bio: "All Day I Dream ",
+    pp: "",
+    followings: [
+      {
+        id: "u2",
+        username: "@komey",
+        name: "Ahmad khattab",
+        bio: " bas ya mohaza2 ",
+        pp: "",
+        followings: "300",
+        followers: "450",
+        posts: [],
+      },
+      {
+        id: "u3",
+        username: "@khalil",
+        name: "Amr khalil",
+        bio: " premium",
+        pp: "",
+        followings: "300",
+        followers: "450",
+        posts: [],
+      },
+    ],
+    followers: "450",
+    posts: [],
+  },
+  {
+    id: "u2",
+    username: "@komey",
+    name: "Ahmad khattab",
+    bio: " bas ya mohaza2 ",
+    pp: "",
+    followings: "300",
+    followers: "450",
+    posts: [],
+  },
+];
+
+export function getAllUsers() {
+  return DUMMY_USERS;
+}
+export function getFollowings() {
+  return DUMMY_USERS[0].followings;
+}
 
 export function getFeaturedEvents() {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);
