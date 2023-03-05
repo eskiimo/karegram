@@ -14,7 +14,7 @@ import UsersList from "@/components/users-list";
 const UserPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [identifiedUser, setIdentifiedUser] = useState([]);
+  const [identifiedUser, setIdentifiedUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -33,6 +33,8 @@ const UserPage = () => {
     let user = await getUserById(router.query.userId);
     if (user.length === 1) {
       setIdentifiedUser(user[0]);
+    } else {
+      setIdentifiedUser(null);
     }
 
     let postsList = await getAllEvents();
@@ -46,7 +48,7 @@ const UserPage = () => {
 
   return (
     <React.Fragment>
-      {!isLoading && identifiedUser.length !== {} ? (
+      {!isLoading && identifiedUser !== null ? (
         <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
           <div className="flex flex-row justify-evenly items-center   h-[25vh]">
             <div className="w-[25%] md:w-[150px] aspect-square  rounded-full bg-black border-2 border-pink-700"></div>
@@ -101,10 +103,12 @@ const UserPage = () => {
           </div>
           <div className="overflow-y-scroll">
             <ModalComp openModal={isOpen} toggle={toggleFollowings}>
-              <UsersList list={listOfUsers} />
+              <UsersList toggle={toggleFollowings} list={listOfUsers} />
             </ModalComp>
           </div>
         </div>
+      ) : identifiedUser === null ? (
+        <h1>no user data 404</h1>
       ) : (
         <h1>loading</h1>
       )}
