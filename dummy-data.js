@@ -127,6 +127,11 @@ export function getFilteredUsers(dateFilter) {
   );
   return filteredUsers;
 }
+export function getUserById(uid) {
+  const identifiedUser = DUMMY_USERS.filter((user) => user.id == uid);
+  // console.log(identifiedUser);
+  return identifiedUser;
+}
 
 export function getFeaturedEvents() {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);

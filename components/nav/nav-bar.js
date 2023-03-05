@@ -44,7 +44,7 @@ function NavBar() {
       </div>
 
       <div className="flex  rounded-full p-1  sm:my-3 items-center	 ">
-        <Link href="/profile" className="text-xl active:font-bold">
+        <Link href="/profile/u1" className="text-xl active:font-bold">
           <div className="flex flex-row items-center">
             <i className="fa-solid text-2xl dark:text-white fa-user"></i>
           </div>

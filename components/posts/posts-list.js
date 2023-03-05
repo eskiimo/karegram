@@ -3,9 +3,12 @@ import Link from "next/link";
 function PostsList(props) {
   return (
     <div className="pt-5 pb-[8vh]">
-      {props.posts.map((post) => {
+      {props.posts.map((post, index) => {
         return (
-          <div className="flex flex-col sm:ml-[15%] w-full sm:w-[55%] md:w-[50%] mb-5  aspect-square	">
+          <div
+            key={index}
+            className="flex flex-col sm:ml-[15%] w-full sm:w-[55%] md:w-[50%] mb-5  aspect-square	"
+          >
             <div className="flex flex-row m-2 ml-1 justify-start items-center	">
               <div className="w-[12%] max-w-[50px] aspect-square mr-2 rounded-full bg-black border-2 border-pink-700"></div>
               <div className="flex flex-col">

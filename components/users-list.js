@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const UsersList = (props) => {
   const { list } = props;
   return (
