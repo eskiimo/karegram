@@ -1,10 +1,10 @@
 const UsersList = (props) => {
   const { list } = props;
   return (
-    <div className="overflow-y-scroll m-5 mr-0">
-      {list.map((user) => {
+    <div className=" m-5 mr-0">
+      {list.map((user, index) => {
         return (
-          <div className="flex flex-row justify-start my-3">
+          <div key={index} className="flex flex-row justify-start my-3">
             <div className="bg-black border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3">
               {/* <img src={user.pp} /> */}
             </div>

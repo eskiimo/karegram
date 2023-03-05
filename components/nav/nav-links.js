@@ -26,6 +26,17 @@ function NavLinks() {
           </div>
         </Link>
       </div>
+      <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
+        <Link href="/search" className="text-xl active:font-bold">
+          <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
+            <i className="fa-solid  text-2xl dark:text-white fa-magnifying-glass"></i>{" "}
+            <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
+              {" "}
+              Search{" "}
+            </h1>
+          </div>
+        </Link>
+      </div>
 
       <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
         <Link href="/create" className="text-xl active:font-bold">

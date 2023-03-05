@@ -64,7 +64,7 @@ const ProfilePage = () => {
       <div className="h-[70vh] w-full justify-center md:w-[90%] mx-auto p-0">
         <ProfileList posts={posts} />
       </div>
-      <div>
+      <div className="overflow-y-scroll">
         <ModalComp openModal={isOpen} toggle={toggleFollowings}>
           <UsersList list={listOfUsers} />
         </ModalComp>

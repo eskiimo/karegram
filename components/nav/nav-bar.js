@@ -20,6 +20,14 @@ function NavBar() {
       </div>
 
       <div className="flex  rounded-full p-1  sm:my-3 items-center	 ">
+        <Link href="/search" className="text-xl active:font-bold">
+          <div className="flex flex-row items-center">
+            <i className="fa-solid  sm:text-lg md:text-2xl dark:text-white fa-magnifying-glass"></i>{" "}
+          </div>
+        </Link>
+      </div>
+
+      <div className="flex  rounded-full p-1  sm:my-3 items-center	 ">
         <Link href="/create" className="text-xl active:font-bold">
           <div className="flex flex-row items-center">
             <i className="fa-solid  sm:text-lg md:text-2xl dark:text-white fa-square-plus"></i>{" "}

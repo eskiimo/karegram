@@ -120,6 +120,13 @@ export function getAllUsers() {
 export function getFollowings() {
   return DUMMY_USERS[0].followings;
 }
+export function getFilteredUsers(dateFilter) {
+  console.log(dateFilter);
+  const filteredUsers = DUMMY_USERS.filter(
+    (user) => user.username === dateFilter
+  );
+  return filteredUsers;
+}
 
 export function getFeaturedEvents() {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);
