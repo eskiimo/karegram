@@ -1,8 +1,30 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
+import { useAuth } from "@/hooks/auth-hook";
 
-export const AuthContext = createContext({
-  isLoggedIn: false,
-  userData: null,
+const AuthContext = createContext({
+  isLoggedIn: true,
+  userId: null,
   login: () => {},
-  logout: () => {},
+  logOut: () => {},
 });
+
+export function AppWrapper({ children }) {
+  const { login, logout, isLoggedIn, userId } = useAuth();
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuthContext() {
+  return useContext(AuthContext);
+}

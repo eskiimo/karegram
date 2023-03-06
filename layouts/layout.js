@@ -1,9 +1,12 @@
 import MainHeader from "./header";
-
+import { useAuthContext } from "@/context/auth.context";
+import { useEffect, useState } from "react";
 const LayOut = (props) => {
+  const auth = useAuthContext();
+
   return (
     <>
-      <MainHeader />
+      {auth.isLoggedIn ? <MainHeader /> : <></>}
       <main>{props.children}</main>
     </>
   );

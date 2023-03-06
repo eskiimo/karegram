@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const ModalComp = (props) => {
-  const { openModal, toggle } = props;
+  const { header, openModal, toggle } = props;
   //   const [close, setClose] = useState(false);
   const closeModal = () => {
     toggle();
@@ -15,7 +15,9 @@ const ModalComp = (props) => {
     >
       <div className="relative top-0 w-full border-b-[1px] h-[60px]">
         <div className="flex flex-row h-full items-center justify-between mx-5">
-          <h1 className="text-2xl font-medium "> Followings</h1>
+          <h1 className="text-2xl font-medium text-black dark:text-white">
+            {header}
+          </h1>
           <button onClick={closeModal}>
             <i className="text-2xl fa-solid fa-xmark"></i>
           </button>
