@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-
 const ModalComp = (props) => {
   const { header, openModal, toggle } = props;
-  //   const [close, setClose] = useState(false);
   const closeModal = () => {
     toggle();
   };

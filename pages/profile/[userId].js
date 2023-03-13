@@ -143,7 +143,9 @@ const UserPage = () => {
           </div>
         </div>
       ) : identifiedUser === null ? (
-        <h1>no user data 404</h1>
+        <div className="flex w-full h-[100vh] justify-center items-center">
+          <h1>no user data 404</h1>
+        </div>
       ) : (
         <h1>loading</h1>
       )}

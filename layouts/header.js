@@ -9,7 +9,7 @@ const MainHeader = () => {
           {" "}
           <NavLinks />
         </div>
-        <div className="flex justify-center align-middle fixed sm:hidden w-full h-[7%] bottom-0 	 dark:text-white border-1 border-t border-gray-700 p-2  z-50 ">
+        <div className="flex justify-center align-middle fixed sm:hidden w-full h-[7%] bottom-0 dark:text-white border-1 border-t border-gray-700 p-2  z-50 ">
           <NavBar />
         </div>
       </header>

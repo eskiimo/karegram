@@ -21,9 +21,9 @@ function NavBar() {
         <button onClick={toggleDarkMode} className="text-xl active:font-bold">
           <div className="flex flex-row items-center">
             {darkMood ? (
-              <i className="fa-solid sm:text-lg md:text-2xl dark:text-white fa-moon"></i>
-            ) : (
               <i className="fa-solid sm:text-lg md:text-2xl dark:text-white fa-lightbulb"></i>
+            ) : (
+              <i className="fa-solid sm:text-lg md:text-2xl dark:text-white fa-moon"></i>
             )}
           </div>
         </button>
