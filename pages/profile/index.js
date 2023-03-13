@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/context/auth.context";
-
+import RegisterPage from "../register";
 import UserPage from "./[userId]";
 
 const ProfilePage = () => {
