@@ -33,10 +33,8 @@ function Home() {
       {!auth.isLoggedIn ? (
         <SpinnerScreen />
       ) : (
-        <div className="h-[100vh] sm:w-[80vw]   flex dark:bg-black justify-end border-l-[1px] dark:border-l-[1px] dark:border-l-gray-400	mr-0 min-w-[300px] overflow-y-scroll z-0">
-          <div className="  dark:bg-black dark:text-white justify-self-end pt-5 ">
-            <PostsList posts={posts} />
-          </div>
+        <div className="h-[100vh] w-[100vw] sm:w-[80vw]  pt-5 justify-self-end flex dark:bg-black dark:text-white justify-end border-l-[1px] dark:border-l-[1px] dark:border-l-gray-400	mr-0 min-w-[300px] overflow-y-scroll z-0">
+          <PostsList posts={posts} />
         </div>
       )}
     </>
