@@ -1,7 +1,13 @@
 import Link from "next/link";
+import { useState } from "react";
 import DropDown from "../UI/dropdown";
 
 function NavLinks() {
+  const [darkMood, setDarkMood] = useState(false);
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle("dark");
+    setDarkMood((prev) => !prev);
+  };
   return (
     <div className="flex flex-row h-[100vh] sm:w-[20vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">
       <div className="flex sm:my-4 sm:pl-5 items-center	 ">
@@ -17,15 +23,18 @@ function NavLinks() {
       </div>
 
       <div className="flex   w-[20vw] sm:my-4 sm:pl-5 items-center	">
-        <Link href="/messeges" className="text-xl active:font-bold">
+        <button onClick={toggleDarkMode} className="text-xl active:font-bold">
           <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
-            <i className="fa-solid text-2xl dark:text-white fa-envelope"></i>
+            {darkMood ? (
+              <i className="fa-solid sm:text-xl md:text-2xl dark:text-white fa-lightbulb"></i>
+            ) : (
+              <i className="fa-solid sm:text-xl md:text-2xl dark:text-white fa-moon"></i>
+            )}
             <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
-              {" "}
-              Messages{" "}
+              {darkMood ? "Light" : "Night"}
             </h1>
           </div>
-        </Link>
+        </button>
       </div>
       <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
         <Link href="/search" className="text-xl active:font-bold">

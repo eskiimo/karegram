@@ -76,7 +76,7 @@ const DUMMY_USERS = [
     username: "@__eskiimo",
     name: "kareem kamal",
     bio: "All Day I Dream ",
-    pp: "",
+    avatar: "/images/avi.jpg",
     followings: [
       {
         id: "u2",
@@ -107,7 +107,7 @@ const DUMMY_USERS = [
     username: "@komey",
     name: "Ahmad khattab",
     bio: " bas ya mohaza2 ",
-    pp: "",
+    avatar: "",
     followings: "300",
     followers: "450",
     posts: [],

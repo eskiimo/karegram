@@ -15,7 +15,7 @@ const CreatePost = () => {
 
   return (
     <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col items-center">
-      <h1 className="text-[50px] m-5 w-full">Search</h1>
+      <h1 className="text-[50px]  w-full pl-5">Search</h1>
       <form className="m-5 w-8/12 flex justify-center" onSubmit={handleSearch}>
         <div className="w-full flex flex-row">
           <label htmlFor="name"></label>

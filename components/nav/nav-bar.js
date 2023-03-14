@@ -57,6 +57,11 @@ function NavBar() {
         <Link href="/profile/u1" className="text-xl active:font-bold">
           <div className="flex flex-row items-center">
             <i className="fa-solid sm:text-xl md:text-2xl dark:text-white fa-user"></i>
+            {/* <img
+              alt="avatar"
+              src={identifiedUser.avatar}
+              className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
+            /> */}
           </div>
         </Link>
       </div>
