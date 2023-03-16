@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useState } from "react";
-import DropDown from "../UI/dropdown";
 
 function NavLinks() {
   const [darkMood, setDarkMood] = useState(false);

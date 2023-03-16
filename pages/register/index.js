@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/context/auth.context";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 const RegisterPage = () => {
@@ -7,9 +7,10 @@ const RegisterPage = () => {
   const passwordRef = useRef();
   const auth = useAuthContext();
   const router = useRouter();
+  const [islogin, setIsLogin] = useState(true);
 
   const switchMode = () => {
-    console.log("switch");
+    setIsLogin((prev) => !prev);
   };
   const handleReg = (e) => {
     e.preventDefault();
@@ -24,9 +25,18 @@ const RegisterPage = () => {
   const logout = () => {
     auth.logout();
   };
-  const getdata = () => {
-    console.log(JSON.parse(localStorage.getItem("userData")));
+  const getLocalUser = () => {
+    const storedUser = JSON.parse(localStorage.getItem("userData")).user;
+    if (storedUser && storedUser !== null) {
+      auth.login(storedUser);
+      router.push("/");
+    } else {
+      return "no user";
+    }
   };
+  useEffect(() => {
+    getLocalUser();
+  }, []);
   return (
     <div className="w-full h-[100vh]   flex flex-col justify-evenly dark:bg-black dark:text-white">
       <div className="flex  justify-center">

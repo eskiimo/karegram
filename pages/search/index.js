@@ -26,10 +26,7 @@ const CreatePost = () => {
             placeholder="search"
             className="text-black px-3 py-1 w-full"
           ></input>
-          <button
-            type="submit"
-            className=" py-2 px-5 border-white border-[1px]"
-          >
+          <button type="submit" className="py-2 px-5 border-white border-[1px]">
             <i className="text-2xl fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
