@@ -22,11 +22,13 @@ const RegisterPage = () => {
     auth.login(user);
     router.push("/");
   };
-  const logout = () => {
-    auth.logout();
-  };
-  const getLocalUser = () => {
-    const storedUser = JSON.parse(localStorage.getItem("userData")).user;
+  // const logout = () => {
+  //   auth.logout();
+  // };
+  const getLocalUser = async () => {
+    const storedUser = await JSON.parse(localStorage.getItem("userData"));
+
+    console.log("getting local data ", storedUser);
     if (storedUser && storedUser !== null) {
       auth.login(storedUser);
       router.push("/");

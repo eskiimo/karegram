@@ -8,7 +8,6 @@ export const useAuth = () => {
     setIsLoggedIn(true);
     setUser(user);
 
-    console.log("hook user " + user);
     localStorage.setItem(
       "userData",
       JSON.stringify({
@@ -21,17 +20,16 @@ export const useAuth = () => {
     setUser(null);
     setIsLoggedIn(false);
 
-    console.log("hook log out " + isLoggedIn);
     localStorage.removeItem("userData");
   }, []);
 
-  // useEffect(() => {
-  //   const storedData = JSON.parse(localStorage.getItem("userData"));
-  //   if (storedData) {
-  //     login(storedData.user);
-  //   } else {
-  //     setIsLoggedIn(false);
-  //   }
-  // }, [login]);
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
+    if (storedData) {
+      login(storedData.user);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [login]);
   return { user, isLoggedIn, login, logout };
 };
