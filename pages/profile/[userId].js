@@ -113,12 +113,7 @@ const UserPage = () => {
               {identifiedUser.followings.length} followings{" "}
             </button>
           </div>
-          <div className="flex flex-row sm:hidden px-10 py-2  border-b-2  justify-between">
-            {/* link to list of certain users */}
-            <i className="text-blue-700 text-lg fa-solid fa-table-cells"></i>
-            <i className="text-lg fa-solid fa-table-cells"></i>
-            <i className="text-lg fa-solid fa-table-cells"></i>
-          </div>
+
           <div className="h-[70vh] w-full justify-center md:w-[90%] mx-auto p-0">
             <ProfileList posts={identifiedUser.posts} />
           </div>
