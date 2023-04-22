@@ -16,7 +16,7 @@ function Home() {
   //   console.log("index pdage ");
   //   if (!auth.isLoggedIn) {
   //     setTimeout(router.push("/register"), 5000);
- 
+
   // }, []);
 
   useEffect(() => {
