@@ -19,6 +19,7 @@ const ImageUpload = (props) => {
 
   const pickImageHandler = () => {
     filePickerRef.current.click();
+    console.log(previewUrl);
   };
   const pickedHandler = (event) => {
     let pickedFile;
@@ -38,9 +39,16 @@ const ImageUpload = (props) => {
   };
   const clearFile = () => {
     setFile(null);
+    setPrewiew(null);
+    setIsValid(false);
   };
   return (
-    <div className="">
+    <div className="h-full w-full aspect-square">
+      <div className="h-[50px] flex justify-end rounded-t-md border-[1px]">
+        <button onClick={clearFile} className="">
+          <i className="text-xl m-3 fa-regular fa-circle-xmark"></i>
+        </button>
+      </div>
       <input
         type="file"
         ref={filePickerRef}
@@ -49,7 +57,7 @@ const ImageUpload = (props) => {
         accept=".jpg,.png,.jpeg"
         onChange={pickedHandler}
       />
-      <div className="">
+      <div className="h-full">
         {file ? (
           <>
             <div className="max-h-[50vh] flex justify-center">
@@ -62,14 +70,13 @@ const ImageUpload = (props) => {
               )}
               {!previewUrl && <p>please pick an image</p>}
             </div>
-            <button onClick={clearFile} className="m-3 p-3 border">
-              CANCEL
-            </button>
           </>
         ) : (
-          <button className="" type="button" onClick={pickImageHandler}>
-            PICK IMAGE
-          </button>
+          <div className="h-[100%] flex justify-center items-center">
+            <button onClick={pickImageHandler}>
+              <i className="text-3xl fa-solid fa-file-import"></i>
+            </button>
+          </div>
         )}
         {!isValid && <p>{props.errorText}</p>}
       </div>

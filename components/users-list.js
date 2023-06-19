@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const UsersList = (props) => {
   const { list, toggle } = props;
   const router = useRouter();
+  // useEffect(() => {
+  //   console.log(props);
+  // });
   return (
     <div className=" m-5 mr-0">
       {list.map((user, index) => {

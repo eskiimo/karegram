@@ -83,7 +83,7 @@ const DUMMY_USERS = [
         username: "@komey",
         name: "Ahmad khattab",
         bio: " bas ya mohaza2 ",
-        pp: "",
+        avatar: "",
         followings: "300",
         followers: "450",
         posts: [],
@@ -93,20 +93,62 @@ const DUMMY_USERS = [
         username: "@khalil",
         name: "Amr khalil",
         bio: " premium",
-        pp: "",
+        avatar: "",
         followings: "300",
         followers: "450",
         posts: [],
       },
     ],
-    followers: "450",
-    posts: [],
+    followers: [
+      {
+        id: "u2",
+        username: "@komey",
+        name: "Ahmad khattab",
+        bio: " bas ya mohaza2 ",
+        avatar: "",
+        followings: "300",
+        followers: "450",
+        posts: [],
+      },
+    ],
+    posts: [
+      {
+        id: "e1",
+        title: "Programming for everyone",
+        description:
+          "Everyone can learn to code! Yes, everyone! In this live event, we are going to go through all the key basics and get you started with programming as well.",
+        location: "Somestreet 25, 12345 San Somewhereo",
+        date: "2021-05-12",
+        image: "images/pic1.jpg",
+        isFeatured: false,
+      },
+      {
+        id: "e2",
+        title: "Networking for introverts",
+        description:
+          "We know: Networking is no fun if you are an introvert person. That's why we came up with this event - it'll be so much easier. Promised!",
+        location: "New Wall Street 5, 98765 New Work",
+        date: "2021-05-30",
+        image: "images/pic2.jpg",
+        isFeatured: true,
+      },
+    ],
   },
   {
     id: "u2",
     username: "@komey",
     name: "Ahmad khattab",
     bio: " bas ya mohaza2 ",
+    avatar: "",
+    followings: "300",
+    followers: "450",
+    posts: [],
+  },
+  {
+    id: "u3",
+    username: "@khalil",
+    name: "Amr khalil",
+    bio: " premium",
     avatar: "",
     followings: "300",
     followers: "450",
@@ -119,6 +161,9 @@ export function getAllUsers() {
 }
 export function getFollowings() {
   return DUMMY_USERS[0].followings;
+}
+export function getFollowers() {
+  return DUMMY_USERS[0].followers;
 }
 export function getFilteredUsers(dateFilter) {
   console.log(dateFilter);

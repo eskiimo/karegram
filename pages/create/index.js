@@ -25,21 +25,21 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full dark:bg-black  min-h-[100vh] mb-[30px] sm:w-[75vw]  flex justify-center">
-      <div className="w-full md:w-7/12 h-full  p-3 flex flex-col ">
-        <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
-          <div className="w-[90%] my-3 mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center ">
+    <div className="w-full dark:bg-black bg-slate-100  min-h-[100vh] mb-[30px] sm:w-[75vw]  flex justify-center">
+      <div className="h-fit pb-3 shadow-2xl md:w-7/12 rounded-md  m-10 flex flex-col">
+        <form className="flex flex-col justify-between" onSubmit={handleSubmit}>
+          <div className="w-full h-[50vh]  mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center ">
             <ImageUpload onInput={handleImage} />
           </div>
           <input
-            className="w-[90%] p-3 my-3 mx-auto border dark:bg-black dark:text-white"
+            className="w-full p-3 my-3 mx-auto border dark:bg-black dark:text-white"
             type="text"
             ref={captionRef}
             placeholder="write a caption..."
           ></input>
           {!isLoading ? (
             <button
-              className=" py-3 my-3 mx-auto w-[90%] max-w-[400px] m-auto rounded-lg  bg-blue-500 text-white "
+              className=" py-2 my-2 mx-auto w-[50%] max-w-[400px]  rounded-lg  bg-blue-500 text-white "
               type="submit"
             >
               POST

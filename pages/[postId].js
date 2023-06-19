@@ -6,7 +6,11 @@ const PostDetails = () => {
   const pid = router.query.postId;
   const post = getEventById(pid);
   if (!post) {
-    return <>404</>;
+    return (
+      <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
+        404
+      </div>
+    );
   }
   return (
     <>

@@ -62,7 +62,7 @@ const RegisterPage = () => {
           placeholder="password"
           id="password"
           ref={passwordRef}
-          type="text"
+          type="password"
         />
         <button
           className="px-3 py-1 sm:w-5/12 max-w-[400px] m-5 rounded-lg w-8/12 bg-blue-500 text-white "
@@ -82,8 +82,6 @@ const RegisterPage = () => {
           </button>
         </h1>
       </div>
-      {/* <button onClick={logout}>logout</button>
-      <button onClick={getdata}>show data</button> */}
     </div>
   );
 };
