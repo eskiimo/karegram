@@ -12,12 +12,12 @@ function Home() {
   const auth = useAuthContext();
   const posts = getAllEvents();
 
-  // useEffect(() => {
-  //   console.log("index pdage ");
-  //   if (!auth.isLoggedIn) {
-  //     setTimeout(router.push("/register"), 5000);
-
-  // }, []);
+  useEffect(() => {
+    console.log("index pdage , is logged in :", auth.isLoggedIn);
+    if (!auth.isLoggedIn) {
+      setTimeout(router.push("/register"), 5000);
+    }
+  });
 
   useEffect(() => {
     if (!auth.isLoggedIn) {

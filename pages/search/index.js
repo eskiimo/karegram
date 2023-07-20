@@ -25,6 +25,7 @@ const CreatePost = () => {
             type="text"
             placeholder="search"
             className="text-black px-3 py-1 w-full"
+            onChange={handleSearch}
           ></input>
           <button type="submit" className="py-2 px-5 border-white border-[1px]">
             <i className="text-2xl fa-solid fa-magnifying-glass"></i>

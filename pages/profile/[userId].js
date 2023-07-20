@@ -69,6 +69,8 @@ const UserPage = (props) => {
     if (props.user) {
       getData();
     }
+    let currentId = localStorage.getItem("userData");
+    console.log("current :", currentId);
   }, [identifiedUser]);
 
   if (!props.user) {
@@ -92,9 +94,11 @@ const UserPage = (props) => {
                 <div className="flex flex-row justify-start items-center">
                   {" "}
                   <h3 className="mr-10">{identifiedUser.username}</h3>{" "}
-                  <button onClick={toggleSettings}>
-                    <i className="fa-solid fa-gear"></i>{" "}
-                  </button>
+                  {identifiedUser.id === "u1" ? (
+                    <button onClick={toggleSettings}>
+                      <i className="fa-solid fa-gear"></i>{" "}
+                    </button>
+                  ) : null}
                 </div>
                 <div className="hidden sm:flex sm:flex-row md:m-2 justify-between">
                   <h1>{identifiedUser.posts.length} posts </h1>

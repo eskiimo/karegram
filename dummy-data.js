@@ -167,8 +167,8 @@ export function getFollowers() {
 }
 export function getFilteredUsers(dateFilter) {
   console.log(dateFilter);
-  const filteredUsers = DUMMY_USERS.filter(
-    (user) => user.username === dateFilter
+  const filteredUsers = DUMMY_USERS.filter((user) =>
+    user.username.includes(dateFilter)
   );
   return filteredUsers;
 }
