@@ -1,6 +1,6 @@
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const UsersList = (props) => {
   const { list, toggle } = props;

@@ -71,7 +71,7 @@ const UserPage = (props) => {
     }
     let currentId = localStorage.getItem("userData");
     console.log("current :", currentId);
-  }, [identifiedUser]);
+  }, []);
 
   if (!props.user) {
     return (
@@ -177,14 +177,17 @@ export async function getStaticProps(context) {
     props: {
       user: user,
     },
+    revalidate: 30,
   };
 }
+
 export async function getStaticPaths() {
   const users = await getAllUsers();
   const paths = users.map((u) => ({ params: { userId: u.id } }));
   return {
     paths: paths,
-    fallback: false,
+    // fallback: false,
+    fallback: "blocking",
   };
 }
 
