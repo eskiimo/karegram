@@ -1,7 +1,7 @@
 import PostsList from "../components/posts/posts-list";
 import { getAllEvents } from "@/dummy-data";
 import { useAuthContext } from "@/context/auth.context";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import SpinnerScreen from "@/components/UI/spinnerScreen";
 
@@ -10,22 +10,14 @@ function Home(props) {
 
   const router = useRouter();
   const auth = useAuthContext();
+  let isLog = auth.isLoggedIn;
 
   useEffect(() => {
-    console.log("index pdage , is logged in :", auth.isLoggedIn);
-    if (!auth.isLoggedIn) {
-      setTimeout(router.push("/register"), 5000);
+    console.log("index pdage , is logged in :", isLog);
+    if (!isLog) {
+      router.push("/register");
     }
-  }, []);
-
-  useEffect(() => {
-    if (!auth.isLoggedIn) {
-      const timer = setTimeout(() => {
-        router.push("/register");
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+  }, [isLog]);
 
   return (
     <>

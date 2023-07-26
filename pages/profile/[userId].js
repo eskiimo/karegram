@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  getAllEvents,
   getUserById,
   getAllUsers,
   getFollowings,
@@ -49,22 +48,17 @@ const UserPage = (props) => {
     setChild("settings");
   };
 
-  /// make it SSG by getStaticProps from api
-  // const getData = async () => {
-  //   let postsList = await getAllEvents();
-  //   setPosts(postsList);
-  //   setIsLoading(false);
-  // };
   const handleLogOut = () => {
     auth.logout();
     router.push("/register");
     console.log("log out button " + auth.isLoggedIn);
   };
 
-  // let currentId = localStorage.getItem("userData");
-  // console.log("current :", currentId);
+  useEffect(() => {
+    console.log("identifiedUser: ", identifiedUser);
+  }, [identifiedUser]);
 
-  if (!props.user || !auth.isLoggedIn) {
+  if (!auth.isLoggedIn) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
         404
