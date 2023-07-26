@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  getUserById,
-  getAllUsers,
-  getFollowings,
-  getFollowers,
-} from "@/dummy-data";
+import { getUserById, getAllUsers } from "@/dummy-data";
 import { useRouter } from "next/router";
 
 import ProfileList from "@/components/posts/profile-list";
@@ -15,15 +10,15 @@ import { useAuthContext } from "@/context/auth.context";
 const UserPage = (props) => {
   const router = useRouter();
 
-  const identifiedUser = props.user[0];
-  if (!identifiedUser) {
+  if (!props.user[0]) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
         404
       </div>
     );
   }
-  // const [isLoading, setIsLoading] = useState(true);
+
+  let identifiedUser = props.user[0];
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -33,13 +28,13 @@ const UserPage = (props) => {
     setIsOpen((prev) => !prev);
   };
   const toggleFollowings = () => {
-    setListOfUsers(getFollowings());
+    setListOfUsers(identifiedUser.followings);
     toggleModal();
     setChild("followings");
   };
 
   const toggleFollowers = () => {
-    setListOfUsers(getFollowers());
+    setListOfUsers(identifiedUser.followers);
     toggleModal();
     setChild("followers");
   };
@@ -156,7 +151,6 @@ const UserPage = (props) => {
 export async function getStaticProps(context) {
   const userId = context.params.userId;
   const user = await getUserById(userId);
-  console.log("hello:", user[0].posts);
   return {
     props: {
       user: user,

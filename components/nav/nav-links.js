@@ -1,12 +1,23 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function NavLinks() {
   const [darkMood, setDarkMood] = useState(false);
+  const [profile, setProfile] = useState("");
   const toggleDarkMode = () => {
     document.documentElement.classList.toggle("dark");
     setDarkMood((prev) => !prev);
   };
+
+  const getLocalUser = async () => {
+    let storedUser = await JSON.parse(localStorage.getItem("userData"));
+    setProfile(storedUser.id);
+    console.log("idddddddddd:", profile);
+  };
+  useEffect(() => {
+    getLocalUser();
+  }, []);
+
   return (
     <div className="flex flex-row h-[100vh] sm:w-[20vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">
       <h1 className="text-3xl m-3 mb-10">Instagram</h1>
@@ -74,7 +85,7 @@ function NavLinks() {
       </div>
 
       <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
-        <Link href="/profile/u1" className="text-xl active:font-bold">
+        <Link href={`/profile/${profile}`} className="text-xl active:font-bold">
           <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
             <i className="fa-solid text-2xl dark:text-white fa-user"></i>
             <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">

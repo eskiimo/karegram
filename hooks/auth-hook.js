@@ -12,6 +12,9 @@ export const useAuth = () => {
       "userData",
       JSON.stringify({
         user: user,
+        // temp until backend is done
+        id: "u1",
+        //
       })
     );
   }, []);

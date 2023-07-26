@@ -1,7 +1,7 @@
 import PostsList from "../components/posts/posts-list";
 import { getAllEvents } from "@/dummy-data";
 import { useAuthContext } from "@/context/auth.context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import SpinnerScreen from "@/components/UI/spinnerScreen";
 
@@ -15,7 +15,16 @@ function Home(props) {
   useEffect(() => {
     console.log("index pdage , is logged in :", isLog);
     if (!isLog) {
-      router.push("/register");
+      setTimeout(router.push("/register"), 5000);
+    }
+  }, [isLog]);
+
+  useEffect(() => {
+    if (!isLog) {
+      const timer = setTimeout(() => {
+        router.push("/register");
+      }, 1000);
+      return () => clearTimeout(timer);
     }
   }, [isLog]);
 
