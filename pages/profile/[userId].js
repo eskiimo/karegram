@@ -17,7 +17,6 @@ const UserPage = (props) => {
   const router = useRouter();
 
   const identifiedUser = props.user[0];
-
   if (!identifiedUser) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
@@ -25,8 +24,7 @@ const UserPage = (props) => {
       </div>
     );
   }
-  const [isLoading, setIsLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -52,28 +50,21 @@ const UserPage = (props) => {
   };
 
   /// make it SSG by getStaticProps from api
-  const getData = async () => {
-    let postsList = await getAllEvents();
-    setPosts(postsList);
-    setIsLoading(false);
-  };
+  // const getData = async () => {
+  //   let postsList = await getAllEvents();
+  //   setPosts(postsList);
+  //   setIsLoading(false);
+  // };
   const handleLogOut = () => {
     auth.logout();
     router.push("/register");
     console.log("log out button " + auth.isLoggedIn);
   };
-  useEffect(() => {
-    if (!auth.isLoggedIn) {
-      router.push("/register");
-    }
-    if (props.user) {
-      getData();
-    }
-    let currentId = localStorage.getItem("userData");
-    console.log("current :", currentId);
-  }, []);
 
-  if (!props.user) {
+  // let currentId = localStorage.getItem("userData");
+  // console.log("current :", currentId);
+
+  if (!props.user || !auth.isLoggedIn) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
         404
@@ -82,7 +73,7 @@ const UserPage = (props) => {
   } else {
     return (
       <React.Fragment>
-        {!isLoading && identifiedUser !== null ? (
+        {identifiedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
             <div className="flex flex-row justify-evenly items-center   h-[25vh]">
               <img
@@ -158,12 +149,10 @@ const UserPage = (props) => {
               </ModalComp>
             </div>
           </div>
-        ) : identifiedUser === null ? (
+        ) : (
           <div className="flex w-full h-[100vh] justify-center items-center">
             <h1>no user data 404</h1>
           </div>
-        ) : (
-          <h1>loading</h1>
         )}
       </React.Fragment>
     );
@@ -173,6 +162,7 @@ const UserPage = (props) => {
 export async function getStaticProps(context) {
   const userId = context.params.userId;
   const user = await getUserById(userId);
+  console.log("hello:", user[0].posts);
   return {
     props: {
       user: user,
