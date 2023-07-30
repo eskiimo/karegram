@@ -19,8 +19,8 @@ function NavLinks() {
   }, []);
 
   return (
-    <div className="flex flex-row h-[100vh] sm:w-[20vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">
-      <h1 className="text-3xl m-3 mb-10">Instagram</h1>
+    <div className="flex flex-row h-[100vh] sm:w-[25vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">
+      <h1 className="text-xl md:text-3xl font-sigmar m-3 mb-10">KareGram</h1>
 
       <div className="flex sm:my-4 sm:pl-5 items-center	 ">
         <Link href="/" className="text-xl active:font-bold">

@@ -4,8 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>KareGram</title>
-        <meta name="description" content="instagram clone mady by @__eskiimo" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -13,6 +11,21 @@ export default function Document() {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+          rel="stylesheet"
+        />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Pacifico&family=Sigmar+One&display=swap"
+          rel="stylesheet"
+        />
+
         <script
           src="https://kit.fontawesome.com/14646abff4.js"
           crossOrigin="anonymous"

@@ -10,7 +10,12 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        pasifico: ["Pacifico"],
+        sigmar: ["Sigmar One"],
+      },
+    },
   },
   plugins: [],
 };
