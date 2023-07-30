@@ -6,6 +6,7 @@ import ProfileList from "@/components/posts/profile-list";
 import ModalComp from "@/components/UI/Modal";
 import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
+import Head from "next/head";
 
 const UserPage = (props) => {
   const router = useRouter();
@@ -62,6 +63,12 @@ const UserPage = (props) => {
   } else {
     return (
       <React.Fragment>
+        <Head>
+          <meta
+            name="description"
+            content={`karegram user ${identifiedUser.username}`}
+          />
+        </Head>
         {identifiedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
             <div className="flex flex-row justify-evenly items-center   h-[25vh]">

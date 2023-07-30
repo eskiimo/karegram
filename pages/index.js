@@ -14,18 +14,6 @@ function Home(props) {
 
   useEffect(() => {
     console.log("index pdage , is logged in :", isLog);
-    if (!isLog) {
-      setTimeout(router.push("/register"), 5000);
-    }
-  }, [isLog]);
-
-  useEffect(() => {
-    if (!isLog) {
-      const timer = setTimeout(() => {
-        router.push("/register");
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
   }, [isLog]);
 
   return (
