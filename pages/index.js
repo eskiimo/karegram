@@ -15,6 +15,7 @@ function Home(props) {
 
   useEffect(() => {
     console.log("index pdage , is logged in :", isLog);
+    if (!isLog) router.push("/register");
   }, [isLog]);
 
   return (
