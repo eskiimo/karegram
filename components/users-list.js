@@ -1,4 +1,5 @@
 // import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 // import { useEffect } from "react";
 
@@ -14,7 +15,9 @@ const UsersList = (props) => {
         return (
           <div key={index} className="flex flex-row justify-start my-3">
             <div className="bg-black border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3">
-              <img
+              <Image
+                width={100}
+                height={100}
                 alt="avatar"
                 src={user.avatar}
                 className=" border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3"

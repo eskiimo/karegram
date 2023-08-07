@@ -32,6 +32,7 @@ export default function Document() {
         ></script>
       </Head>
       <body>
+        <div id="overlays" />
         <Main />
         <NextScript />
       </body>

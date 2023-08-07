@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 function ProfileList(props) {
   return (
     <div className="flex flex-wrap justify-start">
@@ -9,10 +11,12 @@ function ProfileList(props) {
         props.posts.map((post, index) => {
           return (
             <div key={index} className="flex  w-[31%]  aspect-square m-1	">
-              <img
-                className="object-cover"
+              <Image
+                className="w-full object-cover"
                 src={"/" + post.image}
                 alt={post.title}
+                width={200}
+                height={200}
               />
             </div>
           );

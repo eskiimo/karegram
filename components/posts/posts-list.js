@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 function PostsList(props) {
@@ -18,7 +19,14 @@ function PostsList(props) {
                 </p>
               </div>
             </div>
-            <img src={"/" + post.image} alt={post.title} />
+            <Image
+              className="w-[100vw]"
+              src={"/" + post.image}
+              alt={post.title}
+              width={400}
+              height={400}
+            />
+
             <div className="flex flex-row justify-start mx-2">
               <i className="text-xl mt-3 mr-5 ml-1 fa-regular fa-heart"></i>
               <i className="text-xl mt-3 mr-5 fa-regular fa-comment"></i>

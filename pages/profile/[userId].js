@@ -7,6 +7,7 @@ import ModalComp from "@/components/UI/Modal";
 import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
 import Head from "next/head";
+import Image from "next/image";
 
 const UserPage = (props) => {
   const router = useRouter();
@@ -72,7 +73,9 @@ const UserPage = (props) => {
         {identifiedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
             <div className="flex flex-row justify-evenly items-center   h-[25vh]">
-              <img
+              <Image
+                width={200}
+                height={200}
                 alt="avatar"
                 src={identifiedUser.avatar}
                 className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"

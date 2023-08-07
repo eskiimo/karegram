@@ -165,12 +165,15 @@ export function getFollowings() {
 export function getFollowers() {
   return DUMMY_USERS[0].followers;
 }
-export function getFilteredUsers(dateFilter) {
-  console.log(dateFilter);
-  const filteredUsers = DUMMY_USERS.filter((user) =>
-    user.username.includes(dateFilter)
-  );
-  return filteredUsers;
+export function getFilteredUsers(dataFilter) {
+  console.log(dataFilter);
+  if (dataFilter !== "") {
+    const filteredUsers = DUMMY_USERS.filter((user) =>
+      user.username.includes(dataFilter)
+    );
+    return filteredUsers;
+  }
+  return [];
 }
 export function getUserById(uid) {
   const identifiedUser = DUMMY_USERS.filter((user) => user.id == uid);
