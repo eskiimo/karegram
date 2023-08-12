@@ -1,5 +1,6 @@
 const login = async (req, res) => {
-  console.log(req.body);
+  const { username, password } = req.body;
+  console.log(username, password);
   res.status(200).json({ users: "users" });
 };
 

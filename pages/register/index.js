@@ -63,7 +63,7 @@ const RegisterPage = () => {
     <div className="w-full h-[100vh]   flex flex-col justify-evenly dark:bg-black dark:text-white">
       <div className="flex  justify-center">
         {" "}
-        <h1 className="text-2xl">INSTAGRAM-CLONE</h1>
+        <h1 className="text-4xl font-sigmar ">KareGram</h1>
       </div>
       <form
         className=" flex flex-col justify-center items-center py-5 m-3"
