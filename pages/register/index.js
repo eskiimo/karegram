@@ -1,6 +1,7 @@
 import { useAuthContext } from "@/context/auth.context";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { useHttpClient } from "@/hooks/http-hook";
 
 const RegisterPage = () => {
   const usernameRef = useRef();
@@ -8,6 +9,8 @@ const RegisterPage = () => {
   const auth = useAuthContext();
   const router = useRouter();
   const [islogin, setIsLogin] = useState(true);
+
+  const { isloading, error, sendRequest, clearError } = useHttpClient();
 
   const switchMode = () => {
     setIsLogin((prev) => !prev);
@@ -19,9 +22,26 @@ const RegisterPage = () => {
       password: passwordRef.current.value,
     };
     console.log(user);
-    auth.login(user);
-    router.push("/");
+    loginRequest(user);
+    // auth.login(user);
+    // router.push("/");
   };
+  ///////////////////////////////////////////////
+  const loginRequest = async (input) => {
+    // let body = JSON.stringify({
+    //   username: input.username,
+    //   password: input.password,
+    // });
+    sendRequest(
+      "/api/users",
+      "POST",
+      JSON.stringify({
+        username: input.username,
+        password: input.password,
+      })
+    );
+  };
+
   // const logout = () => {
   //   auth.logout();
   // };
