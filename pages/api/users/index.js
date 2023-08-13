@@ -1,7 +1,1 @@
-const login = async (req, res) => {
-  const { username, password } = req.body;
-  console.log(username, password);
-  res.status(200).json({ users: "users" });
-};
-
-export default login;
+// mongodb+srv://kareem:highspeedlowdrag@cluster0.risomee.mongodb.net/karegram?retryWrites=true&w=majority

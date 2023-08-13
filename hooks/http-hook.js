@@ -6,37 +6,37 @@ export const useHttpClient = () => {
 
   const activeHttpRequests = useRef([]);
 
-  const sendRequest = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
-      setIsLoading(true);
-      const httpAbortCtrl = new AbortController();
-      activeHttpRequests.current.push(httpAbortCtrl);
-      try {
-        const response = await fetch(url, {
-          method,
-          body,
-          headers,
-          signal: httpAbortCtrl.signal,
-        });
-        const responseData = await response.json();
-        console.log(responseData);
+  const sendRequest = useCallback(async (url, method = "GET", body = null) => {
+    setIsLoading(true);
+    const httpAbortCtrl = new AbortController();
+    activeHttpRequests.current.push(httpAbortCtrl);
+    try {
+      const response = await fetch(url, {
+        method,
+        body,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        signal: httpAbortCtrl.signal,
+      });
+      const responseData = await response.json();
+      console.log(responseData);
 
-        activeHttpRequests.current = activeHttpRequests.current.filter(
-          (reqCtrl) => reqCtrl !== httpAbortCtrl
-        );
-        if (!response.ok) {
-          throw new Error("response not ok ");
-        }
-        setIsLoading(false);
-        return responseData;
-      } catch (e) {
-        setError(e.message);
-        setIsLoading(false);
-        throw new Error(e.message || "response not ok ");
+      activeHttpRequests.current = activeHttpRequests.current.filter(
+        (reqCtrl) => reqCtrl !== httpAbortCtrl
+      );
+      if (!response.ok) {
+        throw new Error("response not ok ");
       }
-    },
-    []
-  );
+      setIsLoading(false);
+      return responseData;
+    } catch (e) {
+      setError(e.message);
+      setIsLoading(false);
+      console.log(e.message);
+    }
+  }, []);
 
   const clearError = () => {
     setError(null);

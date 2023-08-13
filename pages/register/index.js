@@ -2,6 +2,9 @@ import { useAuthContext } from "@/context/auth.context";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useHttpClient } from "@/hooks/http-hook";
+import { headers } from "@/next.config";
+import SpinnerScreen from "@/components/UI/spinnerScreen";
+import Spinner from "@/components/UI/spinner";
 
 const RegisterPage = () => {
   const usernameRef = useRef();
@@ -28,12 +31,10 @@ const RegisterPage = () => {
   };
   ///////////////////////////////////////////////
   const loginRequest = async (input) => {
-    // let body = JSON.stringify({
-    //   username: input.username,
-    //   password: input.password,
-    // });
+    clearError();
+    console.log(input);
     sendRequest(
-      "/api/users",
+      "/api/users/login",
       "POST",
       JSON.stringify({
         username: input.username,
@@ -84,13 +85,17 @@ const RegisterPage = () => {
           ref={passwordRef}
           type="password"
         />
-        <button
-          className="px-3 py-1 sm:w-5/12 max-w-[400px] m-5 rounded-lg w-8/12 bg-blue-500 text-white "
-          type="submit"
-        >
-          {" "}
-          login
-        </button>
+        {isloading ? (
+          <Spinner />
+        ) : (
+          <button
+            className="px-3 py-1 sm:w-5/12 max-w-[400px] m-5 rounded-lg w-8/12 bg-blue-500 text-white "
+            type="submit"
+          >
+            {" "}
+            login
+          </button>
+        )}
       </form>
       <div className="flex justify-center">
         <h1>
