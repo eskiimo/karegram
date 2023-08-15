@@ -1,8 +1,12 @@
 import { MongoClient } from "mongodb";
 
-const login = async (req, res) => {
+const signup = async (req, res) => {
+  console.log("registeringggg");
+  console.log(req.body);
+  const fullname = req.body.fullname;
   const username = req.body.username;
   const password = req.body.password;
+  const repass = req.body.repass;
 
   const url =
     "mongodb+srv://kareem:highspeedlowdrag@cluster0.risomee.mongodb.net/karegram?retryWrites=true&w=majority";
@@ -19,18 +23,20 @@ const login = async (req, res) => {
     console.log("e");
   }
 
-  if (!hasUser) {
-    console.error("user does not exist");
-    res.json({ msg: "try signing up instead" });
+  if (hasUser) {
+    console.error("user already exists");
+    res.json({ msg: "try another username" });
   } else {
-    if (hasUser.password === password) {
-      res.status(200).json({ token: "token", user: hasUser });
-    } else {
-      res
-        .status(403)
-        .json({ msg: "Could not log in, please check your password" });
-    }
+    let newUser = {
+      fullname,
+      username,
+      password,
+      repass,
+    };
+    let result = await db.collection("users").insertOne(newUser);
+    console.log(result);
+    res.json({ msg: "new user created", user: newUser });
   }
 };
 
-export default login;
+export default signup;
