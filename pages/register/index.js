@@ -103,6 +103,7 @@ const RegisterPage = () => {
       auth.login(storedUser);
       router.push("/");
     } else {
+      auth.logout();
       return "no user";
     }
   };

@@ -53,6 +53,7 @@ const UserPage = (props) => {
 
   useEffect(() => {
     if (!auth.isLoggedIn || !identifiedUser._id) {
+      auth.logOut();
       router.push("/register");
     }
   }, []);
