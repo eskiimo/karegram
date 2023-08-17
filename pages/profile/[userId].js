@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getUserById, getAllUsers } from "@/dummy-data";
+import { getAllUsers } from "@/dummy-data";
+import getUserById from "../api/users/[id]";
 import { useRouter } from "next/router";
 
 import ProfileList from "@/components/posts/profile-list";
@@ -8,8 +9,10 @@ import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
 import Head from "next/head";
 import Image from "next/image";
+import { useHttpClient } from "@/hooks/http-hook";
 
 const UserPage = (props) => {
+  const { isloading, sendRequest, error, clearError } = useHttpClient();
   const router = useRouter();
 
   if (!props.user[0]) {
@@ -52,8 +55,11 @@ const UserPage = (props) => {
   };
 
   useEffect(() => {
+    if (!auth.isLoggedIn) {
+      router.push("/register");
+    }
     console.log("identifiedUser: ", identifiedUser);
-  }, [identifiedUser]);
+  }, []);
 
   if (!auth.isLoggedIn) {
     return (
@@ -158,12 +164,18 @@ const UserPage = (props) => {
   }
 };
 
+export async function getData(id) {
+  const response = await fetch(`/api/users/${id}`);
+  return response;
+}
+
 export async function getStaticProps(context) {
   const userId = context.params.userId;
-  const user = await getUserById(userId);
+  const response = await getUserById({ userId: userId });
+
   return {
     props: {
-      user: user,
+      user: response,
     },
     revalidate: 30,
   };

@@ -1,8 +1,7 @@
 import { MongoClient } from "mongodb";
+import jwt from "jsonwebtoken";
 
 const signup = async (req, res) => {
-  console.log("registeringggg");
-  console.log(req.body);
   const fullname = req.body.fullname;
   const username = req.body.username;
   const password = req.body.password;
@@ -25,18 +24,44 @@ const signup = async (req, res) => {
 
   if (hasUser) {
     console.error("user already exists");
-    res.json({ msg: "try another username" });
-  } else {
-    let newUser = {
-      fullname,
-      username,
-      password,
-      repass,
-    };
-    let result = await db.collection("users").insertOne(newUser);
-    console.log(result);
-    res.json({ msg: "new user created", user: newUser });
+    res.json({ msg: "user already exists try another username" });
+    return;
   }
+
+  let newUser = {
+    fullname,
+    username,
+    password,
+    repass,
+  };
+  let result;
+  try {
+    result = await db.collection("users").insertOne(newUser);
+    console.log(result.insertedId, "created");
+  } catch (e) {
+    console.log("couldn't add to db...");
+  }
+
+  let token;
+
+  try {
+    token = jwt.sign(
+      {
+        userId: result.insertedId,
+        username: newUser.username,
+      },
+      "jwt-key",
+      { expiresIn: "1h" }
+    );
+  } catch (e) {
+    console.log("didn't generate jwt ", e);
+    res.status(500).json({ meg: "didn't generate token" });
+  }
+  res.json({
+    msg: "new user created",
+    token: token,
+    userId: result.insertedId,
+  });
 };
 
 export default signup;

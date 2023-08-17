@@ -4,17 +4,15 @@ export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
 
-  const login = useCallback((user) => {
+  const login = useCallback((id, token) => {
     setIsLoggedIn(true);
     setUser(user);
 
     localStorage.setItem(
       "userData",
       JSON.stringify({
-        user: user,
-        // temp until backend is done
-        id: "u1",
-        //
+        id: id,
+        token: token,
       })
     );
   }, []);

@@ -74,12 +74,11 @@ const RegisterPage = () => {
       password: formState.inputs.password.value,
     });
     const response = await sendRequest("/api/users/login", "POST", user);
-    if (!error) {
-      auth.login(response.user);
-      router.push("/");
-    }
-    console.log(response);
+
+    auth.login(response.userId, response.token);
+    router.push("/");
   };
+
   const signupRequest = async () => {
     clearError();
     let user = JSON.stringify({
@@ -89,11 +88,8 @@ const RegisterPage = () => {
       repass: formState.inputs.repass.value,
     });
     const response = await sendRequest("/api/users/signup", "POST", user);
-    if (!error) {
-      auth.login(response.user);
-      router.push("/");
-    }
-    console.log(response);
+    auth.login(response.userId, response.token);
+    router.push("/");
   };
 
   // const logout = () => {

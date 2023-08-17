@@ -7,7 +7,10 @@ const MainHeader = () => {
   const lol = () => {
     setSw(window.innerWidth);
   };
-  window.addEventListener("resize", lol);
+  useEffect(() => {
+    lol();
+    window.addEventListener("resize", lol);
+  });
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 
-const users = async (req, res) => {
+const getAllUsers = async (req, res) => {
+  console.log("called get all users");
   const url =
     "mongodb+srv://kareem:highspeedlowdrag@cluster0.risomee.mongodb.net/karegram?retryWrites=true&w=majority";
 
@@ -9,14 +10,20 @@ const users = async (req, res) => {
     useNewUrlParser: true,
   });
   const db = client.db();
-  let users;
   try {
-    users = await db.collection("users").find().sort().toArray();
+    await db
+      .collection("users")
+      .find()
+      .sort()
+      .toArray()
+      .then((users) => {
+        res.status(200).json({ users: users });
+
+        return users;
+      });
   } catch (e) {
     console.log("e");
   }
-
-  res.status(200).json({ users: users });
 };
 
-export default users;
+export default getAllUsers;
