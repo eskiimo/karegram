@@ -99,7 +99,7 @@ const RegisterPage = () => {
     const storedUser = await JSON.parse(localStorage.getItem("userData"));
 
     console.log("getting local data ", storedUser);
-    if (storedUser && storedUser !== null) {
+    if (storedUser && storedUser.id) {
       auth.login(storedUser);
       router.push("/");
     } else {
