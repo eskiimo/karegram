@@ -14,7 +14,7 @@ import {
 const RegisterPage = () => {
   const auth = useAuthContext();
   const router = useRouter();
-  const [isReg, setisReg] = useState(false);
+  const [isLogin, setisLogin] = useState(true);
 
   const { isloading, error, sendRequest, clearError } = useHttpClient();
   const [formState, InputHandler, setFormData] = useForm(
@@ -26,7 +26,7 @@ const RegisterPage = () => {
   );
 
   const switchMode = () => {
-    if (!isReg) {
+    if (!isLogin) {
       setFormData(
         {
           ...formState.inputs,
@@ -50,34 +50,35 @@ const RegisterPage = () => {
         false
       );
     }
-    setisReg((prev) => !prev);
+    setisLogin((prev) => !prev);
   };
   const handleReg = (e) => {
-    if (isReg) {
+    if (isLogin) {
       e.preventDefault();
 
-      console.log("isreg", isReg, formState.inputs);
-      // loginRequest();
+      console.log("isLogin", isLogin, formState.inputs, "logging in");
+      loginRequest();
     } else {
       e.preventDefault();
 
-      console.log("isreg", isReg, formState.inputs);
+      console.log("isLogin", isLogin, formState.inputs);
       // signupRequest();
     }
   };
   ///////////////////////////////////////////////
   const loginRequest = async () => {
     clearError();
-    sendRequest(
-      "/api/users/login",
-      "POST",
-      JSON.stringify({
-        username: formState.inputs.username.value,
-        password: formState.inputs.password.value,
-      })
-    );
-    // auth.login(user);
-    // router.push("/");
+
+    let user = JSON.stringify({
+      username: formState.inputs.username.value,
+      password: formState.inputs.password.value,
+    });
+    const response = await sendRequest("/api/users/login", "POST", user);
+    if (!error) {
+      auth.login(response.user);
+      router.push("/");
+    }
+    console.log(response);
   };
   const signupRequest = async () => {
     clearError();
@@ -122,7 +123,7 @@ const RegisterPage = () => {
         className=" flex flex-col justify-center items-center py-5 m-3"
         onSubmit={handleReg}
       >
-        {isReg ? (
+        {!isLogin ? (
           <Input
             element="input"
             id="fullname"
@@ -151,7 +152,7 @@ const RegisterPage = () => {
           errorText="Incorrect Password."
           onInput={InputHandler}
         />
-        {isReg ? (
+        {!isLogin ? (
           <Input
             element="input"
             id="repass"
@@ -171,15 +172,15 @@ const RegisterPage = () => {
             disabled={!formState.isValid}
             type="submit"
           >
-            {!isReg ? "Login" : "Register"}
+            {isLogin ? "Login" : "Register"}
           </button>
         )}
       </form>
       <div className="flex justify-center">
         <h1>
-          {!isReg ? "Don't have an account ?" : "Already have an account ?"}
+          {isLogin ? "Don't have an account ?" : "Already have an account ?"}
           <button className="text-blue-500 " onClick={switchMode}>
-            {!isReg ? "Register" : "Login"}
+            {isLogin ? "Register" : "Login"}
           </button>
         </h1>
       </div>

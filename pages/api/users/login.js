@@ -24,6 +24,7 @@ const login = async (req, res) => {
     res.json({ msg: "try signing up instead" });
   } else {
     if (hasUser.password === password) {
+      console.log("login successfull");
       res.status(200).json({ token: "token", user: hasUser });
     } else {
       res
