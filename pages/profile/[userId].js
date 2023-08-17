@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAllUsers } from "@/dummy-data";
-import getUserById from "../api/users/[id]";
 import { useRouter } from "next/router";
+import { MongoClient, ObjectId } from "mongodb";
 
 import ProfileList from "@/components/posts/profile-list";
 import ModalComp from "@/components/UI/Modal";
@@ -9,13 +8,11 @@ import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
 import Head from "next/head";
 import Image from "next/image";
-import { useHttpClient } from "@/hooks/http-hook";
 
 const UserPage = (props) => {
-  const { isloading, sendRequest, error, clearError } = useHttpClient();
   const router = useRouter();
 
-  if (!props.user[0]) {
+  if (!props) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
         404
@@ -23,7 +20,7 @@ const UserPage = (props) => {
     );
   }
 
-  let identifiedUser = props.user[0];
+  let identifiedUser = props.user;
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -55,10 +52,9 @@ const UserPage = (props) => {
   };
 
   useEffect(() => {
-    if (!auth.isLoggedIn) {
+    if (!auth.isLoggedIn || !identifiedUser._id) {
       router.push("/register");
     }
-    console.log("identifiedUser: ", identifiedUser);
   }, []);
 
   if (!auth.isLoggedIn) {
@@ -107,7 +103,7 @@ const UserPage = (props) => {
                 </div>
 
                 <h1 className="text-md sm:text-2xl font-medium	">
-                  {identifiedUser.name}
+                  {identifiedUser.fullname}
                 </h1>
                 <h1> {identifiedUser.bio}</h1>
                 <a
@@ -164,26 +160,50 @@ const UserPage = (props) => {
   }
 };
 
-export async function getData(id) {
-  const response = await fetch(`/api/users/${id}`);
-  return response;
-}
-
 export async function getStaticProps(context) {
   const userId = context.params.userId;
-  const response = await getUserById({ userId: userId });
+  const url =
+    "mongodb+srv://kareem:highspeedlowdrag@cluster0.risomee.mongodb.net/karegram?retryWrites=true&w=majority";
 
+  const client = await MongoClient.connect(url, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
+  const db = client.db();
+  let identifiedUser;
+  try {
+    identifiedUser = await db
+      .collection("users")
+      .findOne({ _id: new ObjectId(userId) });
+  } catch (e) {
+    console.log("e:", e);
+  }
+  identifiedUser._id = userId;
   return {
     props: {
-      user: response,
+      user: identifiedUser,
     },
     revalidate: 30,
   };
 }
 
 export async function getStaticPaths() {
-  const users = await getAllUsers();
-  const paths = users.map((u) => ({ params: { userId: u.id } }));
+  const url =
+    "mongodb+srv://kareem:highspeedlowdrag@cluster0.risomee.mongodb.net/karegram?retryWrites=true&w=majority";
+
+  const client = await MongoClient.connect(url, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
+
+  const db = client.db();
+  let users;
+  try {
+    users = await db.collection("users").find().sort().toArray();
+  } catch (e) {
+    console.log("e");
+  }
+  const paths = users.map((u) => ({ params: { userId: u._id.toString() } }));
   return {
     paths: paths,
     // fallback: false,
