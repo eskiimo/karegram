@@ -86,11 +86,10 @@ const UserPage = (props) => {
                 <div className="flex flex-row justify-start items-center">
                   {" "}
                   <h3 className="mr-10">{identifiedUser.username}</h3>{" "}
-                  {identifiedUser.id === "u1" ? (
-                    <button onClick={toggleSettings}>
-                      <i className="fa-solid fa-gear"></i>{" "}
-                    </button>
-                  ) : null}
+                  {/* {identifiedUser.id === "u1" ? ( */}
+                  <button onClick={toggleSettings}>
+                    <i className="fa-solid fa-gear"></i>{" "}
+                  </button>
                 </div>
                 <div className="hidden sm:flex sm:flex-row md:m-2 justify-between">
                   <h1>{identifiedUser.posts.length} posts </h1>
