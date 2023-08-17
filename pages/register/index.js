@@ -61,8 +61,8 @@ const RegisterPage = () => {
     } else {
       e.preventDefault();
 
-      console.log("isLogin", isLogin, formState.inputs);
-      // signupRequest();
+      console.log("isLogin", isLogin, formState.inputs, "sigining up..");
+      signupRequest();
     }
   };
   ///////////////////////////////////////////////
@@ -82,18 +82,18 @@ const RegisterPage = () => {
   };
   const signupRequest = async () => {
     clearError();
-    sendRequest(
-      "/api/users/signup",
-      "POST",
-      JSON.stringify({
-        fullname: formState.inputs.fullname.value,
-        username: formState.inputs.username.value,
-        password: formState.inputs.password.value,
-        repass: formState.inputs.repass.value,
-      })
-    );
-    // auth.login(user);
-    // router.push("/");
+    let user = JSON.stringify({
+      fullname: formState.inputs.fullname.value,
+      username: formState.inputs.username.value,
+      password: formState.inputs.password.value,
+      repass: formState.inputs.repass.value,
+    });
+    const response = await sendRequest("/api/users/signup", "POST", user);
+    if (!error) {
+      auth.login(response.user);
+      router.push("/");
+    }
+    console.log(response);
   };
 
   // const logout = () => {
