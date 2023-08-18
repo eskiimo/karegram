@@ -33,9 +33,9 @@ const signup = async (req, res) => {
     username,
     password,
     repass,
-    followers: [""],
-    followings: [""],
-    posts: ["1", "2"],
+    followers: [],
+    followings: [],
+    posts: [],
   };
   let result;
   try {

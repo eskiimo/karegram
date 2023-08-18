@@ -98,7 +98,7 @@ const RegisterPage = () => {
   const getLocalUser = async () => {
     const storedUser = await JSON.parse(localStorage.getItem("userData"));
 
-    console.log("getting local data ", storedUser);
+    console.log("getting local data register", storedUser);
     if (storedUser && storedUser.id) {
       auth.login(storedUser);
       router.push("/");

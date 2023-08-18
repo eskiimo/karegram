@@ -20,6 +20,7 @@ export const useAuth = () => {
   const logout = useCallback(() => {
     setUser(null);
     setIsLoggedIn(false);
+    console.log("triggered");
 
     localStorage.removeItem("userData");
   }, []);
