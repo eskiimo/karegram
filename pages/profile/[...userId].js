@@ -52,8 +52,8 @@ const UserPage = () => {
           id: me,
         })
       );
-      resData = json(res);
-      console.log(resData);
+
+      console.log(res);
     } catch (e) {
       console.log("e", e);
     }

@@ -1,17 +1,42 @@
 import UsersList from "@/components/users-list";
-import { getFilteredUsers } from "@/dummy-data";
-import { useRef, useState } from "react";
+// import { getAllUsers, getFilteredUsers } from "@/dummy-data";
+import { useEffect, useRef, useState } from "react";
 
 const CreatePost = () => {
   const nameRef = useRef();
   const [found, setFound] = useState([]);
+  const [result, setResult] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
+
     const searchBy = nameRef.current.value;
-    // console.log(searchBy);
-    setFound(getFilteredUsers(searchBy));
+    setResult(filterby(searchBy));
   };
+  const filterby = (key) => {
+    let result = found.filter((user) => user.username.includes(key));
+    return result;
+  };
+
+  const getAllUsers = async () => {
+    await fetch("/api/users")
+      .then((response) => response.json())
+      .then((data) => {
+        setFound(
+          data.users.map((u) => {
+            return {
+              id: u._id,
+              username: u.username,
+              fullname: u.fullname,
+              avatar: u.avatar,
+            };
+          })
+        );
+      });
+  };
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <div className="w-full h-[100vh] sm:w-[75vw] pt-[35px]  flex flex-col items-center">
@@ -25,7 +50,7 @@ const CreatePost = () => {
             type="text"
             placeholder="search"
             className="text-black px-3 py-1 w-full"
-            onChange={handleSearch}
+            // onChange={handleSearch}
           ></input>
           <button type="submit" className="py-2 px-5 border-white border-[1px]">
             <i className="text-2xl fa-solid fa-magnifying-glass"></i>
@@ -33,7 +58,7 @@ const CreatePost = () => {
         </div>
       </form>
       <div className="w-8/12">
-        <UsersList list={found} />
+        <UsersList list={result} />
       </div>
     </div>
   );

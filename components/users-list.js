@@ -19,7 +19,7 @@ const UsersList = (props) => {
                 width={100}
                 height={100}
                 alt="avatar"
-                src={"/images/avi.jpg"}
+                src={user.avatar}
                 className=" border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3"
               />
             </div>
@@ -27,14 +27,14 @@ const UsersList = (props) => {
             <div className="flex flex-col">
               <button
                 onClick={() => {
-                  toggle();
-                  router.push(`64de9da976460bd4a2d5f1a5`);
+                  // toggle();
+                  router.push(`/profile/${user.id}`);
                 }}
                 className="text-md"
               >
-                {"user.username"}
+                {user.username}
               </button>
-              <h1 className="text-lg">{"user.name"}</h1>
+              <h1 className="text-lg">{user.fullname}</h1>
             </div>
           </div>
         );

@@ -14,11 +14,11 @@ const getAllUsers = async (req, res) => {
     await db
       .collection("users")
       .find()
+      // .populate("-password")
       .sort()
       .toArray()
       .then((users) => {
         res.status(200).json({ users: users });
-
         return users;
       });
   } catch (e) {

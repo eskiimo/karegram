@@ -15,8 +15,8 @@ function NavLinks() {
   };
   const seeStored = async () => {
     let storedUser = await JSON.parse(localStorage.getItem("userData"));
-    setProfile(storedUser.id);
-    console.log(storedUser.id);
+
+    console.log(storedUser);
   };
   useEffect(() => {
     getLocalUser();
@@ -25,7 +25,7 @@ function NavLinks() {
   return (
     <div className="flex flex-row h-[100vh] sm:w-[25vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">
       <h1 className="text-xl md:text-3xl font-sigmar m-3 mb-10">KareGram</h1>
-      <button onClick={seeStored}>see stored</button>
+      {/* <button onClick={seeStored}>see stored</button> */}
       <div className="flex sm:my-4 sm:pl-5 items-center	 ">
         <Link href="/" className="text-xl active:font-bold">
           <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
