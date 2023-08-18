@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb";
 import jwt from "jsonwebtoken";
 
 const createPost = async (req, res) => {
+  console.log(req.body);
   const url =
     "mongodb+srv://kareem:highspeedlowdrag@cluster0.risomee.mongodb.net/karegram?retryWrites=true&w=majority";
 
@@ -26,11 +27,11 @@ const createPost = async (req, res) => {
   let result;
   try {
     let newPost = {
+      image: req.file,
       caption: req.body.caption,
-      time: req.body.time,
     };
-    result = await db.collection("posts").insertOne(newPost);
-    console.log(result);
+    // result = await db.collection("posts").insertOne(newPost);
+    console.log(newPost);
   } catch (e) {
     console.log(e);
     console.log("couldn't connect to db");

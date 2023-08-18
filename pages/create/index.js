@@ -1,20 +1,37 @@
 import ImageUpload from "@/components/UI/imagepicker";
 import Spinner from "@/components/UI/spinner";
-import { useRef, useState } from "react";
+import { useHttpClient } from "@/hooks/http-hook";
+import { headers } from "@/next.config";
+import { useEffect, useRef, useState } from "react";
 
 const CreatePost = () => {
+  const [token, setToken] = useState("");
   const [file, setFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const captionRef = useRef();
+  const { sendRequest } = useHttpClient();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const post = {
       image: file || "",
       caption: captionRef.current.value,
     };
-    console.log(post);
+    const formData = new FormData();
+    formData.append("caption", captionRef.current.value);
+    formData.append("image", file);
+    console.log(post, token);
+    // let res = await fetch("/api/posts/create", {
+    //   method: "POST",
+    //   body: formData,
+    //   headers: {
+    //     Authorization: "bearer" + token,
+    //   },
+    // });
+    // if (res) {
+    //   console.log(res);
+    // }
     //
     // create post request to backend
     //
@@ -24,13 +41,25 @@ const CreatePost = () => {
     setFile(file);
   };
 
+  const getLocalUser = async () => {
+    let storedUser = await JSON.parse(localStorage.getItem("userData"));
+    if (storedUser) {
+      setToken(storedUser.token);
+    } else {
+      console.log(storedUser);
+    }
+  };
+  useEffect(() => {
+    getLocalUser();
+  });
+
   return (
-    <div className="w-full dark:bg-black bg-slate-100  min-h-[100vh] mb-[30px] sm:w-[75vw]  flex justify-center">
-      <div className="h-fit pb-3 shadow-2xl md:w-7/12 rounded-md  m-10 flex flex-col">
-        <form className="flex flex-col justify-between" onSubmit={handleSubmit}>
-          <div className="w-full h-[50vh]  mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center ">
-            <ImageUpload onInput={handleImage} />
-          </div>
+    <div className="w-[100vw] h-[100vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center items-center">
+      <div className="w-[80vw] pb-3 shadow-2xl  rounded-md  m-2 flex flex-col">
+        <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
+          {/* <div className="w-full h-[50vh]  mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center "> */}
+          <ImageUpload onInput={handleImage} />
+          {/* </div> */}
           <input
             className="w-full p-3 my-3 mx-auto border dark:bg-black dark:text-white"
             type="text"

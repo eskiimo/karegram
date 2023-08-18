@@ -105,6 +105,7 @@ const RegisterPage = () => {
     }
   };
   useEffect(() => {
+    auth.logout();
     getLocalUser();
   }, []);
   return (
