@@ -13,9 +13,14 @@ function NavBar() {
     let storedUser = await JSON.parse(localStorage.getItem("userData"));
     setProfile(storedUser.id);
   };
+  const seeStored = async () => {
+    let storedUser = await JSON.parse(localStorage.getItem("userData"));
+    setProfile(storedUser.id);
+    console.log(profile);
+  };
   useEffect(() => {
     getLocalUser();
-  }, []);
+  }, [profile]);
 
   return (
     <>

@@ -40,21 +40,39 @@ const UserPage = () => {
     toggleModal();
     setChild("settings");
   };
-
+  const handleFollow = async () => {
+    console.log("followed");
+    let other = router.query.userId;
+    let me = myId;
+    try {
+      let res = await sendRequest(
+        `/api/users/${other}/follow`,
+        "PUT",
+        JSON.stringify({
+          id: me,
+        })
+      );
+      resData = json(res);
+      console.log(resData);
+    } catch (e) {
+      console.log("e", e);
+    }
+  };
   const handleLogOut = () => {
     auth.logout();
     router.push("/register");
-    console.log("log out button " + auth.isLoggedIn);
   };
   const handleSettings = () => {};
-
+  let storedUser;
   const getLocalUser = async () => {
-    let storedUser = await JSON.parse(localStorage.getItem("userData"));
-    setMyId(storedUser.id);
-    // console.log("storedUser", storedUser);
+    storedUser = await JSON.parse(localStorage.getItem("userData"));
+    if (storedUser) {
+      setMyId(storedUser.id);
+    } else {
+      console.log(storedUser);
+    }
   };
   const getUserByQId = async (id) => {
-    console.log(id);
     let response = await sendRequest(`/api/users/${id}`);
     if (response) {
       setDisplayedUser(response.user);
@@ -64,9 +82,14 @@ const UserPage = () => {
     }
   };
   useEffect(() => {
-    getUserByQId(router.query.userId);
-    getLocalUser();
-  }, [router.query.userId]);
+    if (router.query.userId !== "undefined") {
+      getUserByQId(router.query.userId);
+      getLocalUser();
+    } else {
+      auth.logout();
+      router.push("/register");
+    }
+  }, [router.query.userId, myId]);
 
   if (!auth.isLoggedIn) {
     return (
@@ -76,7 +99,7 @@ const UserPage = () => {
     );
   } else if (isLoading) {
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-[80vh] flex justify-center items-center">
         <Spinner />
       </div>
     );
@@ -116,7 +139,14 @@ const UserPage = () => {
                     <button onClick={toggleSettings}>
                       <i className="fa-solid fa-gear"></i>{" "}
                     </button>
-                  ) : null}
+                  ) : (
+                    <button
+                      onClick={handleFollow}
+                      className="flex bg-blue-500 py-1 px-3 rounded-md text-justify items-center text-white"
+                    >
+                      Follow
+                    </button>
+                  )}
                 </div>
                 <div className="hidden sm:flex sm:flex-row md:m-2 justify-between">
                   <h1>{displayedUser.posts.length} posts </h1>
@@ -165,12 +195,12 @@ const UserPage = () => {
                 ) : child === "settings" ? (
                   <div className="w-full flex flex-col justify-center items-center">
                     <div className="w-full border-b-[1px] flex justify-center">
-                      <button className="m-3 p-3 " onClick={handleLogOut}>
+                      <button className="m-3 p-3 " onClick={handleSettings}>
                         SETTINGS
                       </button>
                     </div>
                     <div className="w-full border-b-[1px] flex justify-center">
-                      <button className="m-3 p-3 " onClick={handleSettings}>
+                      <button className="m-3 p-3 " onClick={handleLogOut}>
                         LOG OUT
                       </button>
                     </div>

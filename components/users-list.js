@@ -19,7 +19,7 @@ const UsersList = (props) => {
                 width={100}
                 height={100}
                 alt="avatar"
-                src={user.avatar}
+                src={"/images/avi.jpg"}
                 className=" border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3"
               />
             </div>
@@ -28,13 +28,13 @@ const UsersList = (props) => {
               <button
                 onClick={() => {
                   toggle();
-                  router.push(`${user.id}`);
+                  router.push(`64de9da976460bd4a2d5f1a5`);
                 }}
                 className="text-md"
               >
-                {user.username}
+                {"user.username"}
               </button>
-              <h1 className="text-lg">{user.name}</h1>
+              <h1 className="text-lg">{"user.name"}</h1>
             </div>
           </div>
         );

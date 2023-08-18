@@ -16,7 +16,7 @@ function NavLinks() {
   const seeStored = async () => {
     let storedUser = await JSON.parse(localStorage.getItem("userData"));
     setProfile(storedUser.id);
-    console.log(profile);
+    console.log(storedUser.id);
   };
   useEffect(() => {
     getLocalUser();

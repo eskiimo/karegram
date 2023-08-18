@@ -102,9 +102,6 @@ const RegisterPage = () => {
     if (storedUser && storedUser.id) {
       auth.login(storedUser);
       router.push("/");
-    } else {
-      auth.logout();
-      return "no user";
     }
   };
   useEffect(() => {
