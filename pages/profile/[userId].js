@@ -10,12 +10,13 @@ import Image from "next/image";
 import { useHttpClient } from "@/hooks/http-hook";
 import Spinner from "@/components/UI/spinner";
 
-const UserPage = () => {
+const UserPage = (props) => {
+  console.log(props.user);
   const { sendRequest } = useHttpClient();
   const router = useRouter();
 
-  const [displayedUser, setDisplayedUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const displayedUser = props.user;
+  // const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -46,7 +47,7 @@ const UserPage = () => {
     let me = myId;
     try {
       let res = await sendRequest(
-        `/api/users/${other}/follow`,
+        `localhost:5000/api/users/${other}/follow`,
         "PUT",
         JSON.stringify({
           id: me,
@@ -63,8 +64,9 @@ const UserPage = () => {
     router.push("/register");
   };
   const handleSettings = () => {};
-  let storedUser;
+
   const getLocalUser = async () => {
+    let storedUser;
     storedUser = await JSON.parse(localStorage.getItem("userData"));
     if (storedUser) {
       setMyId(storedUser.id);
@@ -72,35 +74,14 @@ const UserPage = () => {
       console.log(storedUser);
     }
   };
-  const getUserByQId = async (id) => {
-    let response = await sendRequest(`/api/users/${id}`);
-    if (response) {
-      setDisplayedUser(response.user);
-      setIsLoading(false);
-    } else {
-      console.log(response);
-    }
-  };
   useEffect(() => {
-    if (router.query.userId !== "undefined") {
-      getUserByQId(router.query.userId);
-      getLocalUser();
-    } else {
-      auth.logout();
-      router.push("/register");
-    }
-  }, [router.query.userId, myId]);
+    getLocalUser();
+  });
 
   if (!auth.isLoggedIn) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
         404
-      </div>
-    );
-  } else if (isLoading) {
-    return (
-      <div className="w-full h-[80vh] flex justify-center items-center">
-        <Spinner />
       </div>
     );
   } else if (!displayedUser) {
@@ -118,9 +99,7 @@ const UserPage = () => {
             content={`karegram user ${displayedUser.username}`}
           />
         </Head>
-        {isLoading ? (
-          <Spinner />
-        ) : displayedUser !== null ? (
+        {displayedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
             <div className="flex flex-row justify-evenly items-center   h-[25vh]">
               <Image
@@ -128,7 +107,7 @@ const UserPage = () => {
                 width={200}
                 height={200}
                 alt="avatar"
-                src={displayedUser.avatar}
+                src={`http://localhost:5000/${displayedUser.image}`}
                 className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
               />
               <div className="info w-[35%] flex flex-col">
@@ -220,5 +199,91 @@ const UserPage = () => {
     );
   }
 };
+
+const getLocalUser = async (id) => {
+  let user;
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  fetch(
+    "http://localhost:5000/api/users/64ea9a23f8a084120dbaabf6",
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result.user);
+      return result.user;
+    })
+
+    .catch((error) => console.log("error", error));
+};
+///////////////////////////////////////
+const getAllUsers = async () => {
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  fetch("localhost:5000/api/users", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      // console.log("users: ", result);
+      return result;
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export async function getStaticProps(context) {
+  // const userId = context.params.userId;
+
+  let user;
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  user = await fetch(
+    "http://localhost:5000/api/users/64ea9a23f8a084120dbaabf6",
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result.user);
+      return result.user;
+
+      // console.log("a77a ya3ny", user);
+    })
+
+    .catch((error) => console.log("error", error));
+  console.log("zibby: ", user);
+  return {
+    props: {
+      user: user,
+    },
+    revalidate: 30,
+  };
+}
+
+export async function getStaticPaths() {
+  let users = await getAllUsers();
+  console.log(users);
+  // const paths = ["32323", "ksmfdsdsd", "64ea9a23f8a084120dbaabf6"].map((u) => ({
+  //   params: { userId: u },
+  // }));
+  return {
+    paths: [
+      {
+        params: { userId: "64ea9a23f8a084120dbaabf6" },
+      },
+      {
+        params: { userId: "ksmfdsdsd" },
+      },
+    ],
+    // // fallback: false,
+    fallback: "blocking",
+  };
+}
 
 export default UserPage;

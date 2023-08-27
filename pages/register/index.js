@@ -69,14 +69,32 @@ const RegisterPage = () => {
   const loginRequest = async () => {
     clearError();
 
-    let user = JSON.stringify({
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
       username: formState.inputs.username.value,
       password: formState.inputs.password.value,
     });
-    const response = await sendRequest("/api/users/login", "POST", user);
 
-    auth.login(response.userId, response.token);
-    router.push("/");
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/users/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        auth.login(result.userId, result.token);
+
+        router.push("/");
+      })
+      .catch((error) => console.log("error", error));
+
+    // console.log(response);
   };
 
   const signupRequest = async () => {
@@ -87,9 +105,14 @@ const RegisterPage = () => {
       password: formState.inputs.password.value,
       repass: formState.inputs.repass.value,
     });
-    const response = await sendRequest("/api/users/signup", "POST", user);
-    auth.login(response.userId, response.token);
-    router.push("/");
+    await sendRequest("localhost:5000/api/users/signup", "POST", user)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        auth.login(response.userId, response.token);
+      });
+    // auth.login(response.userId, response.token);
+    // router.push("/");
   };
 
   // const logout = () => {

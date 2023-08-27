@@ -1,5 +1,4 @@
 import PostsList from "../components/posts/posts-list";
-import Head from "next/head";
 import { getAllEvents } from "@/dummy-data";
 import { useAuthContext } from "@/context/auth.context";
 import { useEffect, useState } from "react";
