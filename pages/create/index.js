@@ -22,17 +22,17 @@ const CreatePost = () => {
     formData.append("caption", captionRef.current.value);
     formData.append("image", file);
     console.log(post, token);
-    // let res = await fetch("/api/posts/create", {
-    //   method: "POST",
-    //   body: formData,
-    //   headers: {
-    //     Authorization: "bearer" + token,
-    //   },
-    // });
-    // if (res) {
-    //   console.log(res);
-    // }
-    //
+    let res = await fetch("http://localhost/api/posts/create", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: "bearer" + token,
+      },
+    });
+    if (res) {
+      console.log(res);
+    }
+
     // create post request to backend
     //
     setIsLoading(false);
@@ -54,18 +54,20 @@ const CreatePost = () => {
   });
 
   return (
-    <div className="w-[100vw] h-[100vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center items-center">
-      <div className="w-[80vw] pb-3 shadow-2xl  rounded-md  m-2 flex flex-col">
+    <div className="w-full h-[100vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center md:items-center ">
+      <div className="md:w-50 pb-3 shadow-2xl h-fit rounded-md  m-2 flex flex-col">
         <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
-          {/* <div className="w-full h-[50vh]  mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center "> */}
-          <ImageUpload onInput={handleImage} />
-          {/* </div> */}
-          <input
-            className="w-full p-3 my-3 mx-auto border dark:bg-black dark:text-white"
-            type="text"
-            ref={captionRef}
-            placeholder="write a caption..."
-          ></input>
+          <div className="w-full h-[50vh]  mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center ">
+            <ImageUpload onInput={handleImage} />
+          </div>
+          <div className="p-2 flex justify-center">
+            <input
+              className="w-[90%] p-3 my-3 mx-auto border dark:bg-black dark:text-white"
+              type="text"
+              ref={captionRef}
+              placeholder="write a caption..."
+            ></input>
+          </div>
           {!isLoading ? (
             <button
               className=" py-2 my-2 mx-auto w-[50%] max-w-[400px]  rounded-lg  bg-blue-500 text-white "
