@@ -11,7 +11,6 @@ import { useHttpClient } from "@/hooks/http-hook";
 import Spinner from "@/components/UI/spinner";
 
 const UserPage = (props) => {
-  console.log(props.user);
   const { sendRequest } = useHttpClient();
   const router = useRouter();
 
@@ -47,7 +46,7 @@ const UserPage = (props) => {
     let me = myId;
     try {
       let res = await sendRequest(
-        `localhost:5000/api/users/${other}/follow`,
+        `http://localhost:5000/api/users/${other}/follow`,
         "PUT",
         JSON.stringify({
           id: me,
@@ -71,7 +70,7 @@ const UserPage = (props) => {
     if (storedUser) {
       setMyId(storedUser.id);
     } else {
-      console.log(storedUser);
+      console.log("storedUsers: ", storedUser);
     }
   };
   useEffect(() => {
@@ -114,7 +113,7 @@ const UserPage = (props) => {
                 <div className="flex flex-row justify-start items-center">
                   {" "}
                   <h3 className="mr-10">{displayedUser.username}</h3>{" "}
-                  {myId === displayedUser._id ? (
+                  {myId === displayedUser.id ? (
                     <button onClick={toggleSettings}>
                       <i className="fa-solid fa-gear"></i>{" "}
                     </button>
@@ -200,44 +199,8 @@ const UserPage = (props) => {
   }
 };
 
-const getLocalUser = async (id) => {
-  let user;
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  fetch(
-    "http://localhost:5000/api/users/64ea9a23f8a084120dbaabf6",
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result.user);
-      return result.user;
-    })
-
-    .catch((error) => console.log("error", error));
-};
-///////////////////////////////////////
-const getAllUsers = async () => {
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  fetch("localhost:5000/api/users", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      // console.log("users: ", result);
-      return result;
-    })
-    .catch((error) => console.log("error", error));
-};
-
 export async function getStaticProps(context) {
-  // const userId = context.params.userId;
-
+  const userId = context.params.userId;
   let user;
   var requestOptions = {
     method: "GET",
@@ -245,19 +208,14 @@ export async function getStaticProps(context) {
   };
 
   user = await fetch(
-    "http://localhost:5000/api/users/64ea9a23f8a084120dbaabf6",
+    `http://localhost:5000/api/users/${userId}`,
     requestOptions
   )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result.user);
       return result.user;
-
-      // console.log("a77a ya3ny", user);
     })
-
-    .catch((error) => console.log("error", error));
-  console.log("zibby: ", user);
+    .catch((error) => console.error("error", error));
   return {
     props: {
       user: user,
@@ -267,20 +225,23 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  let users = await getAllUsers();
-  console.log(users);
-  // const paths = ["32323", "ksmfdsdsd", "64ea9a23f8a084120dbaabf6"].map((u) => ({
-  //   params: { userId: u },
-  // }));
+  let users;
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  users = await fetch("http://localhost:5000/api/users", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      return result.users;
+    })
+    .catch((error) => console.error("error", error));
+  const paths = users.map((u) => ({
+    params: { userId: u.id },
+  }));
   return {
-    paths: [
-      {
-        params: { userId: "64ea9a23f8a084120dbaabf6" },
-      },
-      {
-        params: { userId: "ksmfdsdsd" },
-      },
-    ],
+    paths: paths,
     // // fallback: false,
     fallback: "blocking",
   };
