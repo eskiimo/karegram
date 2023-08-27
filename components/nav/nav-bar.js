@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 function NavBar() {
   const [darkMood, setDarkMood] = useState(false);
   const [profile, setProfile] = useState("");
+  const router = useRouter();
   const toggleDarkMode = () => {
     document.documentElement.classList.toggle("dark");
     setDarkMood((prev) => !prev);
@@ -11,13 +13,13 @@ function NavBar() {
 
   const getLocalUser = async () => {
     let storedUser = await JSON.parse(localStorage.getItem("userData"));
-    setProfile(storedUser.id);
+    if (storedUser && storedUser.id) {
+      setProfile(storedUser.id);
+    } else {
+      router.push("/register");
+    }
   };
-  const seeStored = async () => {
-    let storedUser = await JSON.parse(localStorage.getItem("userData"));
-    setProfile(storedUser.id);
-    console.log(profile);
-  };
+
   useEffect(() => {
     getLocalUser();
   }, [profile]);

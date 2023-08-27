@@ -2,53 +2,36 @@ import UsersList from "@/components/users-list";
 // import { getAllUsers, getFilteredUsers } from "@/dummy-data";
 import { useEffect, useRef, useState } from "react";
 
-const CreatePost = () => {
+const CreatePost = (props) => {
+  let users = props.users;
   const nameRef = useRef();
-  const [found, setFound] = useState([]);
+  // const [found, setFound] = useState([]);
   const [result, setResult] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-
     const searchBy = nameRef.current.value;
     setResult(filterby(searchBy));
   };
+
   const filterby = (key) => {
-    let result = found.filter((user) => user.username.includes(key));
+    let result = users.filter((user) => user.username.includes(key));
     return result;
   };
 
-  const getAllUsers = async () => {
-    await fetch("/api/users")
-      .then((response) => response.json())
-      .then((data) => {
-        setFound(
-          data.users.map((u) => {
-            return {
-              id: u._id,
-              username: u.username,
-              fullname: u.fullname,
-              avatar: u.avatar,
-            };
-          })
-        );
-      });
-  };
-  useEffect(() => {
-    getAllUsers();
-  }, []);
-
   return (
-    <div className="w-full h-[100vh] sm:w-[75vw] pt-[35px]  flex flex-col items-center">
-      <h1 className="text-[50px]  w-full pl-5">Search</h1>
-      <form className="m-5 w-8/12 flex justify-center" onSubmit={handleSearch}>
+    <div className="w-full h-[100vh] sm:w-[75vw] pt-[50px]  flex flex-col items-center">
+      <form
+        className="m-5 w-10/12 flex justify-center border-2 rounded-lg"
+        onSubmit={handleSearch}
+      >
         <div className="w-full flex flex-row">
           <label htmlFor="name"></label>
           <input
             id="year"
             ref={nameRef}
             type="text"
-            placeholder="search"
+            placeholder="Search"
             className="text-black px-3 py-1 w-full"
             // onChange={handleSearch}
           ></input>
@@ -63,5 +46,26 @@ const CreatePost = () => {
     </div>
   );
 };
+
+export async function getStaticProps() {
+  let users;
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  users = await fetch("http://localhost:5000/api/users", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      return result.users;
+    })
+    .catch((error) => console.error("error", error));
+  return {
+    props: {
+      users: users,
+    },
+    revalidate: 30,
+  };
+}
 
 export default CreatePost;

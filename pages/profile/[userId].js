@@ -14,7 +14,7 @@ const UserPage = (props) => {
   const { sendRequest } = useHttpClient();
   const router = useRouter();
 
-  const displayedUser = props.user;
+  const [displayedUser] = useState(props.user);
   // const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
@@ -69,6 +69,7 @@ const UserPage = (props) => {
     storedUser = await JSON.parse(localStorage.getItem("userData"));
     if (storedUser) {
       setMyId(storedUser.id);
+      console.log(myId, storedUser.id);
     } else {
       console.log("storedUsers: ", storedUser);
     }
@@ -100,7 +101,7 @@ const UserPage = (props) => {
         </Head>
         {displayedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
-            <div className="flex flex-row justify-evenly items-center   h-[25vh]">
+            <div className=" mt-5 flex flex-row justify-evenly items-center   h-[25vh]">
               <Image
                 priority={true}
                 width={200}
@@ -126,7 +127,7 @@ const UserPage = (props) => {
                     </button>
                   )}
                 </div>
-                <div className="hidden sm:flex sm:flex-row md:m-2 justify-between">
+                <div className="hidden sm:flex sm:flex-row md:m-2 mb-2 justify-between">
                   <h1>{displayedUser.posts.length} posts </h1>
                   <button onClick={toggleFollowers}>
                     {displayedUser.followers.length} followers{" "}
@@ -136,7 +137,7 @@ const UserPage = (props) => {
                   </button>
                 </div>
 
-                <h1 className="text-md sm:text-2xl font-medium	">
+                <h1 className="text-md sm:text-2xl mt-2 font-medium	">
                   {displayedUser.fullname}
                 </h1>
                 <h1> {displayedUser.bio}</h1>
@@ -149,7 +150,7 @@ const UserPage = (props) => {
                 </a>
               </div>
             </div>
-            <div className="flex flex-row sm:hidden px-8 py-3 border-t-2 border-b-2  justify-between">
+            <div className="flex flex-row sm:hidden px-8 py-3 border-t-[1px] border-b-[1px]  justify-between">
               {/* link to list of certain users */}
               <h1>{displayedUser.posts.length} posts </h1>
               <button onClick={toggleFollowers}>
@@ -161,7 +162,7 @@ const UserPage = (props) => {
               </button>
             </div>
 
-            <div className="h-[70vh] w-full justify-center md:w-[90%] mx-auto p-0">
+            <div className="h-[70vh] w-full justify-center md:w-[90%] mx-auto p-2">
               <ProfileList posts={displayedUser.posts} />
             </div>
             <div className="overflow-y-scroll">
