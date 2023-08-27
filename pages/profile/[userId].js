@@ -11,11 +11,10 @@ import { useHttpClient } from "@/hooks/http-hook";
 import Spinner from "@/components/UI/spinner";
 
 const UserPage = (props) => {
-  const { sendRequest } = useHttpClient();
+  const { isloading, sendRequest } = useHttpClient();
   const router = useRouter();
 
-  const [displayedUser] = useState(props.user);
-  // const [isLoading, setIsLoading] = useState(true);
+  const displayedUser = props.user;
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -46,7 +45,7 @@ const UserPage = (props) => {
     let me = myId;
     try {
       let res = await sendRequest(
-        `http://localhost:5000/api/users/${other}/follow`,
+        process.env.API + "/api/users/" + other + "/follow",
         "PUT",
         JSON.stringify({
           id: me,
@@ -69,14 +68,14 @@ const UserPage = (props) => {
     storedUser = await JSON.parse(localStorage.getItem("userData"));
     if (storedUser) {
       setMyId(storedUser.id);
-      console.log(myId, storedUser.id);
+      console.log(myId, displayedUser);
     } else {
       console.log("storedUsers: ", storedUser);
     }
   };
   useEffect(() => {
     getLocalUser();
-  });
+  }, [myId]);
 
   if (!auth.isLoggedIn) {
     return (
@@ -94,10 +93,7 @@ const UserPage = (props) => {
     return (
       <React.Fragment>
         <Head>
-          <meta
-            name="description"
-            content={`karegram user ${displayedUser.username}`}
-          />
+          <meta name="description" content={`karegram user `} />
         </Head>
         {displayedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
@@ -107,7 +103,7 @@ const UserPage = (props) => {
                 width={200}
                 height={200}
                 alt="avatar"
-                src={`http://localhost:5000/${displayedUser.image}`}
+                src={process.env.API + displayedUser.image}
                 className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
               />
               <div className="info w-[35%] flex flex-col">
@@ -208,10 +204,7 @@ export async function getStaticProps(context) {
     redirect: "follow",
   };
 
-  user = await fetch(
-    `http://localhost:5000/api/users/${userId}`,
-    requestOptions
-  )
+  user = await fetch(process.env.API + "/api/users/" + userId, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       return result.user;
@@ -232,7 +225,7 @@ export async function getStaticPaths() {
     redirect: "follow",
   };
 
-  users = await fetch("http://localhost:5000/api/users", requestOptions)
+  users = await fetch(process.env.API + "/api/users", requestOptions)
     .then((response) => response.json())
     .then((result) => {
       return result.users;

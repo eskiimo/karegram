@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 const CreatePost = (props) => {
   let users = props.users;
   const nameRef = useRef();
-  // const [found, setFound] = useState([]);
   const [result, setResult] = useState([]);
 
   const handleSearch = (e) => {
@@ -54,7 +53,7 @@ export async function getStaticProps() {
     redirect: "follow",
   };
 
-  users = await fetch("http://localhost:5000/api/users", requestOptions)
+  users = await fetch(process.env.API + "/api/users", requestOptions)
     .then((response) => response.json())
     .then((result) => {
       return result.users;

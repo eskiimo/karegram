@@ -61,7 +61,7 @@ const RegisterPage = () => {
     } else {
       e.preventDefault();
 
-      console.log("isLogin", isLogin, formState.inputs, "sigining up..");
+      console.log("isSignup", isLogin, formState.inputs, "sigining up..");
       signupRequest();
     }
   };
@@ -84,7 +84,7 @@ const RegisterPage = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/users/login", requestOptions)
+    fetch(process.env.API + "/api/users/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -105,23 +105,18 @@ const RegisterPage = () => {
       password: formState.inputs.password.value,
       repass: formState.inputs.repass.value,
     });
-    await sendRequest("localhost:5000/api/users/signup", "POST", user)
+    await sendRequest(process.env.API + "/api/users/signup", "POST", user)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         auth.login(response.userId, response.token);
+        router.push("/");
       });
-    // auth.login(response.userId, response.token);
-    // router.push("/");
   };
 
-  // const logout = () => {
-  //   auth.logout();
-  // };
   const getLocalUser = async () => {
     const storedUser = await JSON.parse(localStorage.getItem("userData"));
 
-    console.log("getting local data register", storedUser);
     if (storedUser && storedUser.id) {
       auth.login(storedUser);
       router.push("/");

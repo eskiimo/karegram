@@ -22,7 +22,7 @@ const CreatePost = () => {
     formData.append("caption", captionRef.current.value);
     formData.append("image", file);
     console.log(post, token);
-    let res = await fetch("http://localhost/api/posts/create", {
+    let res = await fetch(process.env.API + "/api/posts/create", {
       method: "POST",
       body: formData,
       headers: {
