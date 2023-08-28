@@ -1,7 +1,6 @@
 import ImageUpload from "@/components/UI/imagepicker";
 import Spinner from "@/components/UI/spinner";
-import { useHttpClient } from "@/hooks/http-hook";
-import { headers } from "@/next.config";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
 const CreatePost = () => {
@@ -9,33 +8,52 @@ const CreatePost = () => {
   const [file, setFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const captionRef = useRef();
-  const { sendRequest } = useHttpClient();
+  const router = useRouter();
+  // const { isLoading, sendRequest } = useHttpClient();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     const post = {
       image: file || "",
       caption: captionRef.current.value,
     };
-    const formData = new FormData();
+    // const formData = new FormData();
+    // formData.append("caption", captionRef.current.value);
+    // formData.append("image", file);
+    // console.log(post);
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var formData = new FormData();
     formData.append("caption", captionRef.current.value);
     formData.append("image", file);
-    console.log(post, token);
-    let res = await fetch(process.env.API + "/api/posts/create", {
+
+    var requestOptions = {
       method: "POST",
+      headers: myHeaders,
       body: formData,
-      headers: {
-        Authorization: "bearer" + token,
-      },
-    });
-    if (res) {
-      console.log(res);
-    }
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/posts/newpost", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+    // let res = await fetch(process.env.API + "/api/posts/newpost", {
+    //   method: "POST",
+    //   body: formData,
+    //   headers: {
+    //     Authorization: "bearer" + token,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     console.log(result);
+    //     // router.push("/");
+    //   });
 
     // create post request to backend
     //
-    setIsLoading(false);
   };
   const handleImage = (file) => {
     setFile(file);

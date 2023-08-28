@@ -188,6 +188,7 @@ const RegisterPage = () => {
             {isLogin ? "Login" : "Register"}
           </button>
         )}
+        <p>{error && error}</p>
       </form>
       <div className="flex justify-center">
         <h1>

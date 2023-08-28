@@ -34,7 +34,19 @@ function Home(props) {
 }
 
 export async function getStaticProps() {
-  const posts = await getAllEvents();
+  // const posts = await getAllEvents();
+  let posts;
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  posts = await fetch(process.env.API + "/api/posts", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      return result.posts;
+    })
+    .catch((error) => console.error("error", error));
   return {
     props: {
       posts: posts,
