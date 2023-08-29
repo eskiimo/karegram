@@ -6,8 +6,8 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   env: {
-    API: "http://localhost:5000",
-    // API:"karegram.onrender.com"
+    // API: "http://localhost:5000",
+    API: "https://karegram.onrender.com",
   },
 };
 
