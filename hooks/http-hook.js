@@ -1,3 +1,4 @@
+import { headers } from "@/next.config";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useHttpClient = () => {
@@ -6,37 +7,44 @@ export const useHttpClient = () => {
 
   const activeHttpRequests = useRef([]);
 
-  const sendRequest = useCallback(async (url, method = "GET", body = null) => {
-    setIsLoading(true);
-    const httpAbortCtrl = new AbortController();
-    activeHttpRequests.current.push(httpAbortCtrl);
-    try {
-      const response = await fetch(url, {
-        method,
-        body,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        signal: httpAbortCtrl.signal,
-      });
-      const responseData = await response.json();
-      console.log(responseData);
+  const sendRequest = useCallback(
+    async (url, method = "GET", body = null, token = null, heads = null) => {
+      setIsLoading(true);
+      const httpAbortCtrl = new AbortController();
+      activeHttpRequests.current.push(httpAbortCtrl);
+      try {
+        const response = await fetch(url, {
+          method,
+          body,
+          headers: heads
+            ? heads
+            : {
+                "Content-Type": "application/json",
+                // Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+          signal: httpAbortCtrl.signal,
+        });
+        const responseData = await response.json();
+        console.log("data from hook: ", responseData);
+        console.log("status from hook: ", response.status);
 
-      activeHttpRequests.current = activeHttpRequests.current.filter(
-        (reqCtrl) => reqCtrl !== httpAbortCtrl
-      );
-      if (!response.ok) {
-        throw new Error("response not ok ");
+        activeHttpRequests.current = activeHttpRequests.current.filter(
+          (reqCtrl) => reqCtrl !== httpAbortCtrl
+        );
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        } else if (response.status <= 210) {
+          return responseData;
+        }
+        setIsLoading(false);
+      } catch (e) {
+        setError(e.message);
+        setIsLoading(false);
       }
-      setIsLoading(false);
-      return responseData;
-    } catch (e) {
-      setError(e.message);
-      setIsLoading(false);
-      console.log(e.message);
-    }
-  }, []);
+    },
+    []
+  );
 
   const clearError = () => {
     setError(null);

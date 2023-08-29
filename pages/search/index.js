@@ -1,6 +1,5 @@
 import UsersList from "@/components/users-list";
-// import { getAllUsers, getFilteredUsers } from "@/dummy-data";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const CreatePost = (props) => {
   let users = props.users;
@@ -32,7 +31,7 @@ const CreatePost = (props) => {
             type="text"
             placeholder="Search"
             className="text-black px-3 py-1 w-full"
-            // onChange={handleSearch}
+            onChange={handleSearch}
           ></input>
           <button type="submit" className="py-2 px-5 border-white border-[1px]">
             <i className="text-2xl fa-solid fa-magnifying-glass"></i>

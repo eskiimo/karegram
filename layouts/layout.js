@@ -1,6 +1,5 @@
 import MainHeader from "./header";
 import { useAuthContext } from "@/context/auth.context";
-// import { useEffect, useState } from "react";
 const LayOut = (props) => {
   const auth = useAuthContext();
 

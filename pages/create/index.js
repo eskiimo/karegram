@@ -2,27 +2,24 @@ import ImageUpload from "@/components/UI/imagepicker";
 import Spinner from "@/components/UI/spinner";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { useHttpClient } from "@/hooks/http-hook";
 
 const CreatePost = () => {
   const [token, setToken] = useState("");
   const [file, setFile] = useState();
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const captionRef = useRef();
   const router = useRouter();
-  // const { isLoading, sendRequest } = useHttpClient();
+  // const { error, isLoading, clearError, sendRequest } = useHttpClient();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const post = {
-      image: file || "",
-      caption: captionRef.current.value,
-    };
-    // const formData = new FormData();
-    // formData.append("caption", captionRef.current.value);
-    // formData.append("image", file);
-    // console.log(post);
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    setIsLoading(true);
+    setError(null);
+
+    //     var myHeaders = new Headers();
+    // myHeaders.append(`Authorization", "Bearer ${token}`);
 
     var formData = new FormData();
     formData.append("caption", captionRef.current.value);
@@ -30,30 +27,29 @@ const CreatePost = () => {
 
     var requestOptions = {
       method: "POST",
-      headers: myHeaders,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
       redirect: "follow",
     };
-
     fetch("http://localhost:5000/api/posts/newpost", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-    // let res = await fetch(process.env.API + "/api/posts/newpost", {
-    //   method: "POST",
-    //   body: formData,
-    //   headers: {
-    //     Authorization: "bearer" + token,
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     console.log(result);
-    //     // router.push("/");
-    //   });
+      .then((response) => {
+        response.json();
+        if (response.status === 201) {
+          console.log("posted successfuly");
+          router.push("/");
+        }
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setError(error);
+      });
 
-    // create post request to backend
-    //
+    setIsLoading(false);
   };
   const handleImage = (file) => {
     setFile(file);
@@ -70,6 +66,14 @@ const CreatePost = () => {
   useEffect(() => {
     getLocalUser();
   });
+
+  if (!token) {
+    return (
+      <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
+        You Need To Be Logged In to Post. Dumbass!
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-[100vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center md:items-center ">
@@ -98,6 +102,7 @@ const CreatePost = () => {
               <Spinner />
             </div>
           )}
+          <p className="text-[#c03d3d] font-semibold">{error}</p>
         </form>
       </div>
     </div>

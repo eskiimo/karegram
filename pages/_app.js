@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
               name="description"
               content="instagram clone mady by @__eskiimo"
             />
-
+            <meta name="author" content="Kareem Kamal Nagy"></meta>
             <meta
               name="viewport"
               content="initial-scale=1.0, width=device-width"

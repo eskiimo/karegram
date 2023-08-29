@@ -68,33 +68,23 @@ const RegisterPage = () => {
   ///////////////////////////////////////////////
   const loginRequest = async () => {
     clearError();
-
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
+    let body = JSON.stringify({
       username: formState.inputs.username.value,
       password: formState.inputs.password.value,
     });
 
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
+    let response = await sendRequest(
+      process.env.API + "/api/users/login",
+      "POST",
+      body
+    );
 
-    fetch(process.env.API + "/api/users/login", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        auth.login(result.userId, result.token);
-
-        router.push("/");
-      })
-      .catch((error) => console.log("error", error));
-
-    // console.log(response);
+    if (!error) {
+      auth.login(response.userId, response.token);
+      router.push("/");
+    } else {
+      console.log(error);
+    }
   };
 
   const signupRequest = async () => {
@@ -105,20 +95,20 @@ const RegisterPage = () => {
       password: formState.inputs.password.value,
       repass: formState.inputs.repass.value,
     });
-    await sendRequest(process.env.API + "/api/users/signup", "POST", user)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        auth.login(response.userId, response.token);
-        router.push("/");
-      });
+    await sendRequest(process.env.API + "/api/users/signup", "POST", user);
+    if (!error) {
+      auth.login(response.userId, response.token);
+      router.push("/");
+    } else {
+      console.log(error);
+    }
   };
 
   const getLocalUser = async () => {
     const storedUser = await JSON.parse(localStorage.getItem("userData"));
 
     if (storedUser && storedUser.id) {
-      auth.login(storedUser);
+      auth.login(storedUser.id, storedUser.token);
       router.push("/");
     }
   };
@@ -188,7 +178,7 @@ const RegisterPage = () => {
             {isLogin ? "Login" : "Register"}
           </button>
         )}
-        <p>{error && error}</p>
+        <p className="text-[#f33131]">{error ? error : ""}</p>
       </form>
       <div className="flex justify-center">
         <h1>

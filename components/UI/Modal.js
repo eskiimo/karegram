@@ -1,5 +1,6 @@
 const ModalComp = (props) => {
   const { header, openModal, toggle } = props;
+
   const closeModal = () => {
     toggle();
   };

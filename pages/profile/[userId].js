@@ -5,10 +5,8 @@ import ProfileList from "@/components/posts/profile-list";
 import ModalComp from "@/components/UI/Modal";
 import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
-import Head from "next/head";
 import Image from "next/image";
 import { useHttpClient } from "@/hooks/http-hook";
-import Spinner from "@/components/UI/spinner";
 
 const UserPage = (props) => {
   const { isloading, sendRequest } = useHttpClient();
@@ -24,6 +22,7 @@ const UserPage = (props) => {
   const toggleModal = () => {
     setIsOpen((prev) => !prev);
   };
+
   const toggleFollowings = () => {
     setListOfUsers(displayedUser.followings);
     toggleModal();
@@ -35,32 +34,30 @@ const UserPage = (props) => {
     toggleModal();
     setChild("followers");
   };
+
   const toggleSettings = () => {
     toggleModal();
     setChild("settings");
   };
-  const handleFollow = async () => {
-    console.log("followed");
-    let other = router.query.userId;
-    let me = myId;
-    try {
-      let res = await sendRequest(
-        process.env.API + "/api/users/" + other + "/follow",
-        "PUT",
-        JSON.stringify({
-          id: me,
-        })
-      );
 
-      console.log(res);
-    } catch (e) {
-      console.log("e", e);
-    }
+  const handleFollow = async () => {
+    let other = router.query.userId;
+    let res = await sendRequest(
+      process.env.API + "/api/users/" + other + "/follow",
+      "PUT",
+      JSON.stringify({
+        id: myId,
+      })
+    );
+
+    console.log(res);
   };
+
   const handleLogOut = () => {
     auth.logout();
     router.push("/register");
   };
+
   const handleSettings = () => {};
 
   const getLocalUser = async () => {
@@ -68,33 +65,24 @@ const UserPage = (props) => {
     storedUser = await JSON.parse(localStorage.getItem("userData"));
     if (storedUser) {
       setMyId(storedUser.id);
-      console.log(myId, displayedUser);
     } else {
       console.log("storedUsers: ", storedUser);
     }
   };
+
   useEffect(() => {
     getLocalUser();
   }, [myId]);
 
-  if (!auth.isLoggedIn) {
+  if (!displayedUser) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
-        404
-      </div>
-    );
-  } else if (!displayedUser) {
-    return (
-      <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
-        404
+        No User With That ID || 404
       </div>
     );
   } else {
     return (
       <React.Fragment>
-        <Head>
-          <meta name="description" content={`karegram user `} />
-        </Head>
         {displayedUser !== null ? (
           <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
             <div className=" mt-5 flex flex-row justify-evenly items-center   h-[25vh]">

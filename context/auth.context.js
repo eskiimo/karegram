@@ -5,7 +5,7 @@ const AuthContext = createContext({
   isLoggedIn: true,
   userId: null,
   login: () => {},
-  logOut: () => {},
+  logout: () => {},
 });
 
 export function AppWrapper({ children }) {

@@ -73,7 +73,7 @@ const ImageUpload = (props) => {
           </>
         ) : (
           <div className="h-[100%] flex justify-center items-center">
-            <button onClick={pickImageHandler}>
+            <button onClick={pickImageHandler} type="button">
               <i className="text-5xl fa-solid fa-image"></i>
             </button>
           </div>
