@@ -7,7 +7,7 @@ const nextConfig = {
     ],
     domains: ["localhost", "onrender", "karegram.onrender.com"],
 
-    formats: ["image/avif", "image/webp", "**"],
+    formats: ["image/avif", "image/webp"],
   },
   env: {
     // API: "http://localhost:5000",

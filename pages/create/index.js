@@ -33,7 +33,7 @@ const CreatePost = () => {
       body: formData,
       redirect: "follow",
     };
-    fetch("http://localhost:5000/api/posts/newpost", requestOptions)
+    fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 201) {
@@ -46,7 +46,7 @@ const CreatePost = () => {
       })
       .catch((error) => {
         console.log("error", error);
-        setError(error);
+        setError(error.message);
       });
 
     setIsLoading(false);
