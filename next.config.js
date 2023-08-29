@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "onrender", "karegram.onrender.com"],
     formats: ["image/avif", "image/webp"],
   },
   env: {
