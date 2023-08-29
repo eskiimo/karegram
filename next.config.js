@@ -2,9 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "**" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "karegram.onrender.com", port: "" },
+    ],
     domains: ["localhost", "onrender", "karegram.onrender.com"],
-    formats: ["image/avif", "image/webp"],
+
+    formats: ["image/avif", "image/webp", "**"],
   },
   env: {
     // API: "http://localhost:5000",
