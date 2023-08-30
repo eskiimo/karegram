@@ -7,9 +7,9 @@ const nextConfig = {
     API: "https://karegram.onrender.com",
   },
   images: {
-    domains: ["karegram.onrender.com"],
+    domains: ["karegram.onrender.com", "localhost"],
 
-    // formats: ["image/avif", "**"],
+    formats: ["image/avif", "image/webp"],
   },
 };
 

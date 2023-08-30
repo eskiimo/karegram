@@ -28,10 +28,9 @@ export const useAuth = () => {
   }, []);
 
   useEffect(() => {
-    const storedData = localStorage.getItem("userData");
+    const storedData = JSON.parse(localStorage.getItem("userData"));
 
-    if (storedData) {
-      JSON.parse(storedData);
+    if (storedData && storedData.token) {
       login(storedData.userId, storedData.token);
     } else {
       setIsLoggedIn(false);
