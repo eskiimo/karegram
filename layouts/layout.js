@@ -5,7 +5,7 @@ const LayOut = (props) => {
   const auth = useAuthContext();
   return (
     <>
-      {auth.isLoggedIn ? <MainHeader /> : <></>}
+      {auth.isLoggedIn && <MainHeader />}
       <main className="h-[100vh] dark:bg-black">{props.children}</main>
     </>
   );

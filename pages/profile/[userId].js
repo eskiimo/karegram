@@ -63,6 +63,7 @@ const UserPage = (props) => {
   const getLocalUser = async () => {
     let storedUser;
     storedUser = await JSON.parse(localStorage.getItem("userData"));
+    console.log("stored data from profile :  ", storedUser);
     if (storedUser) {
       setMyId(storedUser.userId);
     } else {

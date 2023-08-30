@@ -14,8 +14,8 @@ function NavLinks() {
 
   const getLocalUser = async () => {
     let storedUser = await JSON.parse(localStorage.getItem("userData"));
-    if (storedUser && storedUser.id) {
-      setProfile(storedUser.id);
+    if (storedUser && storedUser.userId) {
+      setProfile(storedUser.userId);
     } else {
       router.push("/register");
     }

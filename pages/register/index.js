@@ -87,7 +87,7 @@ const RegisterPage = () => {
       body
     );
 
-    if (!error) {
+    if (response.userId && !error) {
       auth.login(response.userId, response.token);
       router.push("/");
     } else {
@@ -133,6 +133,8 @@ const RegisterPage = () => {
     if (storedUser && storedUser.userId) {
       auth.login(storedUser.userId, storedUser.token);
       router.push("/");
+    } else {
+      auth.logout();
     }
   };
   useEffect(() => {

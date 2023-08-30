@@ -21,9 +21,9 @@ export function AppWrapper({ children }) {
       value={{
         isLoggedIn: isLoggedIn,
         userId: userId,
+        token: token,
         login: login,
         logout: logout,
-        token: token,
       }}
     >
       {children}

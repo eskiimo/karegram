@@ -1,6 +1,21 @@
 import Image from "next/image";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 function Home(props) {
+  const router = useRouter();
+
+  const getLocalUser = async () => {
+    let storedUser = await JSON.parse(localStorage.getItem("userData"));
+    if (!storedUser && !storedUser.id) {
+      router.push("/register");
+    }
+  };
+
+  useEffect(() => {
+    getLocalUser();
+  }, []);
+
   return (
     <div
       id="homepage"
