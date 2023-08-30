@@ -1,4 +1,3 @@
-import { getEventById } from "@/dummy-data";
 import { useRouter } from "next/router";
 
 const PostDetails = () => {
