@@ -64,7 +64,7 @@ const UserPage = (props) => {
     let storedUser;
     storedUser = await JSON.parse(localStorage.getItem("userData"));
     if (storedUser) {
-      setMyId(storedUser.id);
+      setMyId(storedUser.userId);
     } else {
       console.log("storedUsers: ", storedUser);
     }

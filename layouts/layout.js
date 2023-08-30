@@ -6,7 +6,7 @@ const LayOut = (props) => {
   return (
     <>
       {auth.isLoggedIn ? <MainHeader /> : <></>}
-      <main>{props.children}</main>
+      <main className="h-[100vh] dark:bg-black">{props.children}</main>
     </>
   );
 };

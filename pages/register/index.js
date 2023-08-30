@@ -5,6 +5,8 @@ import { useHttpClient } from "@/hooks/http-hook";
 import { useForm } from "@/hooks/form-hook";
 import Spinner from "@/components/UI/spinner";
 import Input from "@/components/UI/input";
+import ImageUpload from "@/components/UI/imagepicker";
+
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -14,6 +16,7 @@ import {
 const RegisterPage = () => {
   const auth = useAuthContext();
   const router = useRouter();
+  const [file, setFile] = useState();
   const [isLogin, setisLogin] = useState(true);
 
   const { isloading, error, sendRequest, clearError } = useHttpClient();
@@ -52,6 +55,11 @@ const RegisterPage = () => {
     }
     setisLogin((prev) => !prev);
   };
+
+  const handleImage = (file) => {
+    setFile(file);
+  };
+
   const handleReg = (e) => {
     if (isLogin) {
       e.preventDefault();
@@ -89,31 +97,45 @@ const RegisterPage = () => {
 
   const signupRequest = async () => {
     clearError();
-    let user = JSON.stringify({
-      fullname: formState.inputs.fullname.value,
-      username: formState.inputs.username.value,
-      password: formState.inputs.password.value,
-      repass: formState.inputs.repass.value,
-    });
-    await sendRequest(process.env.API + "/api/users/signup", "POST", user);
-    if (!error) {
-      auth.login(response.userId, response.token);
-      router.push("/");
-    } else {
-      console.log(error);
-    }
+
+    var user = new FormData();
+    user.append("fullname", formState.inputs.fullname.value);
+
+    user.append("username", formState.inputs.username.value);
+    user.append("password", formState.inputs.password.value);
+    user.append("repass", formState.inputs.repass.value);
+    user.append("image", file);
+
+    await fetch(`${process.env.API}/api/users/signup`, {
+      method: "POST",
+      body: user,
+    })
+      .then((response) => {
+        response.json();
+        if (response.status === 201) {
+          console.log("user created");
+          auth.login(response.userId, response.token);
+
+          router.push("/");
+        }
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   const getLocalUser = async () => {
     const storedUser = await JSON.parse(localStorage.getItem("userData"));
 
-    if (storedUser && storedUser.id) {
-      auth.login(storedUser.id, storedUser.token);
+    if (storedUser && storedUser.userId) {
+      auth.login(storedUser.userId, storedUser.token);
       router.push("/");
     }
   };
   useEffect(() => {
-    auth.logout();
     getLocalUser();
   }, []);
   return (
@@ -127,15 +149,21 @@ const RegisterPage = () => {
         onSubmit={handleReg}
       >
         {!isLogin ? (
-          <Input
-            element="input"
-            id="fullname"
-            placeholder="Full Name"
-            type="text"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="please enter a fullname"
-            onInput={InputHandler}
-          ></Input>
+          <>
+            {" "}
+            <div className="h-[200px] w-[200px] border-black border-2 aspect-square rounded-full">
+              <ImageUpload onInput={handleImage} />
+            </div>
+            <Input
+              element="input"
+              id="fullname"
+              placeholder="Full Name"
+              type="text"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="please enter a fullname"
+              onInput={InputHandler}
+            ></Input>
+          </>
         ) : null}
         <Input
           id="username"

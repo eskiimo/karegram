@@ -4,12 +4,17 @@ import { useAuth } from "@/hooks/auth-hook";
 const AuthContext = createContext({
   isLoggedIn: true,
   userId: null,
+  token: null,
   login: () => {},
   logout: () => {},
 });
 
+export function useAuthContext() {
+  return useContext(AuthContext);
+}
+
 export function AppWrapper({ children }) {
-  const { login, logout, isLoggedIn, userId } = useAuth();
+  const { login, logout, isLoggedIn, userId, token } = useAuth();
 
   return (
     <AuthContext.Provider
@@ -18,13 +23,10 @@ export function AppWrapper({ children }) {
         userId: userId,
         login: login,
         logout: logout,
+        token: token,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuthContext() {
-  return useContext(AuthContext);
 }

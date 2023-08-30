@@ -2,25 +2,27 @@ import { useCallback, useState, useEffect } from "react";
 
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState();
+  const [userId, setUserId] = useState(null);
+  const [token, setToken] = useState(null);
 
   const login = useCallback((id, token) => {
     setIsLoggedIn(true);
-    setUser(user);
+    setUserId(id);
+    setToken(token);
 
     localStorage.setItem(
       "userData",
       JSON.stringify({
-        id: id,
+        userId: id,
         token: token,
       })
     );
   }, []);
 
   const logout = useCallback(() => {
-    setUser(null);
+    setUserId(null);
+    setToken(null);
     setIsLoggedIn(false);
-    console.log("triggered");
 
     localStorage.removeItem("userData");
   }, []);
@@ -30,10 +32,10 @@ export const useAuth = () => {
 
     if (storedData) {
       JSON.parse(storedData);
-      login(storedData.user);
+      login(storedData.userId, storedData.token);
     } else {
       setIsLoggedIn(false);
     }
   }, [login]);
-  return { user, isLoggedIn, login, logout };
+  return { userId, token, isLoggedIn, login, logout };
 };

@@ -29,7 +29,7 @@ const CreatePost = () => {
       body: formData,
       redirect: "follow",
     };
-    fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
+    await fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 201) {
