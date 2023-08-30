@@ -26,10 +26,10 @@ function NavBar() {
 
   return (
     <>
-      <div className="flex flex-row sm:hidden w-[100vw] bg-white dark:bg-black	 dark:text-white fixed top-0 justify-start border-b-[1px]  z-50">
+      <div className="flex flex-row sm:hidden h-[7vh] w-[100vw] bg-white dark:bg-black	 dark:text-white fixed top-0 justify-start items-center border-b-[1px]  z-50">
         <h1 className="text-2xl font-sigmar  my-2 mx-4">KareGram</h1>
       </div>
-      <div className="flex flex-row sm:hidden w-[100vw] bg-white dark:bg-black	 dark:text-white fixed bottom-0 justify-evenly  py-3  z-50">
+      <div className="flex flex-row sm:hidden h-[7vh] w-[100vw] bg-white dark:bg-black	 dark:text-white fixed bottom-0 justify-evenly  py-3  z-50">
         <div className="flex sm:my-3 items-center	 ">
           <Link href="/" className="text-xl active:font-bold">
             <div className="flex rounded-full p-1  flex-row items-center">

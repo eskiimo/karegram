@@ -84,8 +84,8 @@ const UserPage = (props) => {
     return (
       <React.Fragment>
         {displayedUser !== null ? (
-          <div className="w-full h-[100vh] sm:w-[75vw]  flex flex-col  dark:bg-black dark:text-white  justify-center overflow-y-scroll">
-            <div className=" mt-5 flex flex-row justify-evenly items-center   h-[25vh]">
+          <div className="w-full  sm:w-[75vw] py-[7vh]  flex flex-col  dark:bg-black dark:text-white  justify-center ">
+            <div className=" my-5 flex flex-row justify-evenly items-center   ">
               <Image
                 priority={true}
                 width={200}
@@ -146,7 +146,7 @@ const UserPage = (props) => {
               </button>
             </div>
 
-            <div className="h-[70vh] w-full justify-center md:w-[90%] mx-auto p-2">
+            <div className=" w-full justify-center md:w-[90%] mx-auto ">
               <ProfileList posts={displayedUser.posts} />
             </div>
             <div className="overflow-y-scroll">

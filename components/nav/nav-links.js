@@ -27,7 +27,7 @@ function NavLinks() {
   // };
   useEffect(() => {
     getLocalUser();
-  }, [profile]);
+  }, []);
 
   return (
     <div className="flex flex-row h-[100vh] sm:w-[25vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">

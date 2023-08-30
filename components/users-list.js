@@ -15,7 +15,7 @@ const UsersList = (props) => {
                 height={100}
                 alt="avatar"
                 src={process.env.API + "/" + user.image}
-                className=" border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3"
+                className=" w-[50px] aspect-square rounded-full mr-3"
               />
             </div>
 
