@@ -11,8 +11,8 @@ const UsersList = (props) => {
           <div key={index} className="flex flex-row justify-start my-3">
             <div className="bg-black border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3">
               <Image
-                width={100}
-                height={100}
+                width={200}
+                height={200}
                 alt="avatar"
                 src={process.env.API + "/" + user.image}
                 className=" w-[50px] aspect-square rounded-full mr-3"

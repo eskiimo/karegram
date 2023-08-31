@@ -203,7 +203,6 @@ export async function getStaticProps(context) {
     props: {
       user: user,
     },
-    revalidate: 30,
   };
 }
 
