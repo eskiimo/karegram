@@ -14,6 +14,7 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(typeof token);
     setIsLoading(true);
     setError(null);
 
@@ -32,6 +33,7 @@ const CreatePost = () => {
     await fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
       .then((response) => {
         response.json();
+        console.log(response);
         if (response.status === 201) {
           console.log("posted successfuly");
           router.push("/");
@@ -73,31 +75,34 @@ const CreatePost = () => {
 
   return (
     <div className="w-full h-[100vh] py-[7vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center md:items-center ">
-      <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
-        <div className="w-50 h-[40vh]  mx-auto flex aspect-square dark:bg-black border justify-center text-center content-center  items-center ">
-          <ImageUpload onInput={handleImage} />
-        </div>
-        <div className="p-2 flex justify-center">
-          <input
-            className="w-[90%] p-3 my-3 mx-auto border dark:bg-black dark:text-white"
-            type="text"
-            ref={captionRef}
-            placeholder="write a caption..."
-          ></input>
-        </div>
-        {!isLoading ? (
-          <button
-            className=" py-2 my-2 mx-auto w-[50%] max-w-[400px]  rounded-lg  bg-blue-500 text-white "
-            type="submit"
-          >
-            POST
-          </button>
-        ) : (
-          <div className="flex justify-center items-center m-auto w-full">
-            <Spinner />
+      <form
+        className="w-full md:w-[80%] h-[70%] border-2 flex flex-col "
+        onSubmit={handleSubmit}
+      >
+        <div className="w-full h-full flex flex-col md:flex-row  justify-start  ">
+          <ImageUpload shape="square" onInput={handleImage} />
+          <div className="flex flex-col justify-end md:mb-[5%] md:w-[50%]">
+            <input
+              className="w-[80%] p-3 my-3 mx-auto border dark:bg-black dark:text-white"
+              type="text"
+              ref={captionRef}
+              placeholder="write a caption..."
+            ></input>
+            {!isLoading ? (
+              <button
+                className=" py-2 my-2 mx-auto w-[80%] max-w-[400px]  rounded-lg  bg-blue-500 text-white "
+                type="submit"
+              >
+                POST
+              </button>
+            ) : (
+              <div className="flex justify-center items-center m-auto w-full">
+                <Spinner />
+              </div>
+            )}
+            <p className="text-[#c03d3d] font-semibold">{error}</p>
           </div>
-        )}
-        <p className="text-[#c03d3d] font-semibold">{error}</p>
+        </div>
       </form>
     </div>
   );
