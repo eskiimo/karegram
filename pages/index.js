@@ -4,7 +4,7 @@ function Home(props) {
   return (
     <div
       id="homepage"
-      className=" w-[100vw] sm:w-[75vw]  py-[7vh] md:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white md:border-l-[1px]  dark:border-l-gray-400	 z-0"
+      className=" w-[100vw] sm:w-[75vw]  py-[7vh] md:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
     >
       {props.posts.map((post) => {
         return (

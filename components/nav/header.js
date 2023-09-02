@@ -16,7 +16,7 @@ const MainHeader = () => {
     <>
       <header>
         {sw >= 640 ? (
-          <div className="nav fixed dark:bg-black dark:text-white  sm:flex h-screen border-r-2 border-b-slate-700 dark:border-b-slate-300">
+          <div className="nav fixed dark:bg-black dark:text-white  sm:flex h-screen border-r-[1px] border-b-slate-700 dark:border-b-slate-300">
             {" "}
             <NavLinks />
           </div>

@@ -153,7 +153,7 @@ const RegisterPage = () => {
         {!isLogin ? (
           <>
             {" "}
-            <div className="h-[200px] w-[200px] flex justify-center items-center border-black border-2 aspect-square">
+            <div className="w-[250px] flex justify-center items-center border-black border-[1px] aspect-square rounded-full overflow-hidden">
               <ImageUpload shape="circle" onInput={handleImage} />
             </div>
             <Input

@@ -1,5 +1,6 @@
 import ImageUpload from "@/components/UI/imagepicker";
 import Spinner from "@/components/UI/spinner";
+import { useAuthContext } from "@/context/auth.context";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
@@ -10,22 +11,22 @@ const CreatePost = () => {
   const [isLoading, setIsLoading] = useState(false);
   const captionRef = useRef();
   const router = useRouter();
-  // const { error, isLoading, clearError, sendRequest } = useHttpClient();
+  const auth = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(typeof token);
+
     setIsLoading(true);
     setError(null);
 
     var formData = new FormData();
     formData.append("caption", captionRef.current.value);
     formData.append("image", file);
-
+    console.log(auth.token);
     var requestOptions = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.token.toString()}`,
       },
       body: formData,
       redirect: "follow",
@@ -53,47 +54,27 @@ const CreatePost = () => {
     setFile(file);
   };
 
-  const getLocalUser = async () => {
-    let storedUser = await JSON.parse(localStorage.getItem("userData"));
-    if (storedUser) {
-      setToken(storedUser.token);
-    } else {
-      console.log(storedUser);
-    }
-  };
-  useEffect(() => {
-    getLocalUser();
-  });
-
-  if (!token) {
-    return (
-      <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
-        You Need To Be Logged In to Post. Dumbass!
-      </div>
-    );
-  }
-
   return (
     <div className="w-full h-[100vh] py-[7vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center md:items-center ">
       <form
-        className="w-full md:w-[80%] h-[70%] border-2 flex flex-col "
+        className="w-full md:w-[80%] h-[70%] flex flex-col "
         onSubmit={handleSubmit}
       >
-        <div className="w-full h-full flex flex-col md:flex-row  justify-start  ">
+        <div className="w-full h-full flex flex-col   justify-start  ">
           <ImageUpload shape="square" onInput={handleImage} />
-          <div className="flex flex-col justify-end md:mb-[5%] md:w-[50%]">
+          <div className="flex flex-row items-center justify-start md:mb-[5%] md:w-full">
             <input
-              className="w-[80%] p-3 my-3 mx-auto border dark:bg-black dark:text-white"
+              className=" w-5/6 p-3 my-3 ml-0 border-[1px] rounded-md dark:bg-black dark:text-white"
               type="text"
               ref={captionRef}
               placeholder="write a caption..."
             ></input>
             {!isLoading ? (
               <button
-                className=" py-2 my-2 mx-auto w-[80%] max-w-[400px]  rounded-lg  bg-blue-500 text-white "
+                className=" w-1/6 py-3 m-3 px-5 mx-1 float-right rounded-lg  bg-blue-500 text-white "
                 type="submit"
               >
-                POST
+                Upload
               </button>
             ) : (
               <div className="flex justify-center items-center m-auto w-full">

@@ -43,11 +43,7 @@ const ImageUpload = (props) => {
     setIsValid(false);
   };
   return (
-    <div
-      className={`ImagePicker flex flex-col  items-center ${
-        props.shape === "square" ? "md:w-[50%]" : "h-full  w-full rounded-full"
-      } `}
-    >
+    <div className=" flex flex-col  items-center ">
       <input
         type="file"
         ref={filePickerRef}
@@ -57,8 +53,8 @@ const ImageUpload = (props) => {
         onChange={pickedHandler}
       />
 
-      {file && props.shape === "square" ? (
-        <div className="flex flex-col items-center">
+      {file ? (
+        <div className="flex flex-col items-center relative justify-center">
           {previewUrl && (
             <img
               className="object-contain w-[95%] "
@@ -71,32 +67,13 @@ const ImageUpload = (props) => {
           <button
             onClick={clearFile}
             type="button"
-            className="h-[40px] w-[200px] flex items-center justify-center m-1 bg-gray-500 rounded-md "
+            className=" absolute hover:bg-red-300 hover:bg-opacity-25	 py-3 px-4 rounded-full aspect-square"
           >
-            Cancel
-          </button>
-        </div>
-      ) : file && props.shape === "circle" ? (
-        <div className="flex flex-col h-full w-full rounded-full items-center relative">
-          {previewUrl && (
-            <img
-              className="object-fil h-full w-full "
-              src={previewUrl}
-              alt="preview"
-            />
-          )}
-          {!previewUrl && <p>please pick an image</p>}
-
-          <button
-            onClick={clearFile}
-            type="button"
-            className="absolute bottom-[10%] h-[40px] w-[150px] flex items-center justify-center m-1 bg-gray-500 rounded-md "
-          >
-            Cancel
+            <i className="fa-solid fa-trash-can text-red-500 text-lg"></i>
           </button>
         </div>
       ) : (
-        <div className="h-[100%] flex justify-center items-center">
+        <div className="w-full aspect-video  border-[1px] flex justify-center items-center">
           <button onClick={pickImageHandler} type="button">
             <i className="text-5xl fa-solid fa-image"></i>
           </button>
