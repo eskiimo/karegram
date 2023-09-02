@@ -127,19 +127,19 @@ const RegisterPage = () => {
       });
   };
 
-  const getLocalUser = async () => {
-    const storedUser = await JSON.parse(localStorage.getItem("userData"));
+  // const getLocalUser = async () => {
+  //   const storedUser = await JSON.parse(localStorage.getItem("userData"));
 
-    if (storedUser && storedUser.userId) {
-      auth.login(storedUser.userId, storedUser.token);
-      router.push("/");
-    } else {
-      auth.logout();
-    }
-  };
-  useEffect(() => {
-    getLocalUser();
-  }, []);
+  //   if (storedUser && storedUser.userId) {
+  //     auth.login(storedUser.userId, storedUser.token);
+  //     router.push("/");
+  //   } else {
+  //     auth.logout();
+  //   }
+  // };
+  // useEffect(() => {
+  //   getLocalUser();
+  // }, []);
   return (
     <div className="w-full h-[100vh]   flex flex-col justify-evenly dark:bg-black dark:text-white">
       <div className="flex  justify-center">

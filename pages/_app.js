@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { AppWrapper, useAuthContext } from "@/context/auth.context";
-import LayOut from "@/layouts/layout";
+import LayOut from "@/components/layout";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }) {

@@ -1,4 +1,4 @@
-import MainHeader from "./header";
+import MainHeader from "./nav/header";
 import { useAuthContext } from "@/context/auth.context";
 
 const LayOut = (props) => {
