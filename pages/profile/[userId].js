@@ -87,10 +87,10 @@ const UserPage = (props) => {
         {displayedUser !== null ? (
           <div className="w-full  sm:w-[75vw] py-[7vh]  flex flex-col  dark:bg-black dark:text-white  justify-center ">
             <div className=" my-5 flex flex-row justify-evenly items-center   ">
-              <Image
-                priority={true}
-                width={200}
-                height={200}
+              <img
+                // priority={true}
+                // width={200}
+                // height={200}
                 alt="avatar"
                 src={process.env.API + "/" + displayedUser.image}
                 className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
