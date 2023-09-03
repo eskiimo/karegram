@@ -12,12 +12,12 @@ function ProfileList(props) {
         props.posts.map((post) => {
           return (
             <div key={post._id} className="flex  w-[31%]  aspect-square m-1	">
-              <img
+              <Image
                 className="w-full object-cover"
                 src={process.env.API + "/" + post.image}
                 alt={post.caption || "failed to load caption"}
-                // width={200}
-                // height={200}
+                width={200}
+                height={200}
               />
             </div>
           );

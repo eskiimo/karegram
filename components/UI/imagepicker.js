@@ -54,13 +54,9 @@ const ImageUpload = (props) => {
       />
 
       {file ? (
-        <div className="flex flex-col items-center relative justify-center">
+        <div className="flex flex-col items-center w-full m-3  relative justify-center">
           {previewUrl && (
-            <img
-              className="object-contain w-[95%] "
-              src={previewUrl}
-              alt="preview"
-            />
+            <img className="object-contain " src={previewUrl} alt="preview" />
           )}
           {!previewUrl && <p>please pick an image</p>}
 

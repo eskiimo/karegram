@@ -30,6 +30,23 @@ export default function Document() {
           src="https://kit.fontawesome.com/14646abff4.js"
           crossOrigin="anonymous"
         ></script>
+
+        <script
+          src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
+          crossorigin
+        ></script>
+
+        <script
+          src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"
+          crossorigin
+        ></script>
+
+        <script
+          src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
+          crossorigin
+        ></script>
+
+        <script>var Alert = ReactBootstrap.Alert;</script>
       </Head>
       <body>
         <div id="overlays" />
