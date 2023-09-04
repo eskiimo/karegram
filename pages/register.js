@@ -111,7 +111,6 @@ const RegisterPage = () => {
       body: user,
     })
       .then((response) => {
-        response.json();
         if (response.status === 201) {
           console.log("user created");
           auth.login(response.userId, response.token);
@@ -137,9 +136,9 @@ const RegisterPage = () => {
   //     auth.logout();
   //   }
   // };
-  // useEffect(() => {
-  //   getLocalUser();
-  // }, []);
+  useEffect(() => {
+    auth.logout();
+  }, []);
   return (
     <div className="w-full h-[100vh]   flex flex-col justify-evenly dark:bg-black dark:text-white">
       <div className="flex  justify-center">

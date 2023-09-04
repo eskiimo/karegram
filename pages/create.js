@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
 const CreatePost = () => {
-  const [token, setToken] = useState("");
   const [file, setFile] = useState();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +25,7 @@ const CreatePost = () => {
     var requestOptions = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${auth.token.toString()}`,
+        Authorization: `Bearer ${auth.token}`,
       },
       body: formData,
       redirect: "follow",
