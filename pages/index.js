@@ -1,4 +1,3 @@
-//import Image from "next/image";
 import { message, Popconfirm } from "antd";
 
 function Home(props) {
@@ -31,8 +30,6 @@ function Home(props) {
               className="w-[100vw]"
               src={process.env.API + "/" + post.image}
               alt={post.caption || "failed to load alt text ig .."}
-              
-              
             />
 
             <div className="flex flex-row justify-start mx-2">

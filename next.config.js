@@ -6,11 +6,6 @@ const nextConfig = {
     // API: "http://localhost:5000",
     API: "https://karegram.onrender.com",
   },
-  images: {
-    domains: ["karegram.onrender.com", "localhost"],
-
-    formats: ["image/avif", "image/webp"],
-  },
 };
 
 module.exports = nextConfig;

@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 function ProfileList(props) {
   console.log(props.posts);
   return (
@@ -12,12 +10,10 @@ function ProfileList(props) {
         props.posts.map((post) => {
           return (
             <div key={post._id} className="flex  w-[31%]  aspect-square m-1	">
-              <Image
+              <img
                 className="w-full object-cover"
                 src={process.env.API + "/" + post.image}
                 alt={post.caption || "failed to load caption"}
-                width={500}
-                height={500}
               />
             </div>
           );
