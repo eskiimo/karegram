@@ -16,8 +16,8 @@ function ProfileList(props) {
                 className="w-full object-cover"
                 src={process.env.API + "/" + post.image}
                 alt={post.caption || "failed to load caption"}
-                width={200}
-                height={200}
+                width={500}
+                height={500}
               />
             </div>
           );
