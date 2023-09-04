@@ -31,8 +31,8 @@ function Home(props) {
               className="w-[100vw]"
               src={process.env.API + "/" + post.image}
               alt={post.caption || "failed to load alt text ig .."}
-              width={500}
-              height={500}
+              width={700}
+              height={700}
             />
 
             <div className="flex flex-row justify-start mx-2">
