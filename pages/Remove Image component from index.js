@@ -1,4 +1,4 @@
-/import Image from "next/image";
+//import Image from "next/image";
 import { message, Popconfirm } from "antd";
 
 function Home(props) {
