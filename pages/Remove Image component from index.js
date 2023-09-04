@@ -27,12 +27,12 @@ function Home(props) {
                 <h2 className="font-bold dark:text-white">{post.creator}</h2>
               </div>
             </div>
-            <Image
+            <img
               className="w-[100vw]"
               src={process.env.API + "/" + post.image}
               alt={post.caption || "failed to load alt text ig .."}
-              width={700}
-              height={700}
+              
+              
             />
 
             <div className="flex flex-row justify-start mx-2">
