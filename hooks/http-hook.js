@@ -8,7 +8,7 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(
-    async (url, method = "GET", body = null, token = null, heads = null) => {
+    async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
@@ -16,25 +16,18 @@ export const useHttpClient = () => {
         const response = await fetch(url, {
           method,
           body,
-          headers: heads
-            ? heads
-            : {
-                "Content-Type": "application/json",
-                // Accept: "application/json",
-                Authorization: `Bearer ${token}`,
-              },
+          headers,
           signal: httpAbortCtrl.signal,
         });
         const responseData = await response.json();
-        console.log("data from hook: ", responseData);
-        console.log("status from hook: ", response.status);
+        console.log(response.status);
 
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
         if (!response.ok) {
           throw new Error(responseData.message);
-        } else if (response.status <= 210) {
+        } else if (response.status <= 210 && response.status >= 200) {
           return responseData;
         }
         setIsLoading(false);
@@ -45,7 +38,10 @@ export const useHttpClient = () => {
     },
     []
   );
-
+  // {
+  //   "Content-Type": "application/json",
+  //    Authorization: `Bearer ${token}`,
+  // }
   const clearError = () => {
     setError(null);
   };

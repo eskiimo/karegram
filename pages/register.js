@@ -54,6 +54,7 @@ const RegisterPage = () => {
       );
     }
     setisLogin((prev) => !prev);
+    clearError();
   };
 
   const handleImage = (file) => {
@@ -64,12 +65,10 @@ const RegisterPage = () => {
     if (isLogin) {
       e.preventDefault();
 
-      console.log("isLogin", isLogin, formState.inputs, "logging in");
       loginRequest();
     } else {
       e.preventDefault();
 
-      console.log("isSignup", isLogin, formState.inputs, "sigining up..");
       signupRequest();
     }
   };
@@ -84,10 +83,17 @@ const RegisterPage = () => {
     let response = await sendRequest(
       process.env.API + "/api/users/login",
       "POST",
-      body
+      (body = JSON.stringify({
+        username: formState.inputs.username.value,
+        password: formState.inputs.password.value,
+      })),
+      {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`,
+      }
     );
 
-    if (response.userId && !error) {
+    if (response.token) {
       auth.login(response.userId, response.token);
       router.push("/");
     } else {
@@ -100,30 +106,23 @@ const RegisterPage = () => {
 
     var user = new FormData();
     user.append("fullname", formState.inputs.fullname.value);
-
     user.append("username", formState.inputs.username.value);
     user.append("password", formState.inputs.password.value);
     user.append("repass", formState.inputs.repass.value);
     user.append("image", file);
 
-    await fetch(`${process.env.API}/api/users/signup`, {
-      method: "POST",
-      body: user,
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          console.log("user created");
-          auth.login(response.userId, response.token);
+    let response = await sendRequest(
+      process.env.API + "/api/users/signup",
+      "POST",
+      user
+    );
+    if (response.token) {
+      auth.login(response.userId, response.token);
 
-          router.push("/");
-        }
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+      router.push("/");
+    } else {
+      console.log(error);
+    }
   };
 
   // const getLocalUser = async () => {
