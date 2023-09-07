@@ -23,7 +23,9 @@ function Home(props) {
             <div className="flex flex-row m-2 ml-3 justify-start items-center	">
               <div className="w-[12%] max-w-[50px] aspect-square mr-2 rounded-full bg-black border-2 border-pink-700"></div>
               <div className="flex flex-col">
-                <h2 className="font-bold dark:text-white">{post.creator}</h2>
+                <h2 className="font-bold dark:text-white">
+                  {post.owner ? post.owner : post.creator}
+                </h2>
               </div>
             </div>
             <img

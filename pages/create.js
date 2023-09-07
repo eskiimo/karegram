@@ -16,12 +16,16 @@ const CreatePost = () => {
     e.preventDefault();
 
     setIsLoading(true);
+    // if (!auth.token) {
+    console.log("token :", auth.token);
+    //   return;
+    // }
     setError(null);
 
     var formData = new FormData();
     formData.append("caption", captionRef.current.value);
     formData.append("image", file);
-    console.log(auth.token);
+
     var requestOptions = {
       method: "POST",
       headers: {
@@ -33,15 +37,16 @@ const CreatePost = () => {
     await fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
       .then((response) => {
         response.json();
-        console.log(response);
+
         if (response.status === 201) {
           console.log("posted successfuly");
           router.push("/");
+        } else if (response.status >= 210) {
+          console.log("session expired u need to log in again");
+          // notification to log in again session expired
         }
       })
-      .then((result) => {
-        console.log(result);
-      })
+
       .catch((error) => {
         console.log("error", error);
         setError(error.message);
@@ -61,7 +66,7 @@ const CreatePost = () => {
       >
         <div className="w-full h-full flex flex-col  justify-start  ">
           <ImageUpload shape="square" onInput={handleImage} />
-          <div className="flex flex-row  h-[7vh] mb-[7vh]  items-center justify-center px-1 md:mb-[5%]  w-full">
+          <div className="flex flex-row  h-[7vh] mb-[7vh] md:mb-1  items-center justify-center px-1   w-full">
             <input
               className=" w-4/6 px-3 py-2 my-3 ml-0 border-2 rounded-md dark:bg-black dark:text-white"
               type="text"
