@@ -41,9 +41,11 @@ const CreatePost = () => {
         if (response.status === 201) {
           console.log("posted successfuly");
           router.push("/");
-        } else if (response.status >= 210) {
-          console.log("session expired u need to log in again");
+        } else if (response.status >= 300) {
+          console.log("session expired", response.message);
           // notification to log in again session expired
+          auth.logout();
+          router.push("/register");
         }
       })
 
