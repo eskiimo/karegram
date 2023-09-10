@@ -1,13 +1,22 @@
+import { React, useEffect, useState } from "react";
+
+// const posts = JSON.parse(localStorage.getItem("filteredPosts"));
 function ProfileList(props) {
-  console.log(props.posts);
+  const [postToDis, setPosts] = useState([]);
+
+  useEffect(() => {
+    // const posts = JSON.parse(localStorage.getItem("filteredPosts"));
+    setPosts(props.posts);
+  });
+
   return (
     <div className="flex flex-wrap justify-start">
-      {props.posts.length === 0 ? (
+      {postToDis.length === 0 ? (
         <div className="w-full flex justify-center">
           <h1>no posts yet</h1>
         </div>
       ) : (
-        props.posts.map((post) => {
+        postToDis.map((post) => {
           return (
             <div key={post._id} className="flex  w-[31%]  aspect-square m-1	">
               <img

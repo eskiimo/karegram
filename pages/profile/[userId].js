@@ -17,6 +17,7 @@ const UserPage = (props) => {
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
   const [myId, setMyId] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const auth = useAuthContext();
 
   const toggleModal = () => {
@@ -71,6 +72,19 @@ const UserPage = (props) => {
     }
   };
 
+  // const filterPosts = (list) => {
+  //   console.log("passed", list);
+  //   console.log(auth.allPosts);
+  //   let filteredPosts = [];
+  //   for (let id = 0; id < list.length; id++) {
+  //     console.log(id);
+  //     filteredPosts.push(
+  //       auth.allPosts.filter((post) => post._id === list[id])[0]
+  //     );
+  //   }
+  //   console.log("filtered: ", filteredPosts);
+  //   setFilteredPosts(filteredPosts);
+  // };
   useEffect(() => {
     getLocalUser();
   }, [myId]);
@@ -145,7 +159,7 @@ const UserPage = (props) => {
             </div>
 
             <div className=" w-full justify-center md:w-[90%] mx-auto ">
-              <ProfileList posts={displayedUser.posts} />
+              <ProfileList posts={filteredPosts} />
             </div>
             <div className="overflow-y-scroll">
               <ModalComp openModal={isOpen} toggle={toggleModal} header={child}>
@@ -193,6 +207,7 @@ export async function getStaticProps(context) {
   user = await fetch(process.env.API + "/api/users/" + userId, requestOptions)
     .then((response) => response.json())
     .then((result) => {
+      console.log(result);
       return result.user;
     })
     .catch((error) => console.error("error", error));
