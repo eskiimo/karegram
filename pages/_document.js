@@ -33,7 +33,7 @@ export default function Document() {
 
         <script
           src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
-          crossOrigin
+          crossOrigin="anonymous"
         ></script>
       </Head>
       <body>

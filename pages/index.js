@@ -1,10 +1,10 @@
 import { useAuthContext } from "@/context/auth.context";
 import { message, Popconfirm } from "antd";
+import Image from "next/image";
 import { useEffect } from "react";
 
 function Home(props) {
-  const auth = useAuthContext();
-
+  console.log(props);
   const confirm = (e) => {
     console.log(e);
   };
@@ -32,9 +32,16 @@ function Home(props) {
             </div>
             <img
               className="w-[100vw]"
-              src={process.env.API + "/" + post.image}
+              src={post.imageLink}
               alt={post.caption || "failed to load alt text ig .."}
             />
+            {/* <Image
+              className="w-[100vw]"
+              src={post.imageLink}
+              alt={post.caption || "failed to load alt text ig .."}
+              width={400}
+              height={400}
+            /> */}
 
             <div className="flex flex-row justify-start mx-2">
               <i className="text-xl mt-3 mr-5 ml-1 fa-regular fa-heart"></i>

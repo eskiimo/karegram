@@ -13,11 +13,11 @@ const UserPage = (props) => {
   const router = useRouter();
 
   const displayedUser = props.user;
+  const userPosts = props.userPosts;
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
   const [myId, setMyId] = useState("");
-  const [filteredPosts, setFilteredPosts] = useState([]);
   const auth = useAuthContext();
 
   const toggleModal = () => {
@@ -103,7 +103,7 @@ const UserPage = (props) => {
             <div className=" my-5 flex flex-row justify-evenly items-center   ">
               <img
                 alt="avatar"
-                src={process.env.API + "/" + displayedUser.image}
+                src={displayedUser.imageLink}
                 className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
               />
               <div className="info w-[35%] flex flex-col">
@@ -159,7 +159,7 @@ const UserPage = (props) => {
             </div>
 
             <div className=" w-full justify-center md:w-[90%] mx-auto ">
-              <ProfileList posts={filteredPosts} />
+              <ProfileList posts={userPosts} />
             </div>
             <div className="overflow-y-scroll">
               <ModalComp openModal={isOpen} toggle={toggleModal} header={child}>
@@ -199,6 +199,7 @@ const UserPage = (props) => {
 export async function getStaticProps(context) {
   const userId = context.params.userId;
   let user;
+  let userPosts;
   var requestOptions = {
     method: "GET",
     redirect: "follow",
@@ -211,9 +212,23 @@ export async function getStaticProps(context) {
       return result.user;
     })
     .catch((error) => console.error("error", error));
+
+  userPosts = await fetch(
+    process.env.API + "/api/posts/" + userId,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      if (result) {
+        console.log("user posts: ", result);
+        return result.posts;
+      }
+    })
+    .catch((error) => console.error("error", error));
   return {
     props: {
       user: user,
+      userPosts: userPosts,
     },
   };
 }
@@ -231,9 +246,12 @@ export async function getStaticPaths() {
       return result.users;
     })
     .catch((error) => console.error("error", error));
-  const paths = users.map((u) => ({
-    params: { userId: u.id },
-  }));
+
+  const paths = users
+    ? users.map((u) => ({
+        params: { userId: u.id },
+      }))
+    : [];
   return {
     paths: paths,
     // // fallback: false,
