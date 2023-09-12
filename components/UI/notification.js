@@ -11,7 +11,7 @@ function Noti() {
     <div
       className={`${
         auth.showNotification ? "fixed" : "hidden"
-      }  ${bg} rounded-md top-[10vh] md:left-[25vw] left-5 z-50`}
+      }  ${bg} rounded-md top-[10vh] right-10 z-50`}
     >
       <ToastContainer
         className="p-3 bg-opacity-25"
@@ -20,11 +20,6 @@ function Noti() {
       >
         <Toast className="">
           <Toast.Header closeButton={false}>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
             <strong className="me-auto">{auth.notification.head}</strong>
             {/* <small>11 mins ago</small> */}
           </Toast.Header>

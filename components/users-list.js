@@ -10,9 +10,11 @@ const UsersList = (props) => {
         return (
           <div key={index} className="flex flex-row justify-start my-3">
             <div className="bg-black border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3">
-              <img
+              <Image
                 alt="avatar"
-                src={user.imageLink}
+                width={100}
+                height={100}
+                src={user.imageLink || "/images/avatar-male.png"}
                 className=" w-[50px] aspect-square rounded-full mr-3"
               />
             </div>

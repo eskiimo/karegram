@@ -1,39 +1,41 @@
 import { useAuthContext } from "@/context/auth.context";
 import { message, Popconfirm } from "antd";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 function Home(props) {
-  const confirm = async (e) => {
-    if (e.type == "click") {
-      //   var requestOptions = {
-      //     method: "DELETE",
-      //     headers: {
-      //       Authorization: `Bearer ${auth.token}`,
-      //     },
-      //     redirect: "follow",
-      //   };
-      //   await fetch(`${process.env.API}/api/posts/`, requestOptions)
-      //     .then((response) => {
-      //       response.json();
-      //       console.log(response.status);
-      //       if (response.status === 201) {
-      //         // console.log();
-      //         auth.notify("Success", response.message || "Posted successfuly");
-      //         router.push("/");
-      //       } else if (response.status === 500) {
-      //         console.log("session expired", response.message);
-      //         auth.notify(
-      //           "Error",
-      //           response.message || "Something went wrong, Please Login again"
-      //         );
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       console.log("error", error);
-      //       setError(error.message);
-      //     });
-    }
+  const auth = useAuthContext();
+  const router = useRouter();
+
+  const deletePost = async (id) => {
+    console.log(id);
+    var requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+      },
+      redirect: "follow",
+    };
+    await fetch(`${process.env.API}/api/posts/${id}`, requestOptions)
+      .then((response) => {
+        response.json();
+        console.log(response);
+        if (response.status <= 210) {
+          auth.notify("Success", "Post Deleted");
+          router.push("/");
+        } else if (response.status === 401) {
+          auth.notify("Error", " 401 | forbidden or unauthorized ");
+        } else {
+          auth.notify(
+            "Error",
+            response.message || "500 | Something went wrong, Please try again"
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        auth.notify("Error", error || "Something went wrong, Please try again");
+      });
   };
   const cancel = (e) => {
     console.log(e);
@@ -48,7 +50,7 @@ function Home(props) {
       {props.posts.map((post) => {
         return (
           <div
-            key={post.id}
+            key={post._id}
             className="flex flex-col  w-[100%]  md:w-[50%]  mb-5  aspect-square	"
           >
             <div className="flex flex-row m-2 ml-3 justify-start items-center	">
@@ -57,18 +59,19 @@ function Home(props) {
                 <h2 className="font-bold dark:text-white">{post.owner}</h2>
               </div>
             </div>
-            <img
-              className="w-[100vw]"
-              src={post.imageLink}
-              alt={post.caption || "failed to load alt text ig .."}
-            />
-            {/* <Image
+            {/* <img 
+               className="w-[100vw]"
+               src={post.imageLink}
+               alt={post.caption || "failed to load alt text ig .."}
+             />
+             */}
+            <Image
               className="w-[100vw]"
               src={post.imageLink}
               alt={post.caption || "failed to load alt text ig .."}
               width={400}
               height={400}
-            /> */}
+            />
 
             <div className="flex flex-row justify-start mx-2">
               <i className="text-xl mt-3 mr-5 ml-1 fa-regular fa-heart"></i>
@@ -78,7 +81,9 @@ function Home(props) {
                 <Popconfirm
                   title="Delete the Post"
                   description="Are you sure to delete this post?"
-                  onConfirm={confirm}
+                  onConfirm={() => {
+                    deletePost(post._id);
+                  }}
                   onCancel={cancel}
                   okText="Yes"
                   cancelText="No"

@@ -1,12 +1,13 @@
-import { Button, Result } from "antd";
+import Image from "next/image";
 const NotFoundPage = () => {
   return (
     <div className="w-[100vw] sm:w-[75vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
-      <Result
-        status="404"
-        title="404"
-        subTitle="Sorry, the page you visited does not exist."
-        extra={<Button type="primary">Back Home</Button>}
+      <Image
+        className="w-50 object-contain"
+        src="/images/404.png"
+        alt="Not Found"
+        height={600}
+        width={600}
       />
     </div>
   );
