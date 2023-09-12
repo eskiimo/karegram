@@ -15,18 +15,18 @@ function ProfileList(props) {
         postToDis.map((post) => {
           return (
             <div key={post._id} className="flex  w-[31%]  aspect-square m-1	">
-              {/* <img
+              <img
                 className="w-full object-cover"
                 src={post.imageLink}
                 alt={post.caption || "failed to load caption"}
-              /> */}
-              <Image
+              />
+              {/* <Image
                 className="w-full object-cover"
                 src={post.imageLink}
                 alt={post.caption || "failed to load caption"}
                 height={200}
-                width={200}
-              />
+              width={200} 
+              /> */}
             </div>
           );
         })
