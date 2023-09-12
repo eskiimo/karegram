@@ -5,6 +5,23 @@ export const useAuth = () => {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
 
+  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setnotification] = useState({
+    head: "error",
+    message: "something went wrong",
+  });
+  const notify = (header, messagee) => {
+    setnotification({
+      head: header,
+      message: messagee,
+    });
+    setShowNotification(true);
+    setTimeout(function () {
+      setShowNotification(false);
+      setnotification({});
+    }, 5000);
+  };
+
   const login = useCallback((id, token) => {
     setIsLoggedIn(true);
     setUserId(id);
@@ -36,5 +53,15 @@ export const useAuth = () => {
       setIsLoggedIn(false);
     }
   }, [login]);
-  return { userId, token, isLoggedIn, login, logout };
+  return {
+    userId,
+    token,
+    isLoggedIn,
+    showNotification,
+    notification,
+    setnotification,
+    notify,
+    login,
+    logout,
+  };
 };

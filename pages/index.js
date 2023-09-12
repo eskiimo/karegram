@@ -4,9 +4,36 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 function Home(props) {
-  console.log(props);
-  const confirm = (e) => {
-    console.log(e);
+  const confirm = async (e) => {
+    if (e.type == "click") {
+      //   var requestOptions = {
+      //     method: "DELETE",
+      //     headers: {
+      //       Authorization: `Bearer ${auth.token}`,
+      //     },
+      //     redirect: "follow",
+      //   };
+      //   await fetch(`${process.env.API}/api/posts/`, requestOptions)
+      //     .then((response) => {
+      //       response.json();
+      //       console.log(response.status);
+      //       if (response.status === 201) {
+      //         // console.log();
+      //         auth.notify("Success", response.message || "Posted successfuly");
+      //         router.push("/");
+      //       } else if (response.status === 500) {
+      //         console.log("session expired", response.message);
+      //         auth.notify(
+      //           "Error",
+      //           response.message || "Something went wrong, Please Login again"
+      //         );
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       console.log("error", error);
+      //       setError(error.message);
+      //     });
+    }
   };
   const cancel = (e) => {
     console.log(e);
@@ -83,6 +110,7 @@ export async function getStaticProps() {
   posts = await fetch(process.env.API + "/api/posts", requestOptions)
     .then((response) => response.json())
     .then((result) => {
+      console.log("posts loaded: ", result.posts.length);
       return result.posts;
     })
     .catch((error) => console.error("error", error));

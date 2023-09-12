@@ -5,8 +5,11 @@ const AuthContext = createContext({
   isLoggedIn: true,
   userId: null,
   token: null,
+  showNotification: true,
+  notify: () => {},
   login: () => {},
   logout: () => {},
+  notification: {},
 });
 
 export function useAuthContext() {
@@ -14,7 +17,16 @@ export function useAuthContext() {
 }
 
 export function AppWrapper({ children }) {
-  const { login, logout, isLoggedIn, userId, token } = useAuth();
+  const {
+    login,
+    logout,
+    isLoggedIn,
+    userId,
+    token,
+    notify,
+    showNotification,
+    notification,
+  } = useAuth();
 
   return (
     <AuthContext.Provider
@@ -22,8 +34,11 @@ export function AppWrapper({ children }) {
         isLoggedIn: isLoggedIn,
         userId: userId,
         token: token,
+        showNotification: showNotification,
+        notify: notify,
         login: login,
         logout: logout,
+        notification: notification,
       }}
     >
       {children}

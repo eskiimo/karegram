@@ -2,6 +2,7 @@ import Head from "next/head";
 import { AppWrapper, useAuthContext } from "@/context/auth.context";
 import LayOut from "@/components/layout";
 import "@/styles/globals.css";
+import Noti from "@/components/UI/notification";
 
 export default function App({ Component, pageProps }) {
   const auth = useAuthContext();
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }) {
               auth.isLoggedIn ? "justify-end" : ""
             } dark:bg-black dark:text-white`}
           >
+            <Noti />
             <Component {...pageProps} />
           </div>
         </LayOut>

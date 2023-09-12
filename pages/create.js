@@ -37,15 +37,20 @@ const CreatePost = () => {
     await fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
       .then((response) => {
         response.json();
+        console.log(response.status);
 
         if (response.status === 201) {
-          console.log("posted successfuly");
+          // console.log();
+          auth.notify("Success", response.message || "Posted successfuly");
+
           router.push("/");
-        } else if (response.status >= 300) {
+        } else if (response.status === 500) {
           console.log("session expired", response.message);
-          // notification to log in again session expired
-          auth.logout();
-          router.push("/register");
+
+          auth.notify(
+            "Error",
+            response.message || "Something went wrong, Please Login again"
+          );
         }
       })
 
@@ -56,6 +61,7 @@ const CreatePost = () => {
 
     setIsLoading(false);
   };
+
   const handleImage = (file) => {
     setFile(file);
   };
@@ -87,6 +93,7 @@ const CreatePost = () => {
                 <Spinner />
               </div>
             )}
+
             <p className="text-[#c03d3d] font-semibold">{error}</p>
           </div>
         </div>

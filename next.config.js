@@ -8,11 +8,11 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "http", hostname: "drive.google.com", port: "" },
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
-    domains: ["localhost", "drive.google.com"],
-
-    formats: ["image/avif", "image/webp"],
   },
 };
 

@@ -2,15 +2,10 @@ import { React, useEffect, useState } from "react";
 
 // const posts = JSON.parse(localStorage.getItem("filteredPosts"));
 function ProfileList(props) {
-  const [postToDis, setPosts] = useState([]);
-
-  useEffect(() => {
-    // const posts = JSON.parse(localStorage.getItem("filteredPosts"));
-    setPosts(props.posts);
-  });
+  const postToDis = props.posts;
 
   return (
-    <div className="flex flex-wrap justify-start">
+    <div className="flex flex-wrap justify-start max-w-[1000px]">
       {postToDis.length === 0 ? (
         <div className="w-full flex justify-center">
           <h1>no posts yet</h1>

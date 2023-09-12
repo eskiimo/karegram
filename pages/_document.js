@@ -35,6 +35,22 @@ export default function Document() {
           src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
           crossOrigin="anonymous"
         ></script>
+        {/* ////////////////////////////// React Bootstrap  ////////////////////////////////////////// */}
+        <script
+          src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
+          crossOrigin="anonymous"
+        ></script>
+
+        <script
+          src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"
+          crossOrigin="anonymous"
+        ></script>
+
+        <script
+          src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
+          crossOrigin="anonymous"
+        ></script>
+        {/* /////////////////////////////////////////////////////////////////////////// */}
       </Head>
       <body>
         <div id="overlays" />

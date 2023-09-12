@@ -67,24 +67,9 @@ const UserPage = (props) => {
     console.log("stored data from profile :  ", storedUser);
     if (storedUser) {
       setMyId(storedUser.userId);
-    } else {
-      console.log("storedUsers: ", storedUser);
     }
   };
 
-  // const filterPosts = (list) => {
-  //   console.log("passed", list);
-  //   console.log(auth.allPosts);
-  //   let filteredPosts = [];
-  //   for (let id = 0; id < list.length; id++) {
-  //     console.log(id);
-  //     filteredPosts.push(
-  //       auth.allPosts.filter((post) => post._id === list[id])[0]
-  //     );
-  //   }
-  //   console.log("filtered: ", filteredPosts);
-  //   setFilteredPosts(filteredPosts);
-  // };
   useEffect(() => {
     getLocalUser();
   }, [myId]);
@@ -208,10 +193,10 @@ export async function getStaticProps(context) {
   user = await fetch(process.env.API + "/api/users/" + userId, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      console.log("Loaded user: ", result.user.username);
       return result.user;
     })
-    .catch((error) => console.error("error", error));
+    .catch((error) => console.error("error: ", error));
 
   userPosts = await fetch(
     process.env.API + "/api/posts/" + userId,
@@ -220,11 +205,11 @@ export async function getStaticProps(context) {
     .then((response) => response.json())
     .then((result) => {
       if (result) {
-        console.log("user posts: ", result);
+        console.log("user posts: ", result.posts.length);
         return result.posts;
       }
     })
-    .catch((error) => console.error("error", error));
+    .catch((error) => console.error("error: ", error));
   return {
     props: {
       user: user,
@@ -245,13 +230,11 @@ export async function getStaticPaths() {
     .then((result) => {
       return result.users;
     })
-    .catch((error) => console.error("error", error));
+    .catch((error) => console.error("error: ", error));
 
-  const paths = users
-    ? users.map((u) => ({
-        params: { userId: u.id },
-      }))
-    : [];
+  const paths = users.map((u) => ({
+    params: { userId: u.id },
+  }));
   return {
     paths: paths,
     // // fallback: false,
