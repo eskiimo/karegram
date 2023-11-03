@@ -45,7 +45,7 @@ function Home(props) {
   return (
     <div
       id="homepage"
-      className=" w-[100vw] sm:w-[75vw]  py-[7vh] md:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
+      className=" w-[100vw]    md:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
     >
       {props.posts.map((post) => {
         return (
@@ -77,20 +77,6 @@ function Home(props) {
               <i className="text-xl mt-3 mr-5 ml-1 fa-regular fa-heart"></i>
               <i className="text-xl mt-3 mr-5 fa-regular fa-comment"></i>
               <i className="text-xl mt-3 mr-5 fa-regular fa-paper-plane"></i>
-              <div className="">
-                <Popconfirm
-                  title="Delete the Post"
-                  description="Are you sure to delete this post?"
-                  onConfirm={() => {
-                    deletePost(post._id);
-                  }}
-                  onCancel={cancel}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <i className=" text-xl mt-3 mr-5 fa-solid fa-trash-can"></i>
-                </Popconfirm>
-              </div>
             </div>
             <div className="mx-3">
               <h1 className="dark:text-white text-[18px] font-semibold my-1">

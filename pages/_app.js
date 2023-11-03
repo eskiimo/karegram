@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }) {
             } dark:bg-black dark:text-white`}
           >
             <Noti />
-            {/* <Component {...pageProps} /> */}
+            <Component {...pageProps} />
           </div>
         </LayOut>
       </AppWrapper>

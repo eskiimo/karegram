@@ -14,19 +14,12 @@ const LayOut = (props) => {
   };
   return (
     <NextUIProvider>
-      {auth.isLoggedIn ? (
-        <MainHeader />
-      ) : (
-        <FloatButton
-          icon={<LoginOutlined />}
-          onClick={redirect}
-          type="primary"
-          style={{
-            right: "10%",
-          }}
-        />
-      )}
-      <main className="h-[100vh] dark:bg-black">{props.children}</main>
+      <div className="sm:flex sm:flex-row justify-between w-full m-0 p-0">
+        {auth.isLoggedIn && <MainHeader />}
+        <main className="h-[100vh] overflow-y-scroll dark:bg-black">
+          {props.children}
+        </main>
+      </div>
     </NextUIProvider>
   );
 };
