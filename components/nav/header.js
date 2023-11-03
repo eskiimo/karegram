@@ -1,30 +1,27 @@
 import NavBar from "@/components/nav/nav-bar";
 import NavLinks from "@/components/nav/nav-links";
 import { useEffect, useState } from "react";
+import { Switch } from "antd";
 
 const MainHeader = () => {
-  const [sw, setSw] = useState(1900);
-  const lol = () => {
-    setSw(window.innerWidth);
+  const [darkMood, setDarkMood] = useState(false);
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle("dark");
+    setDarkMood((prev) => !prev);
   };
-  useEffect(() => {
-    lol();
-    window.addEventListener("resize", lol);
-  });
 
   return (
     <>
       <header>
-        {sw >= 640 ? (
-          <div className="nav fixed dark:bg-black dark:text-white  sm:flex h-screen border-r-[1px] border-b-slate-700 dark:border-b-slate-300">
-            {" "}
-            <NavLinks />
-          </div>
-        ) : (
-          <div className="flex justify-center align-middle fixed  w-full h-[7%] bottom-0 dark:text-white border-1 border-t border-gray-700 p-2  z-50 ">
-            <NavBar />
-          </div>
-        )}
+        <h1 className="text-[2em] sm:text-[3em] text-black bg-white dark:bg-black dark:text-white font-sigmar p-3 border-b border-black dark:border-white">
+          KareGram
+        </h1>
+
+        <NavLinks />
+
+        <div className="fixed top-5 right-5">
+          <Switch defaultChecked onChange={toggleDarkMode} />
+        </div>
       </header>
     </>
   );

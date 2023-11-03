@@ -4,6 +4,8 @@ import { FloatButton } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
+import { NextUIProvider } from "@nextui-org/react";
+
 const LayOut = (props) => {
   const router = useRouter();
   const auth = useAuthContext();
@@ -11,7 +13,7 @@ const LayOut = (props) => {
     router.push("/register");
   };
   return (
-    <>
+    <NextUIProvider>
       {auth.isLoggedIn ? (
         <MainHeader />
       ) : (
@@ -25,7 +27,7 @@ const LayOut = (props) => {
         />
       )}
       <main className="h-[100vh] dark:bg-black">{props.children}</main>
-    </>
+    </NextUIProvider>
   );
 };
 

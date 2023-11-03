@@ -67,7 +67,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full  mb-[7vh] py-[7vh] dark:bg-black bg-slate-100   sm:w-[75vw]  flex justify-center md:items-center ">
+    <div className="w-full  mb-[7vh] py-[7vh] dark:bg-black    sm:w-[75vw]  flex justify-center md:items-center ">
       <form
         className="w-full md:w-[60%] border-2 shadow-md  flex flex-col items-between"
         onSubmit={handleSubmit}

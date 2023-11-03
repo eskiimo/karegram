@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import LinkItem from "./LinkItem";
 
 function NavLinks() {
   const [darkMood, setDarkMood] = useState(false);
@@ -30,22 +31,14 @@ function NavLinks() {
   }, []);
 
   return (
-    <div className="flex flex-row h-[100vh] sm:w-[25vw]  mt-5 justify-evenly  sm:flex-col sm:justify-start  p-5">
-      <h1 className="text-xl md:text-3xl font-sigmar m-3 mb-10">KareGram</h1>
-      {/* <button onClick={seeStored}>see stored</button> */}
-      <div className="flex sm:my-4 sm:pl-5 items-center	 ">
-        <Link href="/" className="text-xl active:font-bold">
-          <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
-            <i className="fa-solid  text-2xl dark:text-white fa-house"></i>{" "}
-            <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
-              {" "}
-              Home{" "}
-            </h1>
-          </div>
-        </Link>
-      </div>
+    // <div className="flex flex-row sm:hidden h-[7vh] w-[100vw] bg-white dark:bg-black	 dark:text-white fixed top-0 justify-start items-center border-b-[1px]  z-50">
 
-      <div className="flex   w-[20vw] sm:my-4 sm:pl-5 items-center	">
+    <div className="flex  flex-row justify-between  fixed sm:relative bottom-0 w-full sm:w-auto py-3 px-5 border-t sm:border-r  border-black dark:border-white  sm:h-full sm:justify-center sm:flex-col  bg-slate-600 z-[-1]">
+      <LinkItem name="Home" route="/">
+        <i className="fa-solid  text-[1.5em] dark:text-white fa-house"></i>{" "}
+      </LinkItem>
+
+      {/* <div className="flex   w-[20vw] sm:my-4 sm:pl-5 items-center	">
         <button onClick={toggleDarkMode} className="text-xl active:font-bold">
           <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
             {darkMood ? (
@@ -58,54 +51,27 @@ function NavLinks() {
             </h1>
           </div>
         </button>
-      </div>
-      <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
-        <Link href="/search" className="text-xl active:font-bold">
-          <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
-            <i className="fa-solid  text-2xl dark:text-white fa-magnifying-glass"></i>{" "}
-            <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
-              {" "}
-              Search{" "}
-            </h1>
-          </div>
-        </Link>
-      </div>
+      </div> */}
 
-      <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
-        <Link href="/create" className="text-xl active:font-bold">
-          <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
-            <i className="fa-solid  text-2xl dark:text-white fa-square-plus"></i>{" "}
-            <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
-              {" "}
-              Create{" "}
-            </h1>
-          </div>
-        </Link>
-      </div>
+      <LinkItem route="/search" name="Search">
+        <i className="fa-solid  text-[1.5em] dark:text-white fa-magnifying-glass"></i>{" "}
+      </LinkItem>
 
-      <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
-        <Link href="/notifications" className="text-xl active:font-bold">
-          <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
-            <i className="fa-solid  text-2xl dark:text-white fa-bell"></i>
-            <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
-              {" "}
-              Notifications{" "}
-            </h1>
-          </div>
-        </Link>
-      </div>
+      <LinkItem route="/messeges" name="Messages">
+        <i class="fa-brands text-[1.5em] dark:text-white fa-facebook-messenger"></i>
+      </LinkItem>
 
-      <div className="flex   rounded-full p-1 w-[20vw] sm:my-4 sm:pl-5 items-center	 ">
-        <Link href={`/profile/${profile}`} className="text-xl active:font-bold">
-          <div className="flex   rounded-full p-1 w-[20vw] flex-row items-center">
-            <i className="fa-solid text-2xl dark:text-white fa-user"></i>
-            <h1 className="dark:text-white hidden lg:flex  md:text-xl   ml-5">
-              {" "}
-              Profile{" "}
-            </h1>
-          </div>
-        </Link>
-      </div>
+      <LinkItem route="/notifications" name="Notifications">
+        <i className="fa-solid  text-[1.5em] dark:text-white fa-bell"></i>
+      </LinkItem>
+
+      <LinkItem route="/create" name="Create">
+        <i className="fa-solid  text-[1.5em] dark:text-white fa-square-plus"></i>{" "}
+      </LinkItem>
+
+      <LinkItem route={`/profile/${profile}`} name="Profile">
+        <i className="fa-solid text-[1.5em] dark:text-white fa-user"></i>
+      </LinkItem>
     </div>
   );
 }
