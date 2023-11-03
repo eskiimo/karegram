@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import ProfileList from "@/components/posts/profile-list";
 import ModalComp from "@/components/UI/Modal";
 import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
 import Image from "next/image";
 import { useHttpClient } from "@/hooks/http-hook";
+import Spinner from "@/components/UI/spinner";
 
-const UserPage = (props) => {
+const UserPage = () => {
   const { isloading, sendRequest } = useHttpClient();
   const router = useRouter();
 
-  const displayedUser = props.user;
-  const userPosts = props.userPosts;
   const [isOpen, setIsOpen] = useState(false);
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
   const [myId, setMyId] = useState("");
+  const [displayedUser, setDisplayedUser] = useState(null);
   const auth = useAuthContext();
 
   const toggleModal = () => {
@@ -50,8 +49,6 @@ const UserPage = (props) => {
         id: myId,
       })
     );
-
-    console.log(res);
   };
 
   const handleLogOut = () => {
@@ -61,29 +58,37 @@ const UserPage = (props) => {
 
   const handleSettings = () => {};
 
+  const getLinkUser = async () => {
+    let res = await sendRequest(
+      process.env.API + `/api/users/${router.query.userId}`,
+      "GET"
+    );
+    setDisplayedUser(res.user);
+  };
+
   const getLocalUser = async () => {
     let storedUser;
     storedUser = await JSON.parse(localStorage.getItem("userData"));
-    console.log("stored data from profile :  ", storedUser);
-    if (storedUser) {
+    if (storedUser && storedUser.userId) {
       setMyId(storedUser.userId);
     }
   };
 
   useEffect(() => {
     getLocalUser();
+    getLinkUser();
   }, [myId]);
 
   if (!displayedUser) {
     return (
       <div className="w-[100vw] sm:w-[80vw] h-[100vh] flex justify-center items-center dark:bg-black dark:text-white text-7xl">
-        No User With That ID || 404
+        404 | No User Found
       </div>
     );
   } else {
     return (
       <React.Fragment>
-        {displayedUser !== null ? (
+        {!isloading ? (
           <div className="w-full  sm:w-[75vw] py-[7vh]  flex flex-col  dark:bg-black dark:text-white  justify-center ">
             <div className=" my-5 flex flex-row justify-evenly items-center   ">
               <img
@@ -151,102 +156,38 @@ const UserPage = (props) => {
             </div>
 
             <div className=" w-full justify-center md:w-[90%] mx-auto ">
-              <ProfileList posts={userPosts} />
-            </div>
-            <div className="overflow-y-scroll">
-              <ModalComp openModal={isOpen} toggle={toggleModal} header={child}>
-                {child === "followings" ? (
-                  <UsersList toggle={toggleFollowings} list={listOfUsers} />
-                ) : child === "followers" ? (
-                  <UsersList toggle={toggleFollowings} list={listOfUsers} />
-                ) : child === "settings" ? (
-                  <div className="w-full flex flex-col justify-center items-center">
-                    <div className="w-full border-b-[1px] flex justify-center">
-                      <button className="m-3 p-3 " onClick={handleSettings}>
-                        SETTINGS
-                      </button>
-                    </div>
-                    <div className="w-full border-b-[1px] flex justify-center">
-                      <button className="m-3 p-3 " onClick={handleLogOut}>
-                        LOG OUT
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </ModalComp>
+              <ProfileList posts={displayedUser.posts} />
             </div>
           </div>
         ) : (
           <div className="flex w-full h-[100vh] justify-center items-center">
-            <h1>no user data 404</h1>
+            <Spinner />
           </div>
         )}
+
+        {/* ////////////////////////// MODAL  //////////////////////////////////////////////////// */}
+
+        <ModalComp openModal={isOpen} toggle={toggleModal} header={child}>
+          {child !== "settings" ? (
+            <UsersList list={listOfUsers} />
+          ) : (
+            <div className="w-full flex flex-col justify-center items-center">
+              <div className="w-full border-b-[1px] flex justify-center">
+                <button className="m-3 p-3 " onClick={handleSettings}>
+                  SETTINGS
+                </button>
+              </div>
+              <div className="w-full border-b-[1px] flex justify-center">
+                <button className="m-3 p-3 " onClick={handleLogOut}>
+                  LOG OUT
+                </button>
+              </div>
+            </div>
+          )}
+        </ModalComp>
       </React.Fragment>
     );
   }
 };
-
-export async function getStaticProps(context) {
-  const userId = context.params.userId;
-  let user;
-  let userPosts;
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  user = await fetch(process.env.API + "/api/users/" + userId, requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("Loaded user: ", result.user.username);
-      return result.user;
-    })
-    .catch((error) => console.error("error: ", error));
-
-  userPosts = await fetch(
-    process.env.API + "/api/posts/" + userId,
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      if (result) {
-        console.log("user posts: ", result.posts.length);
-        return result.posts;
-      }
-    })
-    .catch((error) => console.error("error: ", error));
-  return {
-    props: {
-      user: user,
-      userPosts: userPosts,
-    },
-  };
-}
-
-export async function getStaticPaths() {
-  let users;
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  users = await fetch(process.env.API + "/api/users", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      return result.users;
-    })
-    .catch((error) => console.error("error: ", error));
-
-  const paths = users.map((u) => ({
-    params: { userId: u.id },
-  }));
-  return {
-    paths: paths,
-    // // fallback: false,
-    fallback: "blocking",
-  };
-}
 
 export default UserPage;

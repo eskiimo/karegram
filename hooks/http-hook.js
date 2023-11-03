@@ -28,9 +28,9 @@ export const useHttpClient = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         } else if (response.status <= 210 && response.status >= 200) {
+          setIsLoading(false);
           return responseData;
         }
-        setIsLoading(false);
       } catch (e) {
         setError(e.message);
         setIsLoading(false);

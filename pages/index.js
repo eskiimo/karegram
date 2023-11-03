@@ -7,51 +7,47 @@ function Home(props) {
   const auth = useAuthContext();
   const router = useRouter();
 
-  const deletePost = async (id) => {
-    console.log(id);
-    var requestOptions = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${auth.token}`,
-      },
-      redirect: "follow",
-    };
-    await fetch(`${process.env.API}/api/posts/${id}`, requestOptions)
-      .then((response) => {
-        response.json();
-        console.log(response);
-        if (response.status <= 210) {
-          auth.notify("Success", "Post Deleted");
-          router.push("/");
-        } else if (response.status === 401) {
-          auth.notify("Error", " 401 | forbidden or unauthorized ");
-        } else {
-          auth.notify(
-            "Error",
-            response.message || "500 | Something went wrong, Please try again"
-          );
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-        auth.notify("Error", error || "Something went wrong, Please try again");
-      });
-  };
-  const cancel = (e) => {
-    console.log(e);
-    message.error("Click on No");
-  };
+  // const deletePost = async (id) => {
+  //   console.log(id);
+  //   var requestOptions = {
+  //     method: "DELETE",
+  //     headers: {
+  //       Authorization: `Bearer ${auth.token}`,
+  //     },
+  //     redirect: "follow",
+  //   };
+  //   await fetch(`${process.env.API}/api/posts/${id}`, requestOptions)
+  //     .then((response) => {
+  //       response.json();
+  //       console.log(response);
+  //       if (response.status <= 210) {
+  //         auth.notify("Success", "Post Deleted");
+  //         router.push("/");
+  //       } else if (response.status === 401) {
+  //         auth.notify("Error", " 401 | forbidden or unauthorized ");
+  //       } else {
+  //         auth.notify(
+  //           "Error",
+  //           response.message || "500 | Something went wrong, Please try again"
+  //         );
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       auth.notify("Error", error || "Something went wrong, Please try again");
+  //     });
+  // };
 
   return (
     <div
       id="homepage"
-      className=" w-[100vw]    md:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
+      className=" w-full    sm:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
     >
       {props.posts.map((post) => {
         return (
           <div
             key={post._id}
-            className="flex flex-col  w-[100%]  md:w-[50%]  mb-5  aspect-square	"
+            className="flex flex-col  w-[100%]  md:w-[40%]  mb-5  aspect-square	"
           >
             <div className="flex flex-row m-2 ml-3 justify-start items-center	">
               <div className="w-[12%] max-w-[50px] aspect-square mr-2 rounded-full bg-black border-2 border-pink-700"></div>

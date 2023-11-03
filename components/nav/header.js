@@ -11,7 +11,7 @@ const MainHeader = () => {
 
   return (
     <>
-      <header className="w-fit p-10">
+      <header className="sm:w-fit sm:p-10">
         {/* <div className="sm:h-[100vh] fixed top-0 pl-5 pr-10 w-fit  sm:flex sm:flex-col sm:justify-between left-0 right-0  border-b sm:border-r border-black dark:border-white z-[99]"> */}
         <h1 className="text-[2em] sm:mb-10 sm:text-[2em] text-black bg-white dark:bg-black dark:text-white font-sigmar p-3 ">
           KareGram
