@@ -6,7 +6,7 @@ export const useAuth = () => {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
 
-  const router = useNavigate();
+  const router = useRouter();
 
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setnotification] = useState({
