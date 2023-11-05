@@ -19,7 +19,7 @@ const RegisterPage = () => {
   const [file, setFile] = useState();
   const [isLogin, setisLogin] = useState(true);
 
-  const { isloading, error, sendRequest, clearError } = useHttpClient();
+  const { isloading, Neterror, sendRequest, clearError } = useHttpClient();
   const [formState, InputHandler, setFormData] = useForm(
     {
       username: { value: "", isValid: false },
@@ -57,18 +57,14 @@ const RegisterPage = () => {
     clearError();
   };
 
-  const handleImage = (file) => {
-    setFile(file);
-  };
+  // const handleImage =
+  // };
 
   const handleReg = (e) => {
+    e.preventDefault();
     if (isLogin) {
-      e.preventDefault();
-
       loginRequest();
     } else {
-      e.preventDefault();
-
       signupRequest();
     }
   };
@@ -83,10 +79,7 @@ const RegisterPage = () => {
     let response = await sendRequest(
       process.env.API + "/api/users/login",
       "POST",
-      (body = JSON.stringify({
-        username: formState.inputs.username.value,
-        password: formState.inputs.password.value,
-      })),
+      body,
       {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`,
@@ -96,8 +89,6 @@ const RegisterPage = () => {
     if (response.token) {
       auth.login(response.userId, response.token);
       router.push("/");
-    } else {
-      console.log(error);
     }
   };
 
@@ -114,30 +105,21 @@ const RegisterPage = () => {
     let response = await sendRequest(
       process.env.API + "/api/users/signup",
       "POST",
-      user
+      user,
+      {
+        "Content-Type": "application/json",
+      }
     );
     if (response.token) {
       auth.login(response.userId, response.token);
-
       router.push("/");
-    } else {
-      console.log(error);
     }
   };
 
-  // const getLocalUser = async () => {
-  //   const storedUser = await JSON.parse(localStorage.getItem("userData"));
-
-  //   if (storedUser && storedUser.userId) {
-  //     auth.login(storedUser.userId, storedUser.token);
-  //     router.push("/");
-  //   } else {
-  //     auth.logout();
-  //   }
-  // };
   useEffect(() => {
     auth.logout();
   }, []);
+
   return (
     <div className="w-full h-[100vh]   flex flex-col justify-evenly dark:bg-black dark:text-white">
       <div className="flex  justify-center">
@@ -147,12 +129,13 @@ const RegisterPage = () => {
       <form
         className=" flex flex-col justify-center items-center py-5 m-3"
         onSubmit={handleReg}
+        // action={create}  in case of local next api
       >
         {!isLogin ? (
           <>
             {" "}
             <div className="w-[250px] flex justify-center items-center border-black border-[1px] aspect-square rounded-full overflow-hidden">
-              <ImageUpload shape="circle" onInput={handleImage} />
+              <ImageUpload shape="circle" onInput={(file) => setFile(file)} />
             </div>
             <Input
               element="input"
@@ -206,7 +189,7 @@ const RegisterPage = () => {
             {isLogin ? "Login" : "Register"}
           </button>
         )}
-        <p className="text-[#f33131]">{error ? error : ""}</p>
+        {Neterror && <p className="text-[#f33131]">{Neterror}</p>}
       </form>
       <div className="flex justify-center">
         <h1>

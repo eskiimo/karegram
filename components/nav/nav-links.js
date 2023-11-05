@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { Badge } from "@nextui-org/react";
 import LinkItem from "./LinkItem";
 
 function NavLinks() {
@@ -33,7 +34,9 @@ function NavLinks() {
       </LinkItem>
 
       <LinkItem route="/messeges" name="Messages">
-        <i className="fa-brands text-[1.5em] dark:text-white fa-facebook-messenger"></i>
+        <Badge content={5} color="danger">
+          <i className="fa-brands text-[1.5em] dark:text-white fa-facebook-messenger"></i>
+        </Badge>
       </LinkItem>
 
       <LinkItem route="/notifications" name="Notifications">

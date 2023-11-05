@@ -16,10 +16,7 @@ const CreatePost = () => {
     e.preventDefault();
 
     setIsLoading(true);
-    // if (!auth.token) {
-    console.log("token :", auth.token);
-    //   return;
-    // }
+    // console.log("token :", auth.token);
     setError(null);
 
     var formData = new FormData();
@@ -37,16 +34,12 @@ const CreatePost = () => {
     await fetch(`${process.env.API}/api/posts/newpost`, requestOptions)
       .then((response) => {
         response.json();
-        console.log(response.status);
 
         if (response.status === 201) {
-          // console.log();
           auth.notify("Success", response.message || "Posted successfuly");
 
           router.push("/");
         } else if (response.status === 500) {
-          console.log("session expired", response.message);
-
           auth.notify(
             "Error",
             response.message || "Something went wrong, Please Login again"
@@ -55,7 +48,6 @@ const CreatePost = () => {
       })
 
       .catch((error) => {
-        console.log("error", error);
         setError(error.message);
       });
 

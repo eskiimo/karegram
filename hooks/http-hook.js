@@ -3,9 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useHttpClient = () => {
   const [isloading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [Neterror, setError] = useState(null);
 
   const activeHttpRequests = useRef([]);
+  // to cancel aborted request to avoid updating state in a non-active component
 
   const sendRequest = useCallback(
     async (url, method = "GET", body = null, headers = {}) => {
@@ -13,24 +14,26 @@ export const useHttpClient = () => {
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
       try {
-        const response = await fetch(url, {
-          method,
-          body,
-          headers,
-          signal: httpAbortCtrl.signal,
-        });
-        const responseData = await response.json();
-        console.log(response.status);
+        const response = await fetch(
+          url,
+          {
+            method,
+            body,
+            headers,
+            signal: httpAbortCtrl.signal,
+          }
+          // { cache: "no-store" }
+        );
 
+        let responseData = await response.json();
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
         if (!response.ok) {
           throw new Error(responseData.message);
-        } else if (response.status <= 210 && response.status >= 200) {
-          setIsLoading(false);
-          return responseData;
         }
+        setIsLoading(false);
+        return responseData;
       } catch (e) {
         setError(e.message);
         setIsLoading(false);
@@ -38,10 +41,7 @@ export const useHttpClient = () => {
     },
     []
   );
-  // {
-  //   "Content-Type": "application/json",
-  //    Authorization: `Bearer ${token}`,
-  // }
+
   const clearError = () => {
     setError(null);
   };
@@ -50,5 +50,5 @@ export const useHttpClient = () => {
       activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
     };
   }, []);
-  return { isloading, error, sendRequest, clearError };
+  return { isloading, Neterror, sendRequest, clearError };
 };

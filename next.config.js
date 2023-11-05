@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
 
   env: {
-    // API: "http://localhost:5000",
-    API: "https://karegram.onrender.com",
+    API: "http://localhost:5000",
+    // API: "https://karegram.onrender.com",
   },
   images: {
     remotePatterns: [
