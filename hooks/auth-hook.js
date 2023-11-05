@@ -1,9 +1,12 @@
 import { useCallback, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
+
+  const router = useNavigate();
 
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setnotification] = useState({
@@ -40,7 +43,7 @@ export const useAuth = () => {
     setUserId(null);
     setToken(null);
     setIsLoggedIn(false);
-
+    router.push("/register");
     localStorage.removeItem("userData");
   }, []);
 
@@ -50,7 +53,7 @@ export const useAuth = () => {
     if (storedData && storedData.token) {
       login(storedData.userId, storedData.token);
     } else {
-      setIsLoggedIn(false);
+      logout();
     }
   }, [login]);
   return {
