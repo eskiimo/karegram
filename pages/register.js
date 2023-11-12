@@ -20,6 +20,7 @@ const RegisterPage = () => {
   const [isLogin, setisLogin] = useState(true);
 
   const { isloading, Neterror, sendRequest, clearError } = useHttpClient();
+
   const [formState, InputHandler, setFormData] = useForm(
     {
       username: { value: "", isValid: false },
