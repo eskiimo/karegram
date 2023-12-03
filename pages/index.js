@@ -1,10 +1,8 @@
 import { useAuthContext } from "@/context/auth.context";
-import { message, Popconfirm } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useHttpClient } from "@/hooks/http-hook";
 import { useEffect, useState } from "react";
-import SpinnerScreen from "@/components/UI/spinnerScreen";
 
 function Home() {
   const auth = useAuthContext();
@@ -13,17 +11,18 @@ function Home() {
   const { isloading, Neterror, clearError, sendRequest } = useHttpClient();
 
   useEffect(() => {
-    const getAllPosts = async () => {
+    (async () => {
       let response = await sendRequest(`${process.env.API}/api/posts`);
-      if (response) setPosts(response.posts);
-    };
-    getAllPosts();
+      if (response) {
+        setPosts(response.posts);
+      }
+    })();
   }, []);
 
   return (
     <div
       id="homepage"
-      className=" w-full    sm:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
+      className=" w-full  sm:pt-2   flex flex-col items-center justify-center dark:bg-black dark:text-white z-0"
     >
       {posts.length === 0 ? (
         <p>No Posts Availavle</p>

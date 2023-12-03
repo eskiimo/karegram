@@ -5,7 +5,7 @@ module.exports = {
   reactStrictMode: true,
 
   env: {
-    // API: "http://localhost:5000",
+    // API: "http://localhost:8000",
     API: "https://karegram.onrender.com",
   },
   images: {
