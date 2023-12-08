@@ -6,7 +6,7 @@ module.exports = {
 
   env: {
     // API: "http://localhost:8000",
-    API: "https://karegram.onrender.com",
+    API: "https://54.81.42.166:8000",
   },
   images: {
     remotePatterns: [
