@@ -1,14 +1,9 @@
 import { useAuthContext } from "@/context/auth.context";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useHttpClient } from "@/hooks/http-hook";
-import { useEffect, useState } from "react";
-const https = require("https");
+import { sendreq } from "@/hooks/static-https";
 
 function Home({ posts }) {
   const auth = useAuthContext();
-  const router = useRouter();
-  const { isloading, Neterror, clearError, sendRequest } = useHttpClient();
 
   return (
     <div
@@ -62,33 +57,9 @@ function Home({ posts }) {
     </div>
   );
 }
-const options = {
-  method: "GET",
-  rejectUnauthorized: false,
-};
 
 export const getStaticProps = async () => {
-  const sendreq = async () => {
-    return new Promise((resolve, reject) => {
-      https.get(`${process.env.API}/api/posts`, options, (res) => {
-        let body = "";
-        res.on("data", (data) => {
-          body += data;
-        });
-        res.on("end", () => {
-          resolve(body);
-        });
-        res.on("error", (error) => {
-          console.log(error);
-          reject();
-        });
-      });
-    });
-  };
-  // fetch(`${process.env.API}/api/posts`);
-  const res = await sendreq();
-  const posts = await JSON.parse(res);
-  console.log("res:;", posts);
+  const posts = await sendreq(`${process.env.API}/api/posts`);
   return { props: posts };
 };
 

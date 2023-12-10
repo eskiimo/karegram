@@ -7,6 +7,7 @@ import { useAuthContext } from "@/context/auth.context";
 import Image from "next/image";
 import { useHttpClient } from "@/hooks/http-hook";
 import Spinner from "@/components/UI/spinner";
+import { sendreq } from "@/hooks/static-https";
 
 const UserPage = (props) => {
   const { user } = props;
@@ -195,9 +196,10 @@ const options = {
 export async function getStaticProps(context) {
   const { params } = context;
   const userId = params.userId;
-  let res = await fetch(`${process.env.API}/api/users/${userId}`, options);
-  let response = await res.json();
-  let user = response.user;
+  let res = await sendreq(`${process.env.API}/api/users/${userId}`);
+
+  console.log("user fetched is :", res.user);
+  let user = res.user;
   return {
     props: {
       user,
@@ -207,17 +209,14 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  let res;
-  try {
-    res = await fetch(`${process.env.API}/api/users`, options);
-  } catch (e) {
-    console.log(e);
-  }
-  let result = await res.json();
-  let ids = result.users.map((user) => user.id);
+  const res = await sendreq(`${process.env.API}/api/users`);
+
+  console.log("users fetched :", res.users.length);
+
+  let ids = res.users.map((user) => user.id);
 
   let params = ids.map((u) => ({ params: { userId: u } }));
-  // console.log("params", params);
+
   return {
     paths: params,
     fallback: "blocking",
