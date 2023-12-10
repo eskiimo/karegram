@@ -52,7 +52,7 @@ export async function getStaticProps() {
     redirect: "follow",
   };
 
-  users = await fetch(process.env.API + "/api/users", requestOptions)
+  users = await fetch(process.env.API + "api/users", requestOptions)
     .then((response) => response.json())
     .then((result) => {
       return result.users;

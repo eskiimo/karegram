@@ -8,7 +8,8 @@ import Image from "next/image";
 import { useHttpClient } from "@/hooks/http-hook";
 import Spinner from "@/components/UI/spinner";
 
-const UserPage = () => {
+const UserPage = (props) => {
+  const { user } = props;
   const { isloading, sendRequest } = useHttpClient();
   const router = useRouter();
 
@@ -16,7 +17,6 @@ const UserPage = () => {
   const [child, setChild] = useState("");
   const [listOfUsers, setListOfUsers] = useState([]);
   const [myId, setMyId] = useState("");
-  const [displayedUser, setDisplayedUser] = useState(null);
   const auth = useAuthContext();
 
   const toggleModal = () => {
@@ -24,13 +24,13 @@ const UserPage = () => {
   };
 
   const toggleFollowings = async () => {
-    await getListByIds(displayedUser.followings);
+    await getListByIds(user.followings);
     toggleModal();
     setChild("followings");
   };
 
   const toggleFollowers = async () => {
-    await getListByIds(displayedUser.followers);
+    await getListByIds(user.followers);
     toggleModal();
     setChild("followers");
   };
@@ -74,49 +74,40 @@ const UserPage = () => {
   const handleSettings = () => {};
 
   useEffect(() => {
-    const getLinkUser = async () => {
-      let res = await sendRequest(
-        process.env.API + `/api/users/${router.query.userId}`,
-        "GET"
-      );
-      if (res) {
-        setDisplayedUser(res.user);
-      }
-    };
-
-    const getLocalUser = async () => {
+    (async () => {
       let storedUser;
       storedUser = await JSON.parse(localStorage.getItem("userData"));
       if (storedUser && storedUser.userId) {
         setMyId(storedUser.userId);
       }
-    };
-    getLocalUser();
-    getLinkUser();
+    })();
   }, [myId]);
 
   return (
     <React.Fragment>
-      {!isloading && displayedUser ? (
+      {!isloading && user ? (
         <div className="w-full  sm:w-[75vw] py-[7vh]  flex flex-col  dark:bg-black dark:text-white  justify-center ">
           <div className=" my-5 flex flex-row justify-evenly items-center   ">
-            {/* <img
+            <img
               alt="avatar"
-              src={displayedUser.imageLink}
+              src={process.env.API + user.imageLink}
               className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
-            /> */}
-            <Image
+            />
+            {/* <Image
               alt="avatar"
               width={200}
               height={200}
-              src={displayedUser.imageLink || "/images/avatar-male.png"}
+              src={
+                "https://localhost:8000/" + user.imageLink ||
+                "/images/avatar-male.png"
+              }
               className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
-            />
+            /> */}
             <div className="info w-[35%] flex flex-col">
               <div className="flex flex-row justify-start items-center">
                 {" "}
-                <h3 className="mr-10">{displayedUser.username}</h3>{" "}
-                {myId === displayedUser.id ? (
+                <h3 className="mr-10">{user.username}</h3>{" "}
+                {myId === user._id ? (
                   <button onClick={toggleSettings}>
                     <i className="fa-solid fa-gear"></i>{" "}
                   </button>
@@ -130,19 +121,19 @@ const UserPage = () => {
                 )}
               </div>
               <div className="hidden sm:flex sm:flex-row md:m-2 mb-2 justify-between">
-                <h1>{displayedUser.posts.length} posts </h1>
+                <h1>{user.posts.length} posts </h1>
                 <button onClick={toggleFollowers}>
-                  {displayedUser.followers.length} followers{" "}
+                  {user.followers.length} followers{" "}
                 </button>
                 <button onClick={toggleFollowings}>
-                  {displayedUser.followings.length} followings{" "}
+                  {user.followings.length} followings{" "}
                 </button>
               </div>
 
               <h1 className="text-md sm:text-2xl mt-2 font-medium	">
-                {displayedUser.fullname}
+                {user.fullname}
               </h1>
-              <h1> {displayedUser.bio}</h1>
+              <h1> {user.bio}</h1>
               <a
                 className="font-medium text-blue-800"
                 href="https:eskiimo.netlify.app"
@@ -154,18 +145,18 @@ const UserPage = () => {
           </div>
           <div className="flex flex-row sm:hidden px-8 py-3 border-t-[1px] border-b-[1px]  justify-between">
             {/* link to list of certain users */}
-            <h1>{displayedUser.posts.length} posts </h1>
+            <h1>{user.posts.length} posts </h1>
             <button onClick={toggleFollowers}>
               {" "}
-              {displayedUser.followers.length} followers{" "}
+              {user.followers.length} followers{" "}
             </button>
             <button onClick={toggleFollowings}>
-              {displayedUser.followings.length} followings{" "}
+              {user.followings.length} followings{" "}
             </button>
           </div>
 
           <div className=" w-full justify-center md:w-[90%] mx-auto ">
-            <ProfileList posts={displayedUser.posts} />
+            <ProfileList posts={user.posts} />
           </div>
         </div>
       ) : (
@@ -197,5 +188,32 @@ const UserPage = () => {
     </React.Fragment>
   );
 };
+
+export async function getStaticProps(context) {
+  const { params } = context;
+  const userId = params.userId;
+  let res = await fetch(`${process.env.API}/api/users/${userId}`);
+  let response = await res.json();
+  let user = response.user;
+  return {
+    props: {
+      user,
+    },
+    revalidate: 60,
+  };
+}
+
+export async function getStaticPaths() {
+  let res = await fetch(`${process.env.API}/api/users`);
+  let result = await res.json();
+  let ids = result.users.map((user) => user.id);
+
+  let params = ids.map((u) => ({ params: { userId: u } }));
+  // console.log("params", params);
+  return {
+    paths: params,
+    fallback: "blocking",
+  };
+}
 
 export default UserPage;
