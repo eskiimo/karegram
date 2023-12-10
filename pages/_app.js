@@ -21,6 +21,10 @@ export default function App({ Component, pageProps }) {
               name="viewport"
               content="initial-scale=1.0, width=device-width"
             />
+            <meta
+              httpEquiv="Content-Security-Policy"
+              content="upgrade-insecure-requests"
+            />
           </Head>
           <div
             className={`flex ${

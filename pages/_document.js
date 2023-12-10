@@ -4,6 +4,10 @@ export default function Document() {
   return (
     <Html lang="en" className="dark:bg-black">
       <Head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -35,6 +39,7 @@ export default function Document() {
           src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
           crossOrigin="anonymous"
         ></script>
+
         {/* ////////////////////////////// React Bootstrap  ////////////////////////////////////////// */}
         <script
           src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
