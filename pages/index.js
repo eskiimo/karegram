@@ -29,19 +29,19 @@ function Home({ posts }) {
                   <h2 className="font-bold dark:text-white">{post.owner}</h2>
                 </div>
               </div>
-              <img
+              {/* <img
                 className="w-[100vw]"
-                src={process.env.API + post.image}
+                src={`${process.env.API}/${post.image}`}
                 alt={post.caption || "failed to load alt text ig .."}
-              />
-              {/* 
+              /> */}
+
               <Image
                 className="w-[100vw]"
-                src={process.env.API + post.image}
+                src={`${process.env.API}/${post.image}`}
                 alt={post.caption || "failed to load alt text ig .."}
                 width={400}
                 height={400}
-              /> */}
+              />
 
               <div className="flex flex-row justify-start mx-2">
                 <i className="text-xl mt-3 mr-5 ml-1 fa-regular fa-heart"></i>

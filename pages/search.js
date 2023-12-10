@@ -2,19 +2,23 @@ import UsersList from "@/components/users-list";
 import { useRef, useState } from "react";
 
 const CreatePost = (props) => {
-  let users = props.users;
+  let { users } = props;
   const nameRef = useRef();
   const [result, setResult] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const searchBy = nameRef.current.value;
+    console.log(searchBy);
     setResult(filterby(searchBy));
   };
 
   const filterby = (key) => {
-    let result = users.filter((user) => user.username.includes(key));
-    return result;
+    if (key === "") {
+      return [];
+    } else {
+      return users.filter((user) => user.username.includes(key));
+    }
   };
 
   return (
@@ -32,6 +36,8 @@ const CreatePost = (props) => {
             placeholder="Search"
             className="text-black px-3 py-1 w-full"
             onChange={handleSearch}
+            autoComplete={false}
+            autoFocus={true}
           ></input>
           <button type="submit" className="py-2 px-5 border-white border-[1px]">
             <i className="text-2xl fa-solid fa-magnifying-glass"></i>
@@ -46,18 +52,16 @@ const CreatePost = (props) => {
 };
 
 export async function getStaticProps() {
-  let users;
+  let users = [];
   var requestOptions = {
     method: "GET",
     redirect: "follow",
   };
 
-  users = await fetch(process.env.API + "api/users", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      return result.users;
-    })
-    .catch((error) => console.error("error", error));
+  let response = await fetch(process.env.API + "/api/users", requestOptions);
+  let res = await response.json();
+  console.log(res);
+  users = res.users;
   return {
     props: {
       users: users,

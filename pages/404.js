@@ -6,8 +6,9 @@ const NotFoundPage = () => {
         className="w-50 object-contain"
         src="/images/404.png"
         alt="Not Found"
-        height={600}
-        width={600}
+        height={400}
+        width={400}
+        priority={true}
       />
     </div>
   );

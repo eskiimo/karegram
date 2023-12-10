@@ -22,6 +22,7 @@ function ProfileList({ posts }) {
       );
       if (response) {
         setPoststoDis(response.images);
+        console.log(response);
       }
     })();
   }, []);
@@ -38,18 +39,18 @@ function ProfileList({ posts }) {
         postToDis.map((post) => {
           return (
             <div key={post._id} className="flex  w-[31%]  aspect-square m-1	">
-              <img
+              {/* <img
                 className="w-full object-cover"
                 src={process.env.API + post.image}
                 alt={post.caption || "failed to load caption"}
-              />
-              {/* <Image
+              /> */}
+              <Image
                 className="w-full object-cover"
-                src={post.imageLink}
+                src={`${process.env.API}/${post.image}`}
                 alt={post.caption || "failed to load caption"}
                 height={400}
                 width={400}
-              /> */}
+              />
             </div>
           );
         })

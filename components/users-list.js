@@ -15,27 +15,31 @@ const UsersList = (props) => {
       ) : (
         list.map((user, index) => {
           return (
-            <div key={index} className="flex flex-row justify-start my-3">
+            <Link
+              href={`/profile/${user._id}`}
+              key={index}
+              className="flex flex-row justify-start my-3 hover:bg-slate-200"
+            >
               <div className="bg-black border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3">
                 <Image
                   alt="avatar"
                   width={100}
                   height={100}
-                  src={user.imageLink || "/images/avatar-male.png"}
+                  src={
+                    `${process.env.API}/${user.imageLink}` ||
+                    "/images/avatar-male.png"
+                  }
                   className=" w-[50px] aspect-square rounded-full mr-3"
                 />
               </div>
 
               <div className="flex flex-col">
-                <Link
-                  href={`/profile/${user._id}`}
-                  className="text-md text-start font-semibold"
-                >
+                <p className="text-md text-start font-semibold">
                   {user.username}
-                </Link>
-                <h1 className="text-lg">{user.fullname}</h1>
+                </p>
+                <p className="text-lg">{user.fullname}</p>
               </div>
-            </div>
+            </Link>
           );
         })
       )}
