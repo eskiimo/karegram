@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useHttpClient } from "@/hooks/http-hook";
 import { useEffect, useState } from "react";
+const https = require("https");
 
 function Home({ posts }) {
   const auth = useAuthContext();
@@ -61,10 +62,33 @@ function Home({ posts }) {
     </div>
   );
 }
+const options = {
+  method: "GET",
+  rejectUnauthorized: false,
+};
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${process.env.API}/api/posts`);
-  const posts = await res.json();
+  const sendreq = async () => {
+    return new Promise((resolve, reject) => {
+      https.get(`${process.env.API}/api/posts`, options, (res) => {
+        let body = "";
+        res.on("data", (data) => {
+          body += data;
+        });
+        res.on("end", () => {
+          resolve(body);
+        });
+        res.on("error", (error) => {
+          console.log(error);
+          reject();
+        });
+      });
+    });
+  };
+  // fetch(`${process.env.API}/api/posts`);
+  const res = await sendreq();
+  const posts = await JSON.parse(res);
+  console.log("res:;", posts);
   return { props: posts };
 };
 

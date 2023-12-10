@@ -188,11 +188,14 @@ const UserPage = (props) => {
     </React.Fragment>
   );
 };
+const options = {
+  rejectUnauthorized: false,
+};
 
 export async function getStaticProps(context) {
   const { params } = context;
   const userId = params.userId;
-  let res = await fetch(`${process.env.API}/api/users/${userId}`);
+  let res = await fetch(`${process.env.API}/api/users/${userId}`, options);
   let response = await res.json();
   let user = response.user;
   return {
@@ -204,7 +207,12 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  let res = await fetch(`${process.env.API}/api/users`);
+  let res;
+  try {
+    res = await fetch(`${process.env.API}/api/users`, options);
+  } catch (e) {
+    console.log(e);
+  }
   let result = await res.json();
   let ids = result.users.map((user) => user.id);
 

@@ -6,12 +6,12 @@ module.exports = {
 
   env: {
     // API: "https://localhost:8000",
-    API: "http://3.94.83.186:8000",
+    API: "https://3.94.83.186:8000",
   },
   images: {
     remotePatterns: [
       {
-        protocol: "http",
+        protocol: "https",
         hostname: "**",
       },
     ],
