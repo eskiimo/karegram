@@ -89,12 +89,12 @@ const UserPage = (props) => {
       {!isloading && user ? (
         <div className="w-full  sm:w-[75vw] py-[7vh]  flex flex-col  dark:bg-black dark:text-white  justify-center ">
           <div className=" my-5 flex flex-row justify-evenly items-center   ">
-            {/* <img
+            <img
               alt="avatar"
-              src={process.env.API + user.imageLink}
+              src={`${process.env.API}/${user.imageLink}`}
               className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
-            /> */}
-            <Image
+            />
+            {/* <Image
               alt="avatar"
               width={200}
               height={200}
@@ -103,7 +103,7 @@ const UserPage = (props) => {
                 "/images/avatar-male.png"
               }
               className="w-[25%] md:w-[150px] aspect-square  rounded-full border-2 border-pink-700"
-            />
+            /> */}
             <div className="info w-[35%] flex flex-col">
               <div className="flex flex-row justify-start items-center">
                 {" "}

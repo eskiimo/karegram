@@ -83,7 +83,6 @@ const RegisterPage = () => {
       body,
       {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
       }
     );
 

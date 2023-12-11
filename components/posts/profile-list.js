@@ -41,7 +41,7 @@ function ProfileList({ posts }) {
             <div key={post._id} className="flex  w-[31%]  aspect-square m-1	">
               <img
                 className="w-full object-cover"
-                src={process.env.API + post.image}
+                src={`${process.env.API}/${post.image}`}
                 alt={post.caption || "failed to load caption"}
               />
               {/* <Image
