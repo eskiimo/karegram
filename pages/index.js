@@ -60,7 +60,7 @@ function Home({ posts }) {
 
 export const getStaticProps = async () => {
   const posts = await sendreq(`${process.env.API}/api/posts`);
-  return { props: posts };
+  return { props: posts, revalidate: 60 };
 };
 
 export default Home;
