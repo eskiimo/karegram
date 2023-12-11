@@ -1,4 +1,5 @@
 import UsersList from "@/components/users-list";
+import { sendreq } from "@/hooks/static-https";
 import { useRef, useState } from "react";
 
 const CreatePost = (props) => {
@@ -36,7 +37,7 @@ const CreatePost = (props) => {
             placeholder="Search"
             className="text-black px-3 py-1 w-full"
             onChange={handleSearch}
-            autoComplete={false}
+            autoComplete="false"
             autoFocus={true}
           ></input>
           <button type="submit" className="py-2 px-5 border-white border-[1px]">
@@ -53,13 +54,9 @@ const CreatePost = (props) => {
 
 export async function getStaticProps() {
   let users = [];
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
 
-  let response = await fetch(process.env.API + "/api/users", requestOptions);
-  let res = await response.json();
+  let res = await sendreq(process.env.API + "/api/users");
+
   console.log(res);
   users = res.users;
   return {

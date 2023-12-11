@@ -21,10 +21,18 @@ const UsersList = (props) => {
               className="flex flex-row justify-start my-3 hover:bg-slate-200"
             >
               <div className="bg-black border-red-500 border-[1px] w-[50px] aspect-square rounded-full mr-3">
-                <Image
+                {/* <Image
                   alt="avatar"
                   width={100}
                   height={100}
+                  src={
+                    `${process.env.API}/${user.imageLink}` ||
+                    "/images/avatar-male.png"
+                  }
+                  className=" w-[50px] aspect-square rounded-full mr-3"
+                /> */}
+                <img
+                  alt="avatar"
                   src={
                     `${process.env.API}/${user.imageLink}` ||
                     "/images/avatar-male.png"
