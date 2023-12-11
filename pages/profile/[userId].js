@@ -5,7 +5,7 @@ import ModalComp from "@/components/UI/Modal";
 import UsersList from "@/components/users-list";
 import { useAuthContext } from "@/context/auth.context";
 import Image from "next/image";
-import { useHttpClient } from "@/hooks/http-hook";
+import { useHttpClient } from "@/hooks/fetch-hook";
 import Spinner from "@/components/UI/spinner";
 import { sendreq } from "@/hooks/static-https";
 

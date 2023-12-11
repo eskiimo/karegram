@@ -1,5 +1,5 @@
 "use client";
-import { useHttpClient } from "@/hooks/http-hook";
+import { useHttpClient } from "@/hooks/fetch-hook";
 import Image from "next/image";
 import { React, useEffect, useState } from "react";
 

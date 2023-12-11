@@ -1,5 +1,10 @@
-import { headers } from "@/next.config";
+const https = require("https");
+
 import { useCallback, useEffect, useRef, useState } from "react";
+
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
 
 export const useHttpClient = () => {
   const [isloading, setIsLoading] = useState(false);
@@ -21,6 +26,7 @@ export const useHttpClient = () => {
             body,
             headers,
             signal: httpAbortCtrl.signal,
+            httpsAgent,
           }
           // { cache: "no-store" }
         );

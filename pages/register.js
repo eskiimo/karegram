@@ -1,7 +1,7 @@
 import { useAuthContext } from "@/context/auth.context";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useHttpClient } from "@/hooks/http-hook";
+import { useHttpClient } from "@/hooks/fetch-hook";
 import { useForm } from "@/hooks/form-hook";
 import Spinner from "@/components/UI/spinner";
 import Input from "@/components/UI/input";

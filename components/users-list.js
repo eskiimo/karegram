@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useHttpClient } from "@/hooks/http-hook";
+import { useHttpClient } from "@/hooks/fetch-hook";
 import {} from "react";
 
 const UsersList = (props) => {
